@@ -61,9 +61,9 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("Folder").FirstOrDefault().Value;
 
-//#if DEBUG
-//            Result = @"C:\Development\Models\";
-//#endif
+#if DEBUG
+            Result = @"C:\Development\Models\";
+#endif
 
             return Result;
         }
@@ -75,9 +75,9 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("ExportFolder").FirstOrDefault().Value;
 
-//#if DEBUG
-//            Result = @"C:\Development\Exports\";
-//#endif
+#if DEBUG
+            Result = @"C:\Development\Exports\";
+#endif
 
             return Result;
         }

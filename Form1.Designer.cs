@@ -165,6 +165,7 @@ namespace CSB
             this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider8 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider9 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.chkRolltop = new System.Windows.Forms.CheckBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -1612,6 +1613,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.tabPage1, null);
             this.structuresExtender1.SetAttributeTypeName(this.tabPage1, null);
             this.structuresExtender1.SetBindPropertyName(this.tabPage1, null);
+            this.tabPage1.Controls.Add(this.chkRolltop);
             this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.panelLayout);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -1795,6 +1797,19 @@ namespace CSB
             // 
             this.errorProvider9.ContainerControl = this;
             // 
+            // chkRolltop
+            // 
+            this.structuresExtender1.SetAttributeName(this.chkRolltop, null);
+            this.structuresExtender1.SetAttributeTypeName(this.chkRolltop, null);
+            this.chkRolltop.AutoSize = true;
+            this.structuresExtender1.SetBindPropertyName(this.chkRolltop, null);
+            this.chkRolltop.Location = new System.Drawing.Point(113, 78);
+            this.chkRolltop.Name = "chkRolltop";
+            this.chkRolltop.Size = new System.Drawing.Size(90, 17);
+            this.chkRolltop.TabIndex = 4;
+            this.chkRolltop.Text = "Rolltop Ridge";
+            this.chkRolltop.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.structuresExtender1.SetAttributeName(this, null);
@@ -1973,6 +1988,7 @@ namespace CSB
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtNote;
+        private System.Windows.Forms.CheckBox chkRolltop;
     }
 }
 

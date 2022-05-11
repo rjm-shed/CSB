@@ -241,10 +241,12 @@ namespace CSB
             if (ProjectSales.RoofMaterial != null && ProjectSales.RoofMaterial.Contains(".42 BMT") && ProjectSales.RoofMaterial.Contains("5-Rib"))
             {
                 cbxRoofClad.Text = "0.47 TCT 5-RIB";
+                chkRolltop.Checked = false;
             }
             else if (ProjectSales.RoofMaterial != null && ProjectSales.RoofMaterial.Contains(".42 BMT") && ProjectSales.RoofMaterial.Contains("Corry"))
             {
                 cbxRoofClad.Text = "0.47 TCT CORRY";
+                chkRolltop.Checked = true;
             }
 
             if (ProjectSales.WallMaterial != null && ProjectSales.WallMaterial.Contains(".42 BMT") && ProjectSales.WallMaterial.Contains("5-Rib"))
@@ -760,6 +762,13 @@ namespace CSB
             // Update roof/wall attributes for building layout
 
             SetRoofWallLayoutAttributes(length, apex, width);
+
+            //**********************************************************************
+
+            if (chkRolltop.Checked == true)
+            {
+                UpdateAttributes("Project Roof Clad Left_RollTop.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+            }
 
             //**********************************************************************
 
