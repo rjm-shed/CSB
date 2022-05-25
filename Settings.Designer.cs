@@ -29,6 +29,7 @@ namespace CSB
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTemplate = new System.Windows.Forms.TextBox();
             this.txtFolder = new System.Windows.Forms.TextBox();
@@ -40,6 +41,7 @@ namespace CSB
             this.button3 = new System.Windows.Forms.Button();
             this.txtExport = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -142,6 +144,11 @@ namespace CSB
             this.label3.TabIndex = 8;
             this.label3.Text = "Location Eport Folder :";
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,5 +188,6 @@ namespace CSB
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox txtExport;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }

@@ -232,276 +232,297 @@ namespace CSB
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
-            //for (int i = 1; i <= rowCount; i++)
-            //{
-            for (int j = 1; j <= colCount; j++)
+            try
             {
-                //new line
-                //if (j == 1)
-                //    Console.Write("\r\n");
-
-                //write the value to the console
-                if (xlRange.Cells[1, j] != null && xlRange.Cells[1, j].Value2 != null && xlRange.Cells[2, j].Value2 != null)
+                //for (int i = 1; i <= rowCount; i++)
+                //{
+                for (int j = 1; j <= colCount; j++)
                 {
-                    if (xlRange.Cells[1, j].Value2 == "Barge")
+                    //new line
+                    //if (j == 1)
+                    //    Console.Write("\r\n");
+
+                    //write the value to the console
+                    if (xlRange.Cells[1, j] != null && xlRange.Cells[1, j].Value2 != null && xlRange.Cells[2, j].Value2 != null)
                     {
-                        Sales.Barge = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Bays")
-                    {
-                        try
+                        if (xlRange.Cells[1, j].Value2 == "Barge")
                         {
-                            Sales.Bays = xlRange.Cells[2, j].Value2;
+                            Sales.Barge = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Bays")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.Bays = temp.ToString("0.###");
+                            try
+                            {
+                                Sales.Bays = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.Bays = temp.ToString("0.###");
+                            }
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "BaySize")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "BaySize")
                         {
-                            Sales.BaySize = xlRange.Cells[2, j].Value2;
+                            try
+                            {
+                                Sales.BaySize = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.BaySize = temp.ToString("0.###");
+                            }
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "ClearSheetRoof")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.BaySize = temp.ToString("0.###");
+                            Sales.ClearSheetRoof = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "ClearSheetRoof")
-                    {
-                        Sales.ClearSheetRoof = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "ClearSheetWall")
-                    {
-                        Sales.ClearSheetWall = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "ColumnType")
-                    {
-                        Sales.ColumnType = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "CompanyName")
-                    {
-                        Sales.CompanyName = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Corner")
-                    {
-                        Sales.Corner = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "CustomerName")
-                    {
-                        Sales.CustomerName = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Downpipe")
-                    {
-                        Sales.Downpipe = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "EndWalls")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "ClearSheetWall")
                         {
-                            Sales.EndWalls = xlRange.Cells[2, j].Value2;
+                            Sales.ClearSheetWall = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "ColumnType")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.EndWalls = temp.ToString("0.###");
+                            Sales.ColumnType = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Finish")
-                    {
-                        Sales.Finish = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "FlashingRidge")
-                    {
-                        Sales.FlashingRidge = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Footings")
-                    {
-                        Sales.Footings = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "FrameSpan")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "CompanyName")
                         {
-                            Sales.FrameSpan = xlRange.Cells[2, j].Value2;
+                            Sales.CompanyName = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Corner")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.FrameSpan = temp.ToString("0.###");
+                            Sales.Corner = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "GutterColour")
-                    {
-                        Sales.GutterColour = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "GutterType")
-                    {
-                        Sales.GutterType = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Height")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "CustomerName")
                         {
-                            Sales.Height = xlRange.Cells[2, j].Value2;
+                            Sales.CustomerName = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Downpipe")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.Height = temp.ToString("0.###");
+                            Sales.Downpipe = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "JobNo")
-                    {
-                        Sales.JobNo = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Length")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "EndWalls")
                         {
-                            Sales.Length = xlRange.Cells[2, j].Value2;
+                            try
+                            {
+                                Sales.EndWalls = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.EndWalls = temp.ToString("0.###");
+                            }
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Finish")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.Length = temp.ToString("0.###");
+                            Sales.Finish = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "OtherFrameDetails")
-                    {
-                        Sales.OtherFrameDetails = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "QuoteVer")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "FlashingRidge")
                         {
-                            Sales.QuoteVer = xlRange.Cells[2, j].Value2;
+                            Sales.FlashingRidge = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Footings")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.QuoteVer = temp.ToString("0.###");
+                            Sales.Footings = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "RoofColour")
-                    {
-                        Sales.RoofColour = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "RoofMaterial")
-                    {
-                        Sales.RoofMaterial = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "RoofPitch")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "FrameSpan")
                         {
-                            Sales.RoofPitch = xlRange.Cells[2, j].Value2;
+                            try
+                            {
+                                Sales.FrameSpan = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.FrameSpan = temp.ToString("0.###");
+                            }
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "GutterColour")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.RoofPitch = temp.ToString("0.###");
+                            Sales.GutterColour = xlRange.Cells[2, j].Value2;
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "RoofPurlin")
-                    {
-                        Sales.RoofPurlin = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "RoofType")
-                    {
-                        Sales.RoofType = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "SideWals")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "GutterType")
                         {
-                            Sales.SideWals = xlRange.Cells[2, j].Value2;
+                            Sales.GutterType = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Height")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.SideWals = temp.ToString("0.###");
+                            try
+                            {
+                                Sales.Height = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.Height = temp.ToString("0.###");
+                            }
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Suburb")
-                    {
-                        Sales.Suburb = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Totwalls")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "JobNo")
                         {
-                            Sales.Totwalls = xlRange.Cells[2, j].Value2;
+                            Sales.JobNo = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "Length")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.Totwalls = temp.ToString("0.###");
+                            try
+                            {
+                                Sales.Length = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.Length = temp.ToString("0.###");
+                            }
                         }
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "TrussType")
-                    {
-                        Sales.TrussType = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "WallColour")
-                    {
-                        Sales.WallColour = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "WallGirt")
-                    {
-                        Sales.WallGirt = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "WallMaterial")
-                    {
-                        Sales.WallMaterial = xlRange.Cells[2, j].Value2;
-                    }
-                    else if (xlRange.Cells[1, j].Value2 == "Width")
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "OtherFrameDetails")
                         {
-                            Sales.Width = xlRange.Cells[2, j].Value2;
+                            Sales.OtherFrameDetails = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "QuoteVer")
                         {
-                            var temp = xlRange.Cells[2, j].Value2;
-                            Sales.Width = temp.ToString("0.###");
+                            try
+                            {
+                                Sales.QuoteVer = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.QuoteVer = temp.ToString("0.###");
+                            }
                         }
-                    }
-                    else
-                    {
-                        try
+                        else if (xlRange.Cells[1, j].Value2 == "RoofColour")
                         {
-                            MessageBox.Show("New Data for " + xlRange.Cells[1, j].Value2);
+                            Sales.RoofColour = xlRange.Cells[2, j].Value2;
                         }
-                        catch
+                        else if (xlRange.Cells[1, j].Value2 == "RoofMaterial")
                         {
-                          
+                            Sales.RoofMaterial = xlRange.Cells[2, j].Value2;
                         }
+                        else if (xlRange.Cells[1, j].Value2 == "RoofPitch")
+                        {
+                            try
+                            {
+                                Sales.RoofPitch = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.RoofPitch = temp.ToString("0.###");
+                            }
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "RoofPurlin")
+                        {
+                            Sales.RoofPurlin = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "RoofType")
+                        {
+                            Sales.RoofType = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "SideWals")
+                        {
+                            try
+                            {
+                                Sales.SideWals = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.SideWals = temp.ToString("0.###");
+                            }
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "Suburb")
+                        {
+                            Sales.Suburb = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "Totwalls")
+                        {
+                            try
+                            {
+                                Sales.Totwalls = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.Totwalls = temp.ToString("0.###");
+                            }
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "TrussType")
+                        {
+                            Sales.TrussType = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "WallColour")
+                        {
+                            Sales.WallColour = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "WallGirt") // Catch old jobs before endwall and sidewall
+                        {
+                            Sales.WallGirtSide = xlRange.Cells[2, j].Value2;
+                            Sales.WallGirtEnd = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "WallGirt")
+                        {
+                            Sales.WallGirtEnd = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "WallGirtEnd")
+                        {
+                            Sales.WallGirtEnd = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "WallMaterial")
+                        {
+                            Sales.WallMaterial = xlRange.Cells[2, j].Value2;
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "Width")
+                        {
+                            try
+                            {
+                                Sales.Width = xlRange.Cells[2, j].Value2;
+                            }
+                            catch
+                            {
+                                var temp = xlRange.Cells[2, j].Value2;
+                                Sales.Width = temp.ToString("0.###");
+                            }
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "ProjectDetails")
+                        {
+                            Sales.ProjectDetails = xlRange.Cells[2, j].Value2;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                LogFile("1103 - New Data for " + xlRange.Cells[1, j].Value2);
+                                MessageBox.Show("New Data for " + xlRange.Cells[1, j].Value2);
+                            }
+                            catch
+                            {
+
+                            }
+                        };
+
                     };
 
-                };
+                }
 
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlRange);
+                Marshal.ReleaseComObject(xlWorksheet);
 
-                    //Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
+                xlWorkbook.Close();
+                Marshal.ReleaseComObject(xlWorkbook);
+
+                xlApp.Quit();
+                Marshal.ReleaseComObject(xlApp);
+
             }
-            //}
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
+            catch (Exception e)
+            {
+                LogFile("1102 - " + e.Message);
+                LogFile("1102 - File - " + xFile);
+                Result = false;
+                return Result;
+            }
 
             return Result;
         }
@@ -520,9 +541,25 @@ namespace CSB
 
         public void LogFile(string temp)
         {
+            string xMonth = DateTime.Today.Month.ToString();
+
+            if (xMonth.Length == 1)
+            {
+                xMonth = "0" + xMonth;
+            }
+
+            string xDay = DateTime.Today.Day.ToString();
+
+            if (xDay.Length == 1)
+            {
+                xDay = "0" + xDay;
+            }
+
+            string xtemp = DateTime.Today.Year.ToString()+ xMonth + xDay;
+
             StringBuilder sb = new StringBuilder();
             sb.Append(DateTime.Now + " - " + temp + "\r\n");
-            File.AppendAllText(@"C:\temp\log.txt", sb.ToString());
+            File.AppendAllText(@"T:\CSB_Program_Files\Documentation\Log_Files\log_" + xtemp +".txt", sb.ToString());
             sb.Clear();
         }
 
@@ -816,12 +853,20 @@ namespace CSB
             set { mRoofPurlin = value; }
         }
 
-        private string mWallGirt;
+        private string mWallGirtSide;
 
-        public string WallGirt
+        public string WallGirtSide
         {
-            get { return mWallGirt; }
-            set { mWallGirt = value; }
+            get { return mWallGirtSide; }
+            set { mWallGirtSide = value; }
+        }
+
+        private string mWallGirtEnd;
+
+        public string WallGirtEnd
+        {
+            get { return mWallGirtEnd; }
+            set { mWallGirtEnd = value; }
         }
 
         private string mOtherFrameDetails;
@@ -889,6 +934,14 @@ namespace CSB
         {
             get { return mFinish; }
             set { mFinish = value; }
+        }
+
+        private string mProjectDetails;
+
+        public string ProjectDetails
+        {
+            get { return mProjectDetails; }
+            set { mProjectDetails = value; }
         }
     }
 
@@ -992,7 +1045,7 @@ namespace CSB
                 // shortened name
                 mModelName = mNumber; // + @"-" + s;
 
-                string xLength = "19875 Indoor Jumping Arena_Frank Demai"; //io
+                string xLength = "19875a"; // Indoor Jumping Arena_Frank Demaiio
 
                 if (mModelName.Length > xLength.Length)
                 {
