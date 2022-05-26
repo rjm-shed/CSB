@@ -10,6 +10,7 @@ namespace CSB
 {
     static class Program
     {
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -24,6 +25,12 @@ namespace CSB
                 return;
             }
 
+            if (!SingleInstance.Start("TeklaStructures"))
+            {
+                MessageBox.Show("Multiple TeklaStructures are running." + "\r\n" + "Fix and try again");
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -32,14 +39,14 @@ namespace CSB
 
         }
         public static class SingleInstance
-        {            
+        {
             public static bool Start(string applicationIdentifier)
             {
                 bool isSingleInstance = false;
 
-                Process[] localByName = Process.GetProcessesByName("CSB_Project_Start");
+                Process[] localByName = Process.GetProcessesByName(applicationIdentifier);
 
-                if(localByName.Length > 1)
+                if (localByName.Length > 1)
                 {
                     isSingleInstance = false;
                 }
@@ -52,7 +59,7 @@ namespace CSB
             }
             public static void Stop()
             {
-               
+
             }
         }
 

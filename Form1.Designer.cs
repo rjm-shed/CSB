@@ -178,6 +178,8 @@ namespace CSB
             this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider8 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider9 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -564,12 +566,13 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.button3, null);
             this.structuresExtender1.SetAttributeTypeName(this.button3, null);
             this.structuresExtender1.SetBindPropertyName(this.button3, null);
-            this.button3.Location = new System.Drawing.Point(730, 414);
+            this.button3.Location = new System.Drawing.Point(741, 362);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 38;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
@@ -1923,9 +1926,12 @@ namespace CSB
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem1,
+            this.manageFilesToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.settingsToolStripMenuItem.Text = "Manage";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -1940,7 +1946,7 @@ namespace CSB
             // modelShareHelpToolStripMenuItem1
             // 
             this.modelShareHelpToolStripMenuItem1.Name = "modelShareHelpToolStripMenuItem1";
-            this.modelShareHelpToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.modelShareHelpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.modelShareHelpToolStripMenuItem1.Text = "Model Share Help";
             this.modelShareHelpToolStripMenuItem1.Click += new System.EventHandler(this.modelShareHelpToolStripMenuItem1_Click);
             // 
@@ -1979,6 +1985,20 @@ namespace CSB
             // errorProvider9
             // 
             this.errorProvider9.ContainerControl = this;
+            // 
+            // settingsToolStripMenuItem1
+            // 
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem1.Text = "Settings";
+            this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
+            // 
+            // manageFilesToolStripMenuItem
+            // 
+            this.manageFilesToolStripMenuItem.Name = "manageFilesToolStripMenuItem";
+            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageFilesToolStripMenuItem.Text = "Manage Files";
+            this.manageFilesToolStripMenuItem.Click += new System.EventHandler(this.manageFilesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -2177,6 +2197,8 @@ namespace CSB
         private System.Windows.Forms.CheckBox chkGirtSingleSpan;
         private System.Windows.Forms.CheckBox chkPurlinSingleSpan;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem manageFilesToolStripMenuItem;
     }
 }
 

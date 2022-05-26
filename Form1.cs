@@ -273,8 +273,9 @@ namespace CSB
 
         private void button3_Click(object sender, EventArgs e)
         {
+            //myHelper.ProcessRunning("TeklaStructures");
 
-           // Process[] localByName = Process.GetProcessesByName("CSB_Project_Start");
+            //Process[] localByName = Process.GetProcessesByName("CSB_Project_Start");
 
            //List<double> spacingList = new List<double>();
 
@@ -293,6 +294,12 @@ namespace CSB
         private void button1_Click_1(object sender, EventArgs e)
         {
             myHelper.LogFile("Model process started");
+
+            if (!myHelper.ProcessRunning("TeklaStructures"))
+            {
+                MessageBox.Show("Multiple TeklaStructures are running." + "\r\n" + "Fix and try again");
+                return;
+            }
 
             myModel = new Model();
 
@@ -350,10 +357,28 @@ namespace CSB
             if (Directory.Exists(xtemp))
             {
                 myHelper.LogFile("Project Exists");
-                System.Windows.Forms.MessageBox.Show("Already exists", "Project", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
-                return;
-            }
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you want to over-write it?" + "\r\n" + "ONLY DO THIS IF IT HAS NOT BEEN SHARED", "Project already exists", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
 
+                if (dialogResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        Directory.Delete(xtemp, true);
+                        myHelper.LogFile("Project deleted " + Project.ModelName);
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Did not Delete", "Project", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                        myHelper.LogFile("Project not deleted " + Project.ModelName);
+                        return;
+                    }
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+               
+            }
 
             string MasterFiles = @"T:\CSB_Program_Files\Documentation\Masters\";
             string TemplateAttributes = @"T:\CSB_TeklaSetup\Model Templates\Model Template 2021_Richard\attributes\";
@@ -2234,116 +2259,23 @@ namespace CSB
         #region Menu
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            //int noBays = 5;
-
-            //if (noBays == 1)
-            //{
-            //    tgt.Value = "1 2";
-            //}
-            //else if (noBays == 2)
-            //+
-            //{
-            //    tgt.Value = "1 2 3";
-            //}
-            //else if (noBays == 3)
-            //{
-            //    tgt.Value = "1 2 3 4";
-            //}
-
-
-                
-
-                //string modelPath = myModel.GetInfo().ModelPath;
-
-                //string attribute = modelPath + @"\attributes\CSB_Project_Setup.CSB_Gable_Shed.MainForm.xml";
-
-                //XDocument xdoc = XDocument.Load(attribute);
-
-                //var tgt = xdoc.Root.Descendants("Height").FirstOrDefault();
-
-                //tgt.Value = eave.ToString();
-
-                //tgt = xdoc.Root.Descendants("Width").FirstOrDefault();
-
-                //tgt.Value = eave.ToString();
-
-                //string AttributeSettings = "";
-
-                //AttributeSettings = "API Gable 40m Reg A";
-
-                //string xFile = @"T:\CSB_TeklaSetup\" + AttributeSettings + ".CSB_Gable_Shed.MainForm.xml";
-
-                //var xdocAttrib = XDocument.Load(xFile);
-
-                //foreach (var childElement in xdocAttrib.Root.Elements())
-                //{
-                //    string a = childElement.Name.ToString();
-                //    string c = childElement.Value.ToString();
-
-                //    if (a != "SpacingBetweenBays" && a != "Millimeters")
-                //    {
-
-                //        var tgt2 = xdoc.Root.Descendants(a).FirstOrDefault();
-
-                //        tgt2.Value = c;
-
-                //    }
-
-                //}
-
-                //xdoc.Root.Descendants("SpacingBetweenBays").Remove();
-
-                ////string temp = ", new XElement(" + "Millimeters" + "," + "5000" + ")";
-
-                //string b = "9000";
-
-                //XElement temp = new XElement("Millimeters", "5000");
-                //XElement temp2 = new XElement("Millimeters", b);
-
-                ////string b = temp + "," + temp2;
-
-                //xdoc.Element("config")
-                //    .Elements("Height").FirstOrDefault()
-                //    .AddAfterSelf(new XElement("SpacingBetweenBays",
-                //    temp
-                //    ));
-
-                //xdoc.Element("config")
-                //    .Elements("SpacingBetweenBays")
-                //    .Elements("Millimeters").LastOrDefault()
-                //    .AddAfterSelf(temp2);
-
-
-
-
-                //xdoc.Element("config")
-                //    .Elements("Height").FirstOrDefault()
-                //    .AddAfterSelf(new XElement("SpacingBetweenBays",
-                //    new XElement("Millimeters", "5000"),
-                //    new XElement("Millimeters", "7000"),
-                //    new XElement("Millimeters", "8000")
-                //    ));
-
-                //XNode tgt2 = (XNode)xdoc.Root.Descendants("SpacingBetweenBays");
-
-                // tgt2.AddAfterSelf("Millimeters","2000");
-
-                //xdoc.Root.Descendants("SpacingBetweenBays").("Millimeters", 2000);
-
-                //tgt.Value = eave.ToString();
-
-                //xdoc.Save(attribute);
-
-
-            }
+            Application.Exit();
+        }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Settings temp = new Settings();
             temp.ShowDialog();
         }
 
+        private void manageFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageFiles temp = new ManageFiles();
+            temp.ShowDialog();
+        }
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -2873,8 +2805,17 @@ namespace CSB
       
     }
 
-#endregion
+    #endregion
 
-#endregion        
+    #endregion
+    //private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
+    //{
 
-    }
+    //    System.Text.StringBuilder messageBoxCS = new System.Text.StringBuilder();
+    //    messageBoxCS.AppendFormat("{0} = {1}", "CloseReason", e.CloseReason);
+    //    messageBoxCS.AppendLine();
+    //    messageBoxCS.AppendFormat("{0} = {1}", "Cancel", e.Cancel);
+    //    messageBoxCS.AppendLine();
+    //    MessageBox.Show(messageBoxCS.ToString(), "FormClosing Event");
+    //}
+}

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
 
 namespace CSB
 {
@@ -61,9 +62,9 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("Folder").FirstOrDefault().Value;
 
-#if DEBUG
-            Result = @"C:\Development\Models\";
-#endif
+//#if DEBUG
+//            Result = @"C:\Development\Models\";
+//#endif
 
             return Result;
         }
@@ -75,9 +76,9 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("ExportFolder").FirstOrDefault().Value;
 
-#if DEBUG
-            Result = @"C:\Development\Exports\";
-#endif
+//#if DEBUG
+//            Result = @"C:\Development\Exports\";
+//#endif
 
             return Result;
         }
@@ -555,13 +556,33 @@ namespace CSB
                 xDay = "0" + xDay;
             }
 
-            string xtemp = DateTime.Today.Year.ToString()+ xMonth + xDay;
+            string xtemp = Environment.UserName +"_"+DateTime.Today.Year.ToString()+ xMonth + xDay;
 
             StringBuilder sb = new StringBuilder();
-            sb.Append(DateTime.Now + " - " + temp + "\r\n");
-            File.AppendAllText(@"T:\CSB_Program_Files\Documentation\Log_Files\log_" + xtemp +".txt", sb.ToString());
+            sb.Append(DateTime.Now + " - " + temp + "\r\n"); //TeklaStructuresLogs
+            File.AppendAllText(@"C:\TeklaStructuresLogs\log_" + xtemp + ".txt", sb.ToString());
+            //File.AppendAllText(@"T:\CSB_Program_Files\Documentation\Log_Files\log_" + xtemp +".txt", sb.ToString());
             sb.Clear();
         }
+
+        public bool ProcessRunning(string applicationIdentifier)
+        {
+            bool isSingleInstance = false;
+
+            Process[] localByName = Process.GetProcessesByName(applicationIdentifier);
+
+            if (localByName.Length > 1)
+            {
+                isSingleInstance = false;
+            }
+            else
+            {
+                isSingleInstance = true;
+            }
+
+            return isSingleInstance;
+        }
+
 
     }    
 
