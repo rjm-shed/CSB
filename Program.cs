@@ -19,17 +19,17 @@ namespace CSB
         static void Main()
         {
 
-            if (!SingleInstance.Start("CSB_Project_Start"))
-            {
-                MessageBox.Show("Application is already running.");
-                return;
-            }
+            //if (!SingleInstance.Start("CSB_Project_Start"))
+            //{
+            //    MessageBox.Show("Application is already running.");
+            //    return;
+            //}
 
-            if (!SingleInstance.Start("TeklaStructures"))
-            {
-                MessageBox.Show("Multiple TeklaStructures are running." + "\r\n" + "Fix and try again");
-                return;
-            }
+            //if (!SingleInstance.Start("TeklaStructures"))
+            //{
+            //    MessageBox.Show("Multiple TeklaStructures are running." + "\r\n" + "Fix and try again");
+            //    return;
+            //}
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

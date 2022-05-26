@@ -459,9 +459,9 @@ namespace CSB
                             Sales.WallGirtSide = xlRange.Cells[2, j].Value2;
                             Sales.WallGirtEnd = xlRange.Cells[2, j].Value2;
                         }
-                        else if (xlRange.Cells[1, j].Value2 == "WallGirt")
+                        else if (xlRange.Cells[1, j].Value2 == "WallGirtSide")
                         {
-                            Sales.WallGirtEnd = xlRange.Cells[2, j].Value2;
+                            Sales.WallGirtSide = xlRange.Cells[2, j].Value2;
                         }
                         else if (xlRange.Cells[1, j].Value2 == "WallGirtEnd")
                         {
