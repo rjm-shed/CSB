@@ -18,49 +18,23 @@ namespace CSB
 
         static void Main()
         {
+            bool instanceCountOne = false;
 
-            //if (!SingleInstance.Start("CSB_Project_Start"))
-            //{
-            //    MessageBox.Show("Application is already running.");
-            //    return;
-            //}
-
-            //if (!SingleInstance.Start("TeklaStructures"))
-            //{
-            //    MessageBox.Show("Multiple TeklaStructures are running." + "\r\n" + "Fix and try again");
-            //    return;
-            //}
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-           
-            SingleInstance.Stop();
-
-        }
-        public static class SingleInstance
-        {
-            public static bool Start(string applicationIdentifier)
+            using (Mutex mtexCSB = new Mutex(true, "CSB_Project_Start", out instanceCountOne))
             {
-                bool isSingleInstance = false;
-
-                Process[] localByName = Process.GetProcessesByName(applicationIdentifier);
-
-                if (localByName.Length > 1)
+                if (instanceCountOne)
                 {
-                    isSingleInstance = false;
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new Form1());
+                    mtexCSB.ReleaseMutex();
                 }
                 else
                 {
-                    isSingleInstance = true;
+                    MessageBox.Show("An application instance is already running");
                 }
-
-                return isSingleInstance;
             }
-            public static void Stop()
-            {
 
-            }
         }
 
     }

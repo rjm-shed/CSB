@@ -155,7 +155,6 @@ namespace CSB
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chkPurlinSingleSpan = new System.Windows.Forms.CheckBox();
             this.txtPurlin = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.chkRolltop = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panelLayout = new System.Windows.Forms.Panel();
@@ -167,6 +166,8 @@ namespace CSB
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modelShareHelpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
@@ -178,8 +179,6 @@ namespace CSB
             this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider8 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider9 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -1673,7 +1672,6 @@ namespace CSB
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.chkRolltop);
             this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.panelLayout);
@@ -1784,18 +1782,6 @@ namespace CSB
             this.txtPurlin.ReadOnly = true;
             this.txtPurlin.Size = new System.Drawing.Size(93, 20);
             this.txtPurlin.TabIndex = 23;
-            // 
-            // label18
-            // 
-            this.structuresExtender1.SetAttributeName(this.label18, null);
-            this.structuresExtender1.SetAttributeTypeName(this.label18, null);
-            this.label18.AutoSize = true;
-            this.structuresExtender1.SetBindPropertyName(this.label18, null);
-            this.label18.Location = new System.Drawing.Point(299, 41);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(63, 13);
-            this.label18.TabIndex = 26;
-            this.label18.Text = "Endwall Girt";
             // 
             // chkRolltop
             // 
@@ -1934,6 +1920,20 @@ namespace CSB
             this.settingsToolStripMenuItem.Text = "Manage";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
+            // settingsToolStripMenuItem1
+            // 
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
+            this.settingsToolStripMenuItem1.Text = "Settings";
+            this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
+            // 
+            // manageFilesToolStripMenuItem
+            // 
+            this.manageFilesToolStripMenuItem.Name = "manageFilesToolStripMenuItem";
+            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.manageFilesToolStripMenuItem.Text = "Manage Files";
+            this.manageFilesToolStripMenuItem.Click += new System.EventHandler(this.manageFilesToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1946,7 +1946,7 @@ namespace CSB
             // modelShareHelpToolStripMenuItem1
             // 
             this.modelShareHelpToolStripMenuItem1.Name = "modelShareHelpToolStripMenuItem1";
-            this.modelShareHelpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.modelShareHelpToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
             this.modelShareHelpToolStripMenuItem1.Text = "Model Share Help";
             this.modelShareHelpToolStripMenuItem1.Click += new System.EventHandler(this.modelShareHelpToolStripMenuItem1_Click);
             // 
@@ -1985,20 +1985,6 @@ namespace CSB
             // errorProvider9
             // 
             this.errorProvider9.ContainerControl = this;
-            // 
-            // settingsToolStripMenuItem1
-            // 
-            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.settingsToolStripMenuItem1.Text = "Settings";
-            this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
-            // 
-            // manageFilesToolStripMenuItem
-            // 
-            this.manageFilesToolStripMenuItem.Name = "manageFilesToolStripMenuItem";
-            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.manageFilesToolStripMenuItem.Text = "Manage Files";
-            this.manageFilesToolStripMenuItem.Click += new System.EventHandler(this.manageFilesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -2188,7 +2174,6 @@ namespace CSB
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtProjectDetails;
         private System.Windows.Forms.TextBox txtWallGirtEnd;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtWallGirtSide;
         private System.Windows.Forms.TextBox txtPurlin;
         private System.Windows.Forms.Label label19;

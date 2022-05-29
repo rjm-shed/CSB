@@ -15,6 +15,15 @@ namespace CSB
 {
     class Helper
     {
+
+        private string mNoteText;
+
+        public string NoteText
+        {
+            get { return mNoteText; }
+            set { mNoteText = value; }
+        }
+
         public bool IsNumeric(string temp)
         {
             bool Result = false;
@@ -51,6 +60,16 @@ namespace CSB
             var xdoc = XDocument.Load(Globals.Config());
 
           string  Result = xdoc.Root.Descendants("TemplateModel").FirstOrDefault().Value;
+
+            return Result;
+        }
+
+        public string TeklaFolder()
+        {
+
+            var xdoc = XDocument.Load(Globals.Config());
+
+            string Result = xdoc.Root.Descendants("TeklaFolder").FirstOrDefault().Value;
 
             return Result;
         }
@@ -539,7 +558,71 @@ namespace CSB
 
             return Result;
         }
+        public bool CheckColumn(string xTemp)
+        {
+            bool Result = false;
 
+            List<string> xColumn = new List<string>();
+            xColumn.Add("UB150*14");
+            xColumn.Add("UB150*18");
+            xColumn.Add("UB180*16");
+            xColumn.Add("UB180*18");
+            xColumn.Add("UB180*22");
+            xColumn.Add("UB200*18");
+            xColumn.Add("UB200*22");
+            xColumn.Add("UB200*25");
+            xColumn.Add("UB200*30");
+            xColumn.Add("UB250*26");
+            xColumn.Add("UB250*31");
+            xColumn.Add("UB250*37");
+            xColumn.Add("UB310*32");
+            xColumn.Add("UB310*40");
+            xColumn.Add("UB310*46");
+            xColumn.Add("UB360*45");
+            xColumn.Add("UB360*51");
+            xColumn.Add("UB360*57");
+            xColumn.Add("UB410*54");
+            xColumn.Add("UB410*60");
+            xColumn.Add("UB460*67");
+            xColumn.Add("UB460*75");
+            xColumn.Add("UB460*82");
+            xColumn.Add("UB530*82");
+            xColumn.Add("UB530*92");
+            xColumn.Add("UB610*101");
+            xColumn.Add("UB610*113");
+            xColumn.Add("UB610*125");
+            xColumn.Add("UB690*125");
+            xColumn.Add("UB690*140");
+            xColumn.Add("UB760*148");
+            xColumn.Add("UB760*173");
+            xColumn.Add("UB760*197");
+            xColumn.Add("UB760*220");
+            xColumn.Add("UB760*244");
+            xColumn.Add("UC100*15");
+            xColumn.Add("UC150*23");
+            xColumn.Add("UC150*30");
+            xColumn.Add("UC150*37");
+            xColumn.Add("UC200*46");
+            xColumn.Add("UC200*52");
+            xColumn.Add("UC200*60");
+            xColumn.Add("UC250*73");
+            xColumn.Add("UC250*90");
+            xColumn.Add("UC310*97");
+            xColumn.Add("UC310*118");
+            xColumn.Add("UC310*137");
+            xColumn.Add("UC310*158");
+
+            for (int index = 0; index < xColumn.Count-1; ++index)
+            {
+                if (xTemp == xColumn[index])
+                {
+                    Result = true;
+                    break;
+                }
+            }
+
+            return Result;
+        }
         public void LogFile(string temp)
         {
             string xMonth = DateTime.Today.Month.ToString();
@@ -582,7 +665,6 @@ namespace CSB
 
             return isSingleInstance;
         }
-
 
     }    
 

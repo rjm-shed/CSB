@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml;
@@ -29,8 +30,7 @@ namespace CSB
 
     public partial class Form1 : Form
     {
-        //C:\Users\TeklaAutomation\AppData\Local\CSB_Project_Start\app-1.0.2
-
+        
         Helper myHelper = new Helper();
 
         salesLib ProjectSales = new salesLib();
@@ -273,11 +273,48 @@ namespace CSB
 
         private void button3_Click(object sender, EventArgs e)
         {
+
+            //string c = "250UB18";
+
+            //string d = c.Substring(0, 3);
+
+            //string f = c.Substring(5);
+
+            //string g = c.Substring(3, 2);
+
+            //string dd = g + d + "*" + f;
+
+
+            //myHelper.NoteText = "yes this it it nownnnnnnnnnnnnn";
+            //PrintPDF(@"C:\Development\Models\21604\attributes\");
+            //try
+            //{
+
+            //    Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
+            //    Origin.X = -6000;
+            //    Origin.Y = -3000;
+            //    Origin.Z = 0;
+
+            //    Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
+            //    FinishPoint.X = -6000;
+            //    FinishPoint.Y = -9000;
+            //    FinishPoint.Z = 0;
+
+            //    PDF(Origin, FinishPoint, "standardnew"); //, myModel
+
+            //    myHelper.LogFile("Add Project Notes");
+            //}
+            //catch (Exception g)
+            //{
+            //    myHelper.LogFile("1008 - " + g.Message);
+            //}
+
+
             //myHelper.ProcessRunning("TeklaStructures");
 
             //Process[] localByName = Process.GetProcessesByName("CSB_Project_Start");
 
-           //List<double> spacingList = new List<double>();
+            //List<double> spacingList = new List<double>();
 
             //spacingList.Add(0 );
             //spacingList.Add(6000);
@@ -357,31 +394,36 @@ namespace CSB
             if (Directory.Exists(xtemp))
             {
                 myHelper.LogFile("Project Exists");
-                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you want to over-write it?" + "\r\n" + "ONLY DO THIS IF IT HAS NOT BEEN SHARED", "Project already exists", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
 
-                if (dialogResult == DialogResult.Yes)
-                {
-                    try
-                    {
-                        Directory.Delete(xtemp, true);
-                        myHelper.LogFile("Project deleted " + Project.ModelName);
-                    }
-                    catch
-                    {
-                        System.Windows.Forms.MessageBox.Show("Did not Delete", "Project", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
-                        myHelper.LogFile("Project not deleted " + Project.ModelName);
-                        return;
-                    }
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    return;
-                }
-               
+                System.Windows.Forms.MessageBox.Show("", "Project already exists", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+
+                return;
+
+                //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you want to over-write it?" + "\r\n" + "ONLY DO THIS IF IT HAS NOT BEEN SHARED", "Project already exists", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
+
+                //if (dialogResult == DialogResult.Yes)
+                //{
+                //    try
+                //    {
+                //        Directory.Delete(xtemp, true);
+                //        myHelper.LogFile("Project deleted " + Project.ModelName);
+                //    }
+                //    catch
+                //    {
+                //        System.Windows.Forms.MessageBox.Show("Did not Delete", "Project", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                //        myHelper.LogFile("Project not deleted " + Project.ModelName);
+                //        return;
+                //    }
+                //}
+                //else if (dialogResult == DialogResult.No)
+                //{
+                //    return;
+                //}
+
             }
 
             string MasterFiles = @"T:\CSB_Program_Files\Documentation\Masters\";
-            string TemplateAttributes = @"T:\CSB_TeklaSetup\Model Templates\Model Template 2021_Richard\attributes\";
+            string TemplateAttributes = myHelper.TeklaFolder() +  @"Model Templates\" + myHelper.TemplateModel() + @"\attributes\";
 
             if (Directory.Exists(MasterFiles))
             {
@@ -482,6 +524,15 @@ namespace CSB
 
             radN.Checked = true;
 
+            btnRight.BackColor = System.Drawing.Color.Red;
+            btnLeft.BackColor = System.Drawing.Color.Red;
+            btnFront.BackColor = System.Drawing.Color.Red;
+            btnRear.BackColor = System.Drawing.Color.Red;
+
+            chkPurlinSingleSpan.Checked = false;
+            chkGirtSingleSpan.Checked = false;
+            chkRolltop.Checked = false;
+            checkBox1.Checked = false; // roofonly
         }
 
         private void btnCBOND_Click(object sender, EventArgs e)
@@ -516,6 +567,67 @@ namespace CSB
             txtColourComment.Text = "";
         }
 
+        #endregion
+
+        #region PDF print
+
+        void PrintPDF(string mDirectory)
+        {
+            // Set the output dir and file name
+            //string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string file = "CSB_Project_Setup.pdf";
+
+            PrintDocument pDoc = new PrintDocument()
+            {
+                PrinterSettings = new PrinterSettings()
+                {
+                    PrinterName = "Microsoft Print to PDF",
+                    PrintToFile = true,
+                    PrintFileName = System.IO.Path.Combine(mDirectory, file),
+                }
+            };
+
+            pDoc.PrintPage += new PrintPageEventHandler(Print_Page);
+            pDoc.Print();
+        }
+
+        void Print_Page(object sender, PrintPageEventArgs e)
+        {
+            // Here you can play with the font style 
+            // (and much much more, this is just an ultra-basic example)
+            Font fnt = new Font("Courier New", 12);
+
+            // Insert the desired text into the PDF file
+            e.Graphics.DrawString
+              (myHelper.NoteText, fnt, System.Drawing.Brushes.Black, 0, 0); //"When nothing goes right, go left"
+        }
+        private void PDF(Tekla.Structures.Geometry3d.Point Origin, Tekla.Structures.Geometry3d.Point FinishPoint, string Attribute) //, Model myModel
+        {
+            try
+            {
+
+                Component component = new Component();
+                component.Name = ("PDFReferenceModel");
+                component.Number = -100000;
+                ComponentInput cInput = new ComponentInput();
+
+                cInput.AddTwoInputPositions(Origin, FinishPoint);
+
+                component.SetComponentInput(cInput);
+
+                component.LoadAttributesFromFile(Attribute);
+                component.Insert();
+
+                myModel.CommitChanges();
+
+                myHelper.LogFile("Write Note");
+            }
+            catch (Exception e)
+            {
+                myHelper.LogFile("1011 - " + e.Message);
+            }
+
+        }
         #endregion
 
         #region Processes
@@ -744,11 +856,16 @@ namespace CSB
 
             SetRoofWallLayoutAttributes(length, apex, width);
 
+            //***********************************************************************
+            // Adjust V-Ridge for pitch
+
+            AdjustVPitch(txtPitch.Text.Trim());
+
             //**********************************************************************
 
             if (chkRolltop.Checked == true)
             {
-                UpdateAttributes("Project Roof Clad Left_RollTop.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                UpdateAttributes(@"Update\Project Roof Clad Left_RollTop.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
             }
 
             //**********************************************************************
@@ -761,6 +878,8 @@ namespace CSB
 
             //**********************************************************************
 
+            //updateViews();
+
             string[] MacrosPathList;
             string MacrosPath = string.Empty;
             TeklaStructuresSettings.GetAdvancedOption("XS_MACRO_DIRECTORY", ref MacrosPath);
@@ -770,6 +889,26 @@ namespace CSB
             string temp = vv + @"\modeling\" + myHelper.ShareMacro();
 
             myHelper.LogFile("Share Macro Name - " + temp);
+
+            if (File.Exists(temp))
+            {
+                myHelper.LogFile("Share Macro Name - " + temp + " - exists");
+
+                bool ismacrounning = true;
+                Operation.RunMacro(myHelper.ShareMacro());
+                while (ismacrounning)
+                {
+                    ismacrounning = Tekla.Structures.Model.Operations.Operation.IsMacroRunning();
+                }
+            }
+            else
+            {
+                myHelper.LogFile("Share Macro Name - " + temp + " - missing");
+
+                Cursor.Current = Cursors.Default;
+                tabControl2.Enabled = true;
+                MessageBox.Show("Share macro missing");
+            }
 
             try
             {
@@ -808,6 +947,43 @@ namespace CSB
             tabControl2.Enabled = true;
 
             return Result;
+        }
+
+        private void AdjustVPitch(string pitch)
+        {
+            //********************************************************************************
+
+            string modelPath = myModel.GetInfo().ModelPath;
+
+            try
+            {
+
+                string RoofSettings = modelPath + @"\attributes\Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml";
+
+                var xdocRoof = XDocument.Load(RoofSettings);
+
+                var xtgt = xdocRoof.Root.Descendants("RidgeCapProfile").FirstOrDefault();
+
+                string vRidge = "FLBK0.6 * " + pitch + " * " + pitch + " * 30 * 180 * 180 * 30";
+
+                xtgt.Value = vRidge;
+
+                myHelper.LogFile("V-ridge - " + vRidge);
+
+                //***********************************************************************
+
+                xdocRoof.Save(RoofSettings);
+
+                //********************************************************************************
+
+            }
+            catch
+            {
+                myHelper.LogFile("1201 V-Ridge Update failed ");
+            }
+
+            //********************************************************************************
+
         }
 
         private void RemoveGridNorth()
@@ -1088,16 +1264,31 @@ namespace CSB
                     {
                         Tekla.Structures.Model.UI.View View = ViewEnum.Current;
 
-                        ViewHandler.RedrawView(view);
-                        ViewHandler.ShowView(view);
-                        ViewHandler.RedrawWorkplane();
-                        if (View.Name == "3d-Rendered" || View.Name == "Project Details")
-                        {
+                        ViewHandler.ShowView(View);
+                        ViewHandler.RedrawView(View);
 
+                        TSG.AABB B = new TSG.AABB(View.WorkArea);
+
+                        ViewHandler.ZoomToBoundingBox(View, B);
+                        ViewHandler.RedrawView(View);
+
+                        if (View.Name == "3d-Rendered")
+                        {
+                            View.Modify();
+                            ViewHandler.HideView(View);
+                            myModel.CommitChanges();
+                        }
+                        else if (View.Name == "Project Details")
+                        {
+                            View.VisibilitySettings.CutsVisibleInComponents = true;
+                            View.Modify();
+                            myModel.CommitChanges();
                         }
                         else
                         {
-                            ViewHandler.HideView(view);
+                            View.Modify();
+                            ViewHandler.HideView(View);
+                            myModel.CommitChanges();
                         }
                     }
                     catch
@@ -1108,13 +1299,61 @@ namespace CSB
 
                 myModel.CommitChanges();
 
-                myHelper.LogFile("North Removed");
+                myHelper.LogFile("Views created");
             }
             catch (Exception e)
             {
                 myHelper.LogFile("1004 - " + e.Message);
             }
 
+        }
+
+        private void updateViews()
+        {
+
+            ModelViewEnumerator ViewEnum = ViewHandler.GetAllViews();
+            while (ViewEnum.MoveNext())
+            {
+                try
+                {
+                    Tekla.Structures.Model.UI.View View = ViewEnum.Current;
+
+                    ViewHandler.ShowView(View);
+                    ViewHandler.RedrawView(View);
+
+                    TSG.AABB B = new TSG.AABB(View.WorkArea);
+
+                    ViewHandler.ZoomToBoundingBox(View,  B);
+                    //ViewHandler.RedrawWorkplane();
+                    if (View.Name == "3d-Rendered")
+                    {
+                        View.Modify();
+                        ViewHandler.HideView(View);
+                        myModel.CommitChanges();
+                    }
+                    else if (View.Name == "Project Details")
+                    {
+                        View.VisibilitySettings.CutsVisibleInComponents = true;
+                        View.Modify();
+                        ViewHandler.HideView(View);
+                        myModel.CommitChanges();
+                    }
+                    else
+                    {
+                        View.Modify();
+                        ViewHandler.HideView(View);
+                        myModel.CommitChanges();
+                    }
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Views Failed", "Tekla Structures", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                }
+            }
+
+            myModel.CommitChanges();
+
+            myHelper.LogFile("Views updated");
         }
 
         private void InsertGrid(List<double> distanceListList, List<double> spacingList, double width, double slab, double eave, double apex)
@@ -1251,6 +1490,55 @@ namespace CSB
 
             string attribute = modelPath + @"\attributes\CSB_Project_Setup.CSB_Gable_Shed.MainForm.xml";
 
+            //********************************************************************************
+            // Update column
+            //********************************************************************************
+
+            try
+            {
+
+                if (ProjectSales.ColumnType != null && (ProjectSales.ColumnType.Contains("UB") || ProjectSales.ColumnType.Contains("UC")))
+                {
+                    string col = ProjectSales.ColumnType.Trim();
+
+                    string column = col.Substring(3, 2) + col.Substring(0, 3) + "*" + col.Substring(5);
+
+                    if (myHelper.CheckColumn(column))
+                    {
+
+                        string portalSettings = modelPath + @"\attributes\" + Portal1_Settings + ".CSB_Portal.MainForm.xml";
+
+                        File.Copy(myHelper.TeklaFolder() + Portal1_Settings + ".CSB_Portal.MainForm.xml", portalSettings, true);
+
+                        myHelper.LogFile("Portal copied - " + portalSettings);
+
+                        var xdocPortal = XDocument.Load(portalSettings);
+
+                        var xtgt = xdocPortal.Root.Descendants("RightProfile").FirstOrDefault();
+
+                        xtgt.Value = column;
+
+                        xtgt = xdocPortal.Root.Descendants("LeftProfile").FirstOrDefault();
+
+                        xtgt.Value = column;
+
+                        //***********************************************************************
+
+                        xdocPortal.Save(portalSettings);
+
+                        //********************************************************************************
+                    }
+
+                    myHelper.LogFile("Column profile - " + column);
+
+                }
+            }
+            catch
+            {
+                myHelper.LogFile("1200 Column Update failed ");
+            }
+            //********************************************************************************
+
             if (File.Exists(attribute))
             {
 
@@ -1262,7 +1550,7 @@ namespace CSB
 
             var xdoc = XDocument.Load(attribute);
 
-            string xFile = @"T:\CSB_TeklaSetup\" + AttributeSettings + ".CSB_Gable_Shed.MainForm.xml";
+            string xFile = myHelper.TeklaFolder() + AttributeSettings + ".CSB_Gable_Shed.MainForm.xml";
 
             if (File.Exists(xFile))
             {
@@ -1373,6 +1661,42 @@ namespace CSB
             tgt = xdoc.Root.Descendants("SideflyBays").FirstOrDefault(); //Girts side fly brace connection
 
             tgt.Value = gridNo;
+
+            //********************************************************************************
+            // Purlin Girt Sizes
+            //********************************************************************************
+
+            string xTemp = txtPurlin.Text.Trim();
+
+            if (xTemp != null && xTemp != "" && xTemp.Length == 6)
+            {
+                tgt = xdoc.Root.Descendants("EavePurProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+
+                tgt = xdoc.Root.Descendants("MidPurProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+
+                tgt = xdoc.Root.Descendants("RidgePurProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+            }
+
+            xTemp = txtWallGirtSide.Text.Trim();
+
+            if (xTemp != null && xTemp != "" && xTemp.Length == 6)
+            {
+                tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+                tgt = xdoc.Root.Descendants("FasciaProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+            }
+
+            xTemp = txtWallGirtEnd.Text.Trim();
+
+            if (xTemp != null && xTemp != "" && xTemp.Length == 6)
+            {
+                tgt = xdoc.Root.Descendants("EndGirtProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+            }
 
             //TODO: Purlin Split Location - needs updating for different roof/wall
 
@@ -1758,11 +2082,23 @@ namespace CSB
                     {
                         UpdateAttributes("Project Roof Clad Left Corro_Front Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro_Front Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
-                    }
+
+                        if (txtPurlin.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project Roof Clad Left Corro_Front Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                            UpdateAttributes(@"150\Project Roof Clad Right Corro_Front Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+                        }
+                    } 
                     else
                     {
                         UpdateAttributes("Project Roof Clad Left_Front Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right_Front Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+
+                        if (txtPurlin.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project Roof Clad Left_Front Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                            UpdateAttributes(@"150\Project Roof Clad Right_Front Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+                        }
                     }
 
                     Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
@@ -1783,11 +2119,23 @@ namespace CSB
                     {
                         UpdateAttributes("Project Roof Clad Left Corro_Back Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro_Back Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+
+                        if (txtPurlin.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project Roof Clad Left Corro_Back Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                            UpdateAttributes(@"150\Project Roof Clad Right Corro_Back Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+                        }
                     }
                     else
                     {
                         UpdateAttributes("Project Roof Clad Left_Back Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right_Back Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+
+                        if (txtPurlin.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project Roof Clad Left_Back Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                            UpdateAttributes(@"150\Project Roof Clad Right_Back Open 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+                        }
                     }
 
                     Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
@@ -1808,11 +2156,23 @@ namespace CSB
                     {
                         UpdateAttributes("Project Roof Clad Left Corro_Roof Only.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro_Roof Only.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+
+                        if (txtPurlin.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project Roof Clad Left Corro_Roof Only 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                            UpdateAttributes(@"150\Project Roof Clad Right Corro_Roof Only 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+                        }
                     }
                     else
                     {
                         UpdateAttributes("Project Roof Clad Left_Roof Only.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right_Roof Only.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+
+                        if (txtPurlin.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project Roof Clad Left_Roof Only 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
+                            UpdateAttributes(@"150\Project Roof Clad Right_Roof Only 150.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
+                        }
                     }
                 }
 
@@ -1824,85 +2184,293 @@ namespace CSB
                 // front-right corner
                 if (btnFront.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project EW Clad Front Right_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Front Right Corro_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Front Right_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+                    }
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.White)
                 {
-                    UpdateAttributes("Project EW Clad Front Right_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Front Right Corro_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Front Right Corro_Right Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Front Right_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Front Right_Right Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
 
                 // front-left corner
                 if (btnFront.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project EW Clad Front Left_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Front Left Corro_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Front Left_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+                    }
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.White)
                 {
-                    UpdateAttributes("Project EW Clad Front Left_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Front Left Corro_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Front Left Corro_Left Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Front Left_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Front Left_Left Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
 
                 // back-right corner
                 if (btnRear.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project EW Clad Back Right_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Back Right Corro_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Back Right_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+                    }
                 }
                 else if (btnRear.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.White)
                 {
-                    UpdateAttributes("Project EW Clad Back Right_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Back Right Corro_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Back Right Corro_Right Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Back Right_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Back Right_Right Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
 
                 // back-left corner
                 if (btnRear.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project EW Clad Back Left_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Back Left Corro_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Back Left_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+                    }
                 }
                 else if (btnRear.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.White)
                 {
-                    UpdateAttributes("Project EW Clad Back Left_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project EW Clad Back Left Corro_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Back Left Corro_Left Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project EW Clad Back Left_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project EW Clad Back Left_Left Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
 
+                //***********************************************************************
                 // Sidewall Left settings 
 
                 if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.White && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project SW Clad Left_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
-                    //UpdateAttributes("Project SW Clad Right_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Left Corro_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Left Corro_FrontBack Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Left_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Left_FrontBack Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.White && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project SW Clad Left_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
-                    //UpdateAttributes("Project SW Clad Right_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Left Corro_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Left Corro_Back Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Left_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Left_Back Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    UpdateAttributes("Project SW Clad Left_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
-                    //UpdateAttributes("Project SW Clad Right_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Left Corro_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Left Corro_Front Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Left_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Left_Front Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
                 else
                 {
-                    UpdateAttributes("Project SW Clad Left.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Left Corro.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Left.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
+                    }
                 }
 
+                //***********************************************************************
                 // Sidewall Right settings 
 
                 if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.White && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    //UpdateAttributes("Project SW Clad Left_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
-                    UpdateAttributes("Project SW Clad Right_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Right Corro_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Right Corro_FrontBack Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Right_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Right_FrontBack Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.White && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    //UpdateAttributes("Project SW Clad Left_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
-                    UpdateAttributes("Project SW Clad Right_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Right Corro_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Right Corro_Back Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Right_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Right_Back Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    //UpdateAttributes("Project SW Clad Left_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
-                    UpdateAttributes("Project SW Clad Right_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Right Corro_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Right Corro_Front Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Right_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+
+                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        {
+                            UpdateAttributes(@"150\Project SW Clad Right_Front Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        }
+                    }
                 }
                 else
                 {
-                    UpdateAttributes("Project SW Clad Right.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    {
+                        UpdateAttributes("Project SW Clad Right Corro.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    }
+                    else
+                    {
+                        UpdateAttributes("Project SW Clad Right Corro.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                    }
                 }
 
                 myHelper.LogFile("Roof Wall Layout Attributes");
@@ -1914,17 +2482,7 @@ namespace CSB
 
             //********************************************************************************
 
-            //TODO: Rolltop Ridge
-
-            //TODO: Corro Roof
-
-            //TODO: Corro Walls
-
-            //TODO: 150 Girts/Purlins
-
             //TODO: change V-Ridge to suit pitch
-
-            //TODO: update portals
 
             //********************************************************************************
         }
@@ -2081,7 +2639,15 @@ namespace CSB
 
                 tgt.Value = newText;
 
+                newText += newText;
+
+                myHelper.NoteText = newText;
+
                 xdoc.Save(attribute);
+
+                //********************************************************************************
+
+                PrintPDF(modelPath + @"\attributes\");
 
                 //********************************************************************************
 
@@ -2808,14 +3374,5 @@ namespace CSB
     #endregion
 
     #endregion
-    //private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
-    //{
-
-    //    System.Text.StringBuilder messageBoxCS = new System.Text.StringBuilder();
-    //    messageBoxCS.AppendFormat("{0} = {1}", "CloseReason", e.CloseReason);
-    //    messageBoxCS.AppendLine();
-    //    messageBoxCS.AppendFormat("{0} = {1}", "Cancel", e.Cancel);
-    //    messageBoxCS.AppendLine();
-    //    MessageBox.Show(messageBoxCS.ToString(), "FormClosing Event");
-    //}
+   
 }

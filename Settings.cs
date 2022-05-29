@@ -40,6 +40,10 @@ namespace CSB
 
             txtTemplate.Text = tgt.Value;
 
+            tgt = xdoc.Root.Descendants("TeklaFolder").FirstOrDefault();
+
+            txtTekla.Text = tgt.Value;
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -59,23 +63,15 @@ namespace CSB
 
             tgt3.Value = txtTemplate.Text;
 
+            var tgt4 = xdoc.Root.Descendants("TeklaFolder").FirstOrDefault();
+
+            tgt4.Value = txtTekla.Text;
+
             xdoc.Save(Globals.Config());
 
             Close();
         }
 
-        //public void PageViewer(string path)
-        //{
-
-        //    byte[] bytes = System.IO.File.ReadAllBytes(path);
-        //    var stream = new MemoryStream(bytes);
-        //    PdfDocument pdfDocument = PdfDocument.Load(stream);
-        //    pdfViewer1.Document = pdfDocument;
-
-
-        //   //var Doc = PdfDocument.Load(path);
-        //   // pdfViewer1.Load(Doc);
-        //}
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -85,7 +81,7 @@ namespace CSB
         private void button1_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = @"T:\";
+            dialog.InitialDirectory = @"C:\";
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -96,24 +92,42 @@ namespace CSB
         private void button2_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = @"T:\CSB_TeklaSetup\Model Templates";
+            if(txtTekla.Text != null && txtTekla.Text != "")
+            {
+                dialog.InitialDirectory = txtTekla.Text + @"Model Templates";
+            }
+            else
+            {
+                dialog.InitialDirectory = @"C:\";
+            }
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 DirectoryInfo fi = new DirectoryInfo(dialog.FileName);
                 txtTemplate.Text = fi.Name;
             }
-
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = @"T:\";
+            dialog.InitialDirectory = @"C:\";
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 txtExport.Text = dialog.FileName + @"\";
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = @"C:\";
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                DirectoryInfo fi = new DirectoryInfo(dialog.FileName);
+                txtTekla.Text = fi.Name;
             }
         }
     }
