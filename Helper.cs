@@ -742,7 +742,7 @@ namespace CSB
                 }
                 else
                 {
-                    mProjectName = mCompanyName + " - " + mCustomerName;
+                    mProjectName = mCompanyName + " C/O " + mCustomerName;
                 }
                 return mProjectName;
             }

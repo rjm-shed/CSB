@@ -533,6 +533,11 @@ namespace CSB
             chkGirtSingleSpan.Checked = false;
             chkRolltop.Checked = false;
             checkBox1.Checked = false; // roofonly
+
+            txtPurlin.Text = "";
+            txtWallGirtSide.Text = "";
+            txtWallGirtEnd.Text = "";
+            txtProjectDetails.Text = "";
         }
 
         private void btnCBOND_Click(object sender, EventArgs e)
@@ -1679,6 +1684,14 @@ namespace CSB
                 tgt = xdoc.Root.Descendants("RidgePurProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
             }
+            else
+            {
+                tgt = xdoc.Root.Descendants("EavePurProfile").FirstOrDefault();
+
+                string mTemp = tgt.Value;
+
+                txtPurlin.Text = mTemp.Substring(7);
+            }
 
             xTemp = txtWallGirtSide.Text.Trim();
 
@@ -1689,6 +1702,14 @@ namespace CSB
                 tgt = xdoc.Root.Descendants("FasciaProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
             }
+            else
+            {
+                tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
+
+                string mTemp = tgt.Value;
+
+                txtWallGirtSide.Text = mTemp.Substring(7);
+            }
 
             xTemp = txtWallGirtEnd.Text.Trim();
 
@@ -1696,6 +1717,14 @@ namespace CSB
             {
                 tgt = xdoc.Root.Descendants("EndGirtProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
+            }
+            else
+            {
+                tgt = xdoc.Root.Descendants("EndGirtProfile").FirstOrDefault();
+
+                string mTemp = tgt.Value;
+
+                txtWallGirtEnd.Text = mTemp.Substring(7);
             }
 
             //TODO: Purlin Split Location - needs updating for different roof/wall
