@@ -34,6 +34,10 @@ namespace CSB
             this.structuresExtender1 = new Tekla.Structures.Dialog.StructuresExtender();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.radModelYes = new System.Windows.Forms.RadioButton();
+            this.radModelNo = new System.Windows.Forms.RadioButton();
             this.label19 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtProjectDetails = new System.Windows.Forms.TextBox();
@@ -51,6 +55,7 @@ namespace CSB
             this.radS = new System.Windows.Forms.RadioButton();
             this.radN = new System.Windows.Forms.RadioButton();
             this.radW = new System.Windows.Forms.RadioButton();
+            this.radTBC = new System.Windows.Forms.RadioButton();
             this.txtSlab = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtBaySize = new System.Windows.Forms.TextBox();
@@ -181,6 +186,8 @@ namespace CSB
             this.errorProvider9 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -223,6 +230,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.tabPage4, null);
             this.structuresExtender1.SetAttributeTypeName(this.tabPage4, null);
             this.structuresExtender1.SetBindPropertyName(this.tabPage4, null);
+            this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Controls.Add(this.label19);
             this.tabPage4.Controls.Add(this.label15);
             this.tabPage4.Controls.Add(this.txtProjectDetails);
@@ -266,6 +274,67 @@ namespace CSB
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "Project Properties";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox5, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox5, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox5, null);
+            this.groupBox5.Controls.Add(this.tableLayoutPanel2);
+            this.groupBox5.Location = new System.Drawing.Point(475, 375);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(104, 81);
+            this.groupBox5.TabIndex = 58;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Create Model";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.structuresExtender1.SetAttributeName(this.tableLayoutPanel2, null);
+            this.structuresExtender1.SetAttributeTypeName(this.tableLayoutPanel2, null);
+            this.structuresExtender1.SetBindPropertyName(this.tableLayoutPanel2, null);
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Controls.Add(this.radModelYes, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.radModelNo, 0, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(9, 19);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(87, 56);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // radModelYes
+            // 
+            this.structuresExtender1.SetAttributeName(this.radModelYes, null);
+            this.structuresExtender1.SetAttributeTypeName(this.radModelYes, null);
+            this.radModelYes.AutoSize = true;
+            this.structuresExtender1.SetBindPropertyName(this.radModelYes, null);
+            this.radModelYes.Checked = true;
+            this.radModelYes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radModelYes.Location = new System.Drawing.Point(3, 3);
+            this.radModelYes.Name = "radModelYes";
+            this.radModelYes.Size = new System.Drawing.Size(81, 22);
+            this.radModelYes.TabIndex = 0;
+            this.radModelYes.TabStop = true;
+            this.radModelYes.Text = "YES";
+            this.radModelYes.UseVisualStyleBackColor = true;
+            // 
+            // radModelNo
+            // 
+            this.structuresExtender1.SetAttributeName(this.radModelNo, null);
+            this.structuresExtender1.SetAttributeTypeName(this.radModelNo, null);
+            this.radModelNo.AutoSize = true;
+            this.structuresExtender1.SetBindPropertyName(this.radModelNo, null);
+            this.radModelNo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radModelNo.Location = new System.Drawing.Point(3, 31);
+            this.radModelNo.Name = "radModelNo";
+            this.radModelNo.Size = new System.Drawing.Size(81, 22);
+            this.radModelNo.TabIndex = 1;
+            this.radModelNo.Text = "NO";
+            this.radModelNo.UseVisualStyleBackColor = true;
             // 
             // label19
             // 
@@ -360,9 +429,9 @@ namespace CSB
             this.structuresExtender1.SetBindPropertyName(this.groupBox1, null);
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox1.Location = new System.Drawing.Point(475, 268);
+            this.groupBox1.Location = new System.Drawing.Point(475, 238);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(105, 117);
+            this.groupBox1.Size = new System.Drawing.Size(104, 131);
             this.groupBox1.TabIndex = 50;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "     NORTH";
@@ -376,21 +445,23 @@ namespace CSB
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Controls.Add(this.radSW, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.radSE, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.radNW, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.radNE, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.radE, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.radS, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.radN, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.radW, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.radSW, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.radSE, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.radNW, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.radNE, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.radE, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.radS, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.radN, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.radW, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.radTBC, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(90, 90);
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00063F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.99813F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(90, 101);
             this.tableLayoutPanel1.TabIndex = 49;
             // 
             // radSW
@@ -399,9 +470,11 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radSW, null);
             this.radSW.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radSW, null);
-            this.radSW.Location = new System.Drawing.Point(3, 63);
+            this.radSW.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radSW.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radSW.Location = new System.Drawing.Point(3, 78);
             this.radSW.Name = "radSW";
-            this.radSW.Size = new System.Drawing.Size(14, 13);
+            this.radSW.Size = new System.Drawing.Size(24, 20);
             this.radSW.TabIndex = 51;
             this.radSW.UseVisualStyleBackColor = true;
             // 
@@ -411,9 +484,11 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radSE, null);
             this.radSE.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radSE, null);
-            this.radSE.Location = new System.Drawing.Point(63, 63);
+            this.radSE.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radSE.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radSE.Location = new System.Drawing.Point(63, 78);
             this.radSE.Name = "radSE";
-            this.radSE.Size = new System.Drawing.Size(14, 13);
+            this.radSE.Size = new System.Drawing.Size(24, 20);
             this.radSE.TabIndex = 51;
             this.radSE.UseVisualStyleBackColor = true;
             // 
@@ -423,9 +498,11 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radNW, null);
             this.radNW.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radNW, null);
-            this.radNW.Location = new System.Drawing.Point(3, 3);
+            this.radNW.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radNW.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radNW.Location = new System.Drawing.Point(3, 28);
             this.radNW.Name = "radNW";
-            this.radNW.Size = new System.Drawing.Size(14, 13);
+            this.radNW.Size = new System.Drawing.Size(24, 19);
             this.radNW.TabIndex = 51;
             this.radNW.UseVisualStyleBackColor = true;
             // 
@@ -435,9 +512,11 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radNE, null);
             this.radNE.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radNE, null);
-            this.radNE.Location = new System.Drawing.Point(63, 3);
+            this.radNE.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radNE.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radNE.Location = new System.Drawing.Point(63, 28);
             this.radNE.Name = "radNE";
-            this.radNE.Size = new System.Drawing.Size(14, 13);
+            this.radNE.Size = new System.Drawing.Size(24, 19);
             this.radNE.TabIndex = 51;
             this.radNE.UseVisualStyleBackColor = true;
             // 
@@ -447,9 +526,11 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radE, null);
             this.radE.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radE, null);
-            this.radE.Location = new System.Drawing.Point(63, 33);
+            this.radE.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radE.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radE.Location = new System.Drawing.Point(63, 53);
             this.radE.Name = "radE";
-            this.radE.Size = new System.Drawing.Size(14, 13);
+            this.radE.Size = new System.Drawing.Size(24, 19);
             this.radE.TabIndex = 51;
             this.radE.UseVisualStyleBackColor = true;
             // 
@@ -459,9 +540,11 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radS, null);
             this.radS.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radS, null);
-            this.radS.Location = new System.Drawing.Point(33, 63);
+            this.radS.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radS.Location = new System.Drawing.Point(33, 78);
             this.radS.Name = "radS";
-            this.radS.Size = new System.Drawing.Size(14, 13);
+            this.radS.Size = new System.Drawing.Size(24, 20);
             this.radS.TabIndex = 52;
             this.radS.UseVisualStyleBackColor = true;
             // 
@@ -471,10 +554,12 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radN, null);
             this.radN.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radN, null);
+            this.radN.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radN.Checked = true;
-            this.radN.Location = new System.Drawing.Point(33, 3);
+            this.radN.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radN.Location = new System.Drawing.Point(33, 28);
             this.radN.Name = "radN";
-            this.radN.Size = new System.Drawing.Size(14, 13);
+            this.radN.Size = new System.Drawing.Size(24, 19);
             this.radN.TabIndex = 50;
             this.radN.TabStop = true;
             this.radN.UseVisualStyleBackColor = true;
@@ -485,11 +570,29 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.radW, null);
             this.radW.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.radW, null);
-            this.radW.Location = new System.Drawing.Point(3, 33);
+            this.radW.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radW.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radW.Location = new System.Drawing.Point(3, 53);
             this.radW.Name = "radW";
-            this.radW.Size = new System.Drawing.Size(14, 13);
+            this.radW.Size = new System.Drawing.Size(24, 19);
             this.radW.TabIndex = 51;
             this.radW.UseVisualStyleBackColor = true;
+            // 
+            // radTBC
+            // 
+            this.structuresExtender1.SetAttributeName(this.radTBC, null);
+            this.structuresExtender1.SetAttributeTypeName(this.radTBC, null);
+            this.radTBC.AutoSize = true;
+            this.structuresExtender1.SetBindPropertyName(this.radTBC, null);
+            this.radTBC.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel1.SetColumnSpan(this.radTBC, 3);
+            this.radTBC.Location = new System.Drawing.Point(3, 3);
+            this.radTBC.Name = "radTBC";
+            this.radTBC.Size = new System.Drawing.Size(49, 17);
+            this.radTBC.TabIndex = 53;
+            this.radTBC.TabStop = true;
+            this.radTBC.Text = "TBC ";
+            this.radTBC.UseVisualStyleBackColor = true;
             // 
             // txtSlab
             // 
@@ -571,7 +674,6 @@ namespace CSB
             this.button3.TabIndex = 38;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
@@ -1923,14 +2025,14 @@ namespace CSB
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem1.Text = "Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
             // manageFilesToolStripMenuItem
             // 
             this.manageFilesToolStripMenuItem.Name = "manageFilesToolStripMenuItem";
-            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.manageFilesToolStripMenuItem.Text = "Manage Files";
             this.manageFilesToolStripMenuItem.Click += new System.EventHandler(this.manageFilesToolStripMenuItem_Click);
             // 
@@ -2003,6 +2105,9 @@ namespace CSB
             this.tabControl2.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -2184,6 +2289,11 @@ namespace CSB
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem manageFilesToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radTBC;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.RadioButton radModelYes;
+        private System.Windows.Forms.RadioButton radModelNo;
     }
 }
 

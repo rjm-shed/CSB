@@ -44,6 +44,10 @@ namespace CSB
 
             txtTekla.Text = tgt.Value;
 
+            tgt = xdoc.Root.Descendants("CreateNote").FirstOrDefault();
+
+            txtNote.Text = tgt.Value;
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -66,6 +70,10 @@ namespace CSB
             var tgt4 = xdoc.Root.Descendants("TeklaFolder").FirstOrDefault();
 
             tgt4.Value = txtTekla.Text;
+
+            var tgt5 = xdoc.Root.Descendants("CreateNote").FirstOrDefault();
+
+            tgt5.Value = txtNote.Text;
 
             xdoc.Save(Globals.Config());
 

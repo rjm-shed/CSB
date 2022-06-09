@@ -45,6 +45,8 @@ namespace CSB
             this.button4 = new System.Windows.Forms.Button();
             this.txtTekla = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtNote = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -84,7 +86,7 @@ namespace CSB
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(347, 231);
+            this.btnOK.Location = new System.Drawing.Point(347, 260);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 4;
@@ -95,7 +97,7 @@ namespace CSB
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(445, 231);
+            this.btnCancel.Location = new System.Drawing.Point(445, 260);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -178,12 +180,30 @@ namespace CSB
             this.label4.TabIndex = 11;
             this.label4.Text = "Tekla Settings : ";
             // 
+            // txtNote
+            // 
+            this.txtNote.Location = new System.Drawing.Point(155, 218);
+            this.txtNote.Name = "txtNote";
+            this.txtNote.Size = new System.Drawing.Size(59, 20);
+            this.txtNote.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 221);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(113, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Create Note in Model :";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(538, 267);
+            this.ClientSize = new System.Drawing.Size(538, 296);
             this.ControlBox = false;
+            this.Controls.Add(this.txtNote);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.txtTekla);
             this.Controls.Add(this.label4);
@@ -224,5 +244,7 @@ namespace CSB
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox txtTekla;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtNote;
+        private System.Windows.Forms.Label label5;
     }
 }

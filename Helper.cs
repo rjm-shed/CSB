@@ -81,9 +81,9 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("Folder").FirstOrDefault().Value;
 
-//#if DEBUG
-//            Result = @"C:\Development\Models\";
-//#endif
+#if DEBUG
+            Result = @"C:\Development\Models\";
+#endif
 
             return Result;
         }
@@ -95,9 +95,9 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("ExportFolder").FirstOrDefault().Value;
 
-//#if DEBUG
-//            Result = @"C:\Development\Exports\";
-//#endif
+#if DEBUG
+            Result = @"C:\Development\Exports\";
+#endif
 
             return Result;
         }
@@ -108,6 +108,15 @@ namespace CSB
             var xdoc = XDocument.Load(Globals.Config());
 
             string Result = xdoc.Root.Descendants("ShareMacro").FirstOrDefault().Value;
+
+            return Result;
+        }
+
+        public string CreateNote()
+        {
+            var xdoc = XDocument.Load(Globals.Config());
+
+            string Result = xdoc.Root.Descendants("CreateNote").FirstOrDefault().Value;
 
             return Result;
         }
@@ -1158,17 +1167,6 @@ namespace CSB
                 return mModelName;
             }
         }
-
-        //private string mProjectFolder;
-
-        //public string ProjectFolder
-        //{
-        //    get
-        //    {
-        //        mProjectFolder = mModelName;
-        //        return mProjectFolder;
-        //    }
-        //}
 
         private string mTeklaDesc;
 

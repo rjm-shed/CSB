@@ -68,6 +68,7 @@ namespace CSB
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Input Files";
+            this.groupBox2.Visible = false;
             // 
             // btnDuplicate
             // 

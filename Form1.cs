@@ -97,6 +97,40 @@ namespace CSB
         private void LoadCbx(ComboBox temp)
         {
             temp.Items.Clear();
+
+
+            //var xdoc = XDocument.Load(@"T:\CSB_Program_Files\Documentation\Settings\CSB_Project_Data.xml");
+
+            //string xFile = myHelper.TeklaFolder() + AttributeSettings + ".CSB_Gable_Shed.MainForm.xml";
+
+            //if (File.Exists(xFile))
+            //{
+
+            //}
+            //else
+            //{
+            //    myHelper.LogFile("1018 File does not exist - " + xFile);
+            //}
+
+            //var xdocAttrib = XDocument.Load(xFile);
+
+            //foreach (var childElement in xdoc.Root.Elements())
+            //{
+            //    //string a = childElement.Name.ToString();
+            //    //string c = childElement.Value.ToString();
+
+            //    //if (a == "CSB" && c == "Colour")
+            //    //{
+
+            //        var tgt2 = xdoc.Root.Descendants("Colour").FirstOrDefault();
+
+            //        temp.Items.Add(tgt2.Value);
+
+            //    //}
+
+            //}
+
+
             temp.Items.Add("CBOND(TBC)");
             temp.Items.Add("ZINC");
             temp.Items.Add("BASALT");
@@ -200,6 +234,16 @@ namespace CSB
             txtPurlin.Text = ProjectSales.RoofPurlin;
             txtProjectDetails.Text = ProjectSales.ProjectDetails;
 
+            if (ProjectSales.RoofPurlin != null && ProjectSales.RoofPurlin.Contains("Z"))
+            {
+                chkPurlinSingleSpan.Checked = true;
+            }
+
+            if (ProjectSales.WallGirtSide != null && ProjectSales.WallGirtSide.Contains("Z"))
+            {
+                chkGirtSingleSpan.Checked = true;
+            }
+
             //******************************************************************
 
             if (ProjectSales.RoofColour != null && ProjectSales.RoofColour.Contains("Zincalume"))
@@ -273,6 +317,12 @@ namespace CSB
 
         private void button3_Click(object sender, EventArgs e)
         {
+            //string d = "MET-MSC20015";
+            //string c =d.Substring(7);
+
+            //string k = d.Substring(6);
+
+            //string f = d.Substring(7);
 
             //string c = "250UB18";
 
@@ -316,11 +366,17 @@ namespace CSB
 
             //List<double> spacingList = new List<double>();
 
-            //spacingList.Add(0 );
+            //spacingList.Add(0);
             //spacingList.Add(6000);
             //spacingList.Add(6000);
+            //spacingList.Add(9030);
             //spacingList.Add(6000);
-            //spacingList.Add(6000);
+
+            ////double max = spacingList.Max();
+
+            ////double ss = 5 * ((max / 0.15) / 5.0);
+
+            //int s = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
 
             //List<string> split = CalcSplitDoubleSpan(spacingList);
 
@@ -538,6 +594,8 @@ namespace CSB
             txtWallGirtSide.Text = "";
             txtWallGirtEnd.Text = "";
             txtProjectDetails.Text = "";
+
+            radModelYes.Checked = true;
         }
 
         private void btnCBOND_Click(object sender, EventArgs e)
@@ -734,6 +792,7 @@ namespace CSB
             }
             else
             {
+                projectInfo.Info1 = "TBC";
             }
 
             projectInfo.SetUserProperty("CSB_BUILD_IMPOR", txtImportance.Text.Trim());
@@ -875,7 +934,10 @@ namespace CSB
 
             //**********************************************************************
 
-            CreateModel();
+            if(radModelYes.Checked == true)
+            {
+                CreateModel();
+            }
 
             //**********************************************************************
 
@@ -1007,7 +1069,7 @@ namespace CSB
                     }
 
                     ContourPlate q = Enum.Current as ContourPlate;
-                    if (q != null)
+                    if (q != null && radTBC.Checked == false)
                     {
                         var temp = "";
                         q.GetUserProperty("USER_FIELD_1", ref temp);
@@ -1123,6 +1185,13 @@ namespace CSB
                     Bottom = "SW ELEVATION";
                     Left = "NW ELEVATION";
                 }
+                else
+                {
+                    Top = "RIGHT ELEVATION";
+                    Right = "BACK ELEVATION";
+                    Bottom = "LEFT ELEVATION";
+                    Left = "FRONT ELEVATION";
+                }
 
                 myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
 
@@ -1226,41 +1295,45 @@ namespace CSB
                 // Move to project text plane
                 //**********************************************************
 
-                Origin = new TSG.Point(-6000, 0, 0);
-                X = new TSG.Vector(1, 0, 0);
-                Y = new TSG.Vector(0, 1, 0);
+                if (myHelper.CreateNote() == "YES")
+                {
 
-                XY_Plane = new TransformationPlane(Origin, X, Y);
+                    Origin = new TSG.Point(-6000, 0, 0);
+                    X = new TSG.Vector(1, 0, 0);
+                    Y = new TSG.Vector(0, 1, 0);
 
-                myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
-                myModel.CommitChanges();
+                    XY_Plane = new TransformationPlane(Origin, X, Y);
 
-                view = new Tekla.Structures.Model.UI.View();
-                view.Name = "Project Details";
-                view.ViewCoordinateSystem.AxisX = new TSG.Vector(0, -1, 0);
-                view.ViewCoordinateSystem.AxisY = new TSG.Vector(0, 0, 1);
-                view.WorkArea.MinPoint = new TSG.Point(0, 2000, -12000);
-                view.WorkArea.MaxPoint = new TSG.Point(0, -20000, 20000);
-                view.ViewDepthUp = 200;
-                view.ViewDepthDown = 200;
-                view.ViewFilter = "standard";
-                view.CurrentRepresentation = "standard";
-                view.DisplayType = Tekla.Structures.Model.UI.View.DisplayOrientationType.DISPLAY_VIEW_PLANE;
-                view.SharedView = true;
-                view.Insert();
+                    myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
+                    myModel.CommitChanges();
 
-                //**********************************************************
-                // Move back to original origin
-                //**********************************************************
+                    view = new Tekla.Structures.Model.UI.View();
+                    view.Name = "Project Details";
+                    view.ViewCoordinateSystem.AxisX = new TSG.Vector(0, -1, 0);
+                    view.ViewCoordinateSystem.AxisY = new TSG.Vector(0, 0, 1);
+                    view.WorkArea.MinPoint = new TSG.Point(0, 2000, -12000);
+                    view.WorkArea.MaxPoint = new TSG.Point(0, -20000, 20000);
+                    view.ViewDepthUp = 200;
+                    view.ViewDepthDown = 200;
+                    view.ViewFilter = "standard";
+                    view.CurrentRepresentation = "standard";
+                    view.DisplayType = Tekla.Structures.Model.UI.View.DisplayOrientationType.DISPLAY_VIEW_PLANE;
+                    view.SharedView = true;
+                    view.Insert();
 
-                Origin = new TSG.Point(6000, 0, 0);
-                X = new TSG.Vector(1, 0, 0);
-                Y = new TSG.Vector(0, 1, 0);
+                    //**********************************************************
+                    // Move back to original origin
+                    //**********************************************************
 
-                XY_Plane = new TransformationPlane(Origin, X, Y);
+                    Origin = new TSG.Point(6000, 0, 0);
+                    X = new TSG.Vector(1, 0, 0);
+                    Y = new TSG.Vector(0, 1, 0);
 
-                myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
-                myModel.CommitChanges();
+                    XY_Plane = new TransformationPlane(Origin, X, Y);
+
+                    myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
+                    myModel.CommitChanges();
+                }
 
                 ModelViewEnumerator ViewEnum = ViewHandler.GetAllViews();
                 while (ViewEnum.MoveNext())
@@ -1280,7 +1353,16 @@ namespace CSB
                         if (View.Name == "3d-Rendered")
                         {
                             View.Modify();
-                            ViewHandler.HideView(View);
+
+                            if (myHelper.CreateNote() == "YES")
+                            {
+                                ViewHandler.HideView(View);
+                            }
+                            else
+                            {
+                                
+                            }
+                               
                             myModel.CommitChanges();
                         }
                         else if (View.Name == "Project Details")
@@ -1683,6 +1765,19 @@ namespace CSB
 
                 tgt = xdoc.Root.Descendants("RidgePurProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
+
+                tgt = xdoc.Root.Descendants("Purlin_OverLabDis").FirstOrDefault();
+
+                if (xTemp.Contains("Z"))
+                {
+                    int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+
+                    tgt.Value = lap.ToString();
+                }
+                else
+                {
+                    tgt.Value = "0";
+                }
             }
             else
             {
@@ -1690,7 +1785,7 @@ namespace CSB
 
                 string mTemp = tgt.Value;
 
-                txtPurlin.Text = mTemp.Substring(7);
+                txtPurlin.Text = mTemp.Substring(6);
             }
 
             xTemp = txtWallGirtSide.Text.Trim();
@@ -1701,6 +1796,19 @@ namespace CSB
                 tgt.Value = "MET-MS" + xTemp;
                 tgt = xdoc.Root.Descendants("FasciaProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
+
+                tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
+
+                if (xTemp.Contains("Z"))
+                {
+                    int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+
+                    tgt.Value = lap.ToString();
+                }
+                else
+                {
+                    tgt.Value = "0";
+                }
             }
             else
             {
@@ -1708,7 +1816,7 @@ namespace CSB
 
                 string mTemp = tgt.Value;
 
-                txtWallGirtSide.Text = mTemp.Substring(7);
+                txtWallGirtSide.Text = mTemp.Substring(6);
             }
 
             xTemp = txtWallGirtEnd.Text.Trim();
@@ -1724,7 +1832,7 @@ namespace CSB
 
                 string mTemp = tgt.Value;
 
-                txtWallGirtEnd.Text = mTemp.Substring(7);
+                txtWallGirtEnd.Text = mTemp.Substring(6);
             }
 
             //TODO: Purlin Split Location - needs updating for different roof/wall
@@ -2678,28 +2786,33 @@ namespace CSB
 
                 PrintPDF(modelPath + @"\attributes\");
 
+                myHelper.LogFile("Notes Printed");
+
                 //********************************************************************************
 
-                try
+                if (myHelper.CreateNote() == "YES")
                 {
+                    try
+                    {
 
-                    Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
-                    Origin.X = -6000;
-                    Origin.Y = -3000;
-                    Origin.Z = 0;
+                        Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
+                        Origin.X = -6000;
+                        Origin.Y = -3000;
+                        Origin.Z = 0;
 
-                    Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
-                    FinishPoint.X = -6000;
-                    FinishPoint.Y = -9000;
-                    FinishPoint.Z = 0;
+                        Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
+                        FinishPoint.X = -6000;
+                        FinishPoint.Y = -9000;
+                        FinishPoint.Z = 0;
 
-                    WriteNote(Origin, FinishPoint, "CSB_Project_Setup"); //, myModel
+                        WriteNote(Origin, FinishPoint, "CSB_Project_Setup"); //, myModel
 
-                    myHelper.LogFile("Add Project Notes");
-                }
-                catch (Exception e)
-                {
-                    myHelper.LogFile("1008 - " + e.Message);
+                        myHelper.LogFile("Add Project Notes");
+                    }
+                    catch (Exception e)
+                    {
+                        myHelper.LogFile("1008 - " + e.Message);
+                    }
                 }
 
             }
@@ -3079,9 +3192,18 @@ namespace CSB
             }
             else
             {
-                this.errorProvider8.SetError(txtBaySize, " Bay sizes do not equal length");
-                Globals.checkError = 1;
-                return;
+                DialogResult dialogResult = MessageBox.Show("Bay Sizes = " + Math.Round(temp/1000,3) + " m" + "\r\n" + "Accept and continue", "Building Length Incorrect", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    //do something
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    this.errorProvider8.SetError(txtBaySize, " Bay sizes do not equal length");
+                    Globals.checkError = 1;
+                    return;
+                }
+
             }
 
             this.errorProvider8.SetError(txtBaySize, "");
@@ -3397,7 +3519,7 @@ namespace CSB
             }
         }
 
-      
+       
     }
 
     #endregion
