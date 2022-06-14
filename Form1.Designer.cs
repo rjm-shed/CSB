@@ -154,12 +154,15 @@ namespace CSB
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtWallGirtEnd = new System.Windows.Forms.TextBox();
+            this.cbxGirtEnd = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chkGirtSingleSpan = new System.Windows.Forms.CheckBox();
             this.txtWallGirtSide = new System.Windows.Forms.TextBox();
+            this.cbxGirtSide = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chkPurlinSingleSpan = new System.Windows.Forms.CheckBox();
             this.txtPurlin = new System.Windows.Forms.TextBox();
+            this.cbxPurlin = new System.Windows.Forms.ComboBox();
             this.chkRolltop = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panelLayout = new System.Windows.Forms.Panel();
@@ -184,6 +187,15 @@ namespace CSB
             this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider8 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider9 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtWallGirtSideRight = new System.Windows.Forms.TextBox();
+            this.cbxGirtSideRight = new System.Windows.Forms.ComboBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txtWallGirtEndBack = new System.Windows.Forms.TextBox();
+            this.cbxGirtEndBack = new System.Windows.Forms.ComboBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.txtFascia = new System.Windows.Forms.TextBox();
+            this.cbxFascia = new System.Windows.Forms.ComboBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -207,6 +219,9 @@ namespace CSB
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider9)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl2
@@ -674,6 +689,7 @@ namespace CSB
             this.button3.TabIndex = 38;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
@@ -1771,6 +1787,9 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.tabPage1, null);
             this.structuresExtender1.SetAttributeTypeName(this.tabPage1, null);
             this.structuresExtender1.SetBindPropertyName(this.tabPage1, null);
+            this.tabPage1.Controls.Add(this.groupBox8);
+            this.tabPage1.Controls.Add(this.groupBox7);
+            this.tabPage1.Controls.Add(this.groupBox6);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
@@ -1791,12 +1810,13 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.groupBox4, null);
             this.structuresExtender1.SetBindPropertyName(this.groupBox4, null);
             this.groupBox4.Controls.Add(this.txtWallGirtEnd);
-            this.groupBox4.Location = new System.Drawing.Point(427, 115);
+            this.groupBox4.Controls.Add(this.cbxGirtEnd);
+            this.groupBox4.Location = new System.Drawing.Point(519, 8);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 45);
+            this.groupBox4.Size = new System.Drawing.Size(231, 45);
             this.groupBox4.TabIndex = 32;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Endwall Girt";
+            this.groupBox4.Text = "Front Endwall Girt";
             // 
             // txtWallGirtEnd
             // 
@@ -1809,6 +1829,18 @@ namespace CSB
             this.txtWallGirtEnd.Size = new System.Drawing.Size(93, 20);
             this.txtWallGirtEnd.TabIndex = 27;
             // 
+            // cbxGirtEnd
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGirtEnd, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtEnd, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGirtEnd, null);
+            this.cbxGirtEnd.FormattingEnabled = true;
+            this.cbxGirtEnd.Location = new System.Drawing.Point(6, 17);
+            this.cbxGirtEnd.Name = "cbxGirtEnd";
+            this.cbxGirtEnd.Size = new System.Drawing.Size(113, 21);
+            this.cbxGirtEnd.TabIndex = 28;
+            this.cbxGirtEnd.SelectedIndexChanged += new System.EventHandler(this.cbxGirtEnd_SelectedIndexChanged);
+            // 
             // groupBox3
             // 
             this.structuresExtender1.SetAttributeName(this.groupBox3, null);
@@ -1816,12 +1848,13 @@ namespace CSB
             this.structuresExtender1.SetBindPropertyName(this.groupBox3, null);
             this.groupBox3.Controls.Add(this.chkGirtSingleSpan);
             this.groupBox3.Controls.Add(this.txtWallGirtSide);
-            this.groupBox3.Location = new System.Drawing.Point(427, 62);
+            this.groupBox3.Controls.Add(this.cbxGirtSide);
+            this.groupBox3.Location = new System.Drawing.Point(272, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(198, 47);
+            this.groupBox3.Size = new System.Drawing.Size(231, 47);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Sidewall Girt";
+            this.groupBox3.Text = "Left Sidewall Girt";
             // 
             // chkGirtSingleSpan
             // 
@@ -1829,7 +1862,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.chkGirtSingleSpan, null);
             this.chkGirtSingleSpan.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.chkGirtSingleSpan, null);
-            this.chkGirtSingleSpan.Location = new System.Drawing.Point(106, 16);
+            this.chkGirtSingleSpan.Location = new System.Drawing.Point(136, 18);
             this.chkGirtSingleSpan.Name = "chkGirtSingleSpan";
             this.chkGirtSingleSpan.Size = new System.Drawing.Size(83, 17);
             this.chkGirtSingleSpan.TabIndex = 26;
@@ -1847,6 +1880,18 @@ namespace CSB
             this.txtWallGirtSide.Size = new System.Drawing.Size(93, 20);
             this.txtWallGirtSide.TabIndex = 25;
             // 
+            // cbxGirtSide
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGirtSide, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtSide, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGirtSide, null);
+            this.cbxGirtSide.FormattingEnabled = true;
+            this.cbxGirtSide.Location = new System.Drawing.Point(6, 16);
+            this.cbxGirtSide.Name = "cbxGirtSide";
+            this.cbxGirtSide.Size = new System.Drawing.Size(113, 21);
+            this.cbxGirtSide.TabIndex = 27;
+            this.cbxGirtSide.SelectedIndexChanged += new System.EventHandler(this.cbxGirtSide_SelectedIndexChanged);
+            // 
             // groupBox2
             // 
             this.structuresExtender1.SetAttributeName(this.groupBox2, null);
@@ -1854,9 +1899,10 @@ namespace CSB
             this.structuresExtender1.SetBindPropertyName(this.groupBox2, null);
             this.groupBox2.Controls.Add(this.chkPurlinSingleSpan);
             this.groupBox2.Controls.Add(this.txtPurlin);
-            this.groupBox2.Location = new System.Drawing.Point(427, 7);
+            this.groupBox2.Controls.Add(this.cbxPurlin);
+            this.groupBox2.Location = new System.Drawing.Point(25, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(198, 47);
+            this.groupBox2.Size = new System.Drawing.Size(231, 47);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Purlin";
@@ -1867,7 +1913,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.chkPurlinSingleSpan, null);
             this.chkPurlinSingleSpan.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.chkPurlinSingleSpan, null);
-            this.chkPurlinSingleSpan.Location = new System.Drawing.Point(105, 19);
+            this.chkPurlinSingleSpan.Location = new System.Drawing.Point(136, 22);
             this.chkPurlinSingleSpan.Name = "chkPurlinSingleSpan";
             this.chkPurlinSingleSpan.Size = new System.Drawing.Size(83, 17);
             this.chkPurlinSingleSpan.TabIndex = 24;
@@ -1885,13 +1931,25 @@ namespace CSB
             this.txtPurlin.Size = new System.Drawing.Size(93, 20);
             this.txtPurlin.TabIndex = 23;
             // 
+            // cbxPurlin
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxPurlin, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxPurlin, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxPurlin, null);
+            this.cbxPurlin.FormattingEnabled = true;
+            this.cbxPurlin.Location = new System.Drawing.Point(6, 18);
+            this.cbxPurlin.Name = "cbxPurlin";
+            this.cbxPurlin.Size = new System.Drawing.Size(113, 21);
+            this.cbxPurlin.TabIndex = 25;
+            this.cbxPurlin.SelectedIndexChanged += new System.EventHandler(this.cbxPurlin_SelectedIndexChanged);
+            // 
             // chkRolltop
             // 
             this.structuresExtender1.SetAttributeName(this.chkRolltop, null);
             this.structuresExtender1.SetAttributeTypeName(this.chkRolltop, null);
             this.chkRolltop.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.chkRolltop, null);
-            this.chkRolltop.Location = new System.Drawing.Point(113, 78);
+            this.chkRolltop.Location = new System.Drawing.Point(34, 89);
             this.chkRolltop.Name = "chkRolltop";
             this.chkRolltop.Size = new System.Drawing.Size(90, 17);
             this.chkRolltop.TabIndex = 4;
@@ -1904,7 +1962,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.checkBox1, null);
             this.checkBox1.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.checkBox1, null);
-            this.checkBox1.Location = new System.Drawing.Point(113, 55);
+            this.checkBox1.Location = new System.Drawing.Point(34, 66);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(73, 17);
             this.checkBox1.TabIndex = 3;
@@ -2025,14 +2083,14 @@ namespace CSB
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
             this.settingsToolStripMenuItem1.Text = "Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
             // manageFilesToolStripMenuItem
             // 
             this.manageFilesToolStripMenuItem.Name = "manageFilesToolStripMenuItem";
-            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.manageFilesToolStripMenuItem.Text = "Manage Files";
             this.manageFilesToolStripMenuItem.Click += new System.EventHandler(this.manageFilesToolStripMenuItem_Click);
             // 
@@ -2088,6 +2146,117 @@ namespace CSB
             // 
             this.errorProvider9.ContainerControl = this;
             // 
+            // groupBox6
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox6, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox6, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox6, null);
+            this.groupBox6.Controls.Add(this.txtWallGirtSideRight);
+            this.groupBox6.Controls.Add(this.cbxGirtSideRight);
+            this.groupBox6.Location = new System.Drawing.Point(272, 59);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(231, 47);
+            this.groupBox6.TabIndex = 33;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Right Sidewall Girt";
+            // 
+            // txtWallGirtSideRight
+            // 
+            this.structuresExtender1.SetAttributeName(this.txtWallGirtSideRight, null);
+            this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtSideRight, null);
+            this.structuresExtender1.SetBindPropertyName(this.txtWallGirtSideRight, null);
+            this.txtWallGirtSideRight.Location = new System.Drawing.Point(6, 16);
+            this.txtWallGirtSideRight.Name = "txtWallGirtSideRight";
+            this.txtWallGirtSideRight.ReadOnly = true;
+            this.txtWallGirtSideRight.Size = new System.Drawing.Size(93, 20);
+            this.txtWallGirtSideRight.TabIndex = 25;
+            // 
+            // cbxGirtSideRight
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGirtSideRight, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtSideRight, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGirtSideRight, null);
+            this.cbxGirtSideRight.FormattingEnabled = true;
+            this.cbxGirtSideRight.Location = new System.Drawing.Point(6, 16);
+            this.cbxGirtSideRight.Name = "cbxGirtSideRight";
+            this.cbxGirtSideRight.Size = new System.Drawing.Size(113, 21);
+            this.cbxGirtSideRight.TabIndex = 27;
+            this.cbxGirtSideRight.SelectedIndexChanged += new System.EventHandler(this.cbxGirtSideRight_SelectedIndexChanged);
+            // 
+            // groupBox7
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox7, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox7, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox7, null);
+            this.groupBox7.Controls.Add(this.txtWallGirtEndBack);
+            this.groupBox7.Controls.Add(this.cbxGirtEndBack);
+            this.groupBox7.Location = new System.Drawing.Point(519, 63);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(231, 45);
+            this.groupBox7.TabIndex = 34;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Back Endwall Girt";
+            // 
+            // txtWallGirtEndBack
+            // 
+            this.structuresExtender1.SetAttributeName(this.txtWallGirtEndBack, null);
+            this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtEndBack, null);
+            this.structuresExtender1.SetBindPropertyName(this.txtWallGirtEndBack, null);
+            this.txtWallGirtEndBack.Location = new System.Drawing.Point(6, 18);
+            this.txtWallGirtEndBack.Name = "txtWallGirtEndBack";
+            this.txtWallGirtEndBack.ReadOnly = true;
+            this.txtWallGirtEndBack.Size = new System.Drawing.Size(93, 20);
+            this.txtWallGirtEndBack.TabIndex = 27;
+            // 
+            // cbxGirtEndBack
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGirtEndBack, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtEndBack, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGirtEndBack, null);
+            this.cbxGirtEndBack.FormattingEnabled = true;
+            this.cbxGirtEndBack.Location = new System.Drawing.Point(6, 17);
+            this.cbxGirtEndBack.Name = "cbxGirtEndBack";
+            this.cbxGirtEndBack.Size = new System.Drawing.Size(113, 21);
+            this.cbxGirtEndBack.TabIndex = 28;
+            this.cbxGirtEndBack.SelectedIndexChanged += new System.EventHandler(this.cbxGirtEndBack_SelectedIndexChanged);
+            // 
+            // groupBox8
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox8, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox8, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox8, null);
+            this.groupBox8.Controls.Add(this.txtFascia);
+            this.groupBox8.Controls.Add(this.cbxFascia);
+            this.groupBox8.Location = new System.Drawing.Point(272, 115);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(231, 45);
+            this.groupBox8.TabIndex = 35;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Fascia Purlin";
+            // 
+            // txtFascia
+            // 
+            this.structuresExtender1.SetAttributeName(this.txtFascia, null);
+            this.structuresExtender1.SetAttributeTypeName(this.txtFascia, null);
+            this.structuresExtender1.SetBindPropertyName(this.txtFascia, null);
+            this.txtFascia.Location = new System.Drawing.Point(6, 18);
+            this.txtFascia.Name = "txtFascia";
+            this.txtFascia.ReadOnly = true;
+            this.txtFascia.Size = new System.Drawing.Size(93, 20);
+            this.txtFascia.TabIndex = 27;
+            // 
+            // cbxFascia
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxFascia, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxFascia, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxFascia, null);
+            this.cbxFascia.FormattingEnabled = true;
+            this.cbxFascia.Location = new System.Drawing.Point(6, 17);
+            this.cbxFascia.Name = "cbxFascia";
+            this.cbxFascia.Size = new System.Drawing.Size(113, 21);
+            this.cbxFascia.TabIndex = 28;
+            this.cbxFascia.SelectedIndexChanged += new System.EventHandler(this.cbxFascia_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.structuresExtender1.SetAttributeName(this, null);
@@ -2135,6 +2304,12 @@ namespace CSB
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider9)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2294,6 +2469,18 @@ namespace CSB
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.RadioButton radModelYes;
         private System.Windows.Forms.RadioButton radModelNo;
+        private System.Windows.Forms.ComboBox cbxPurlin;
+        private System.Windows.Forms.ComboBox cbxGirtEnd;
+        private System.Windows.Forms.ComboBox cbxGirtSide;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.TextBox txtFascia;
+        private System.Windows.Forms.ComboBox cbxFascia;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox txtWallGirtEndBack;
+        private System.Windows.Forms.ComboBox cbxGirtEndBack;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TextBox txtWallGirtSideRight;
+        private System.Windows.Forms.ComboBox cbxGirtSideRight;
     }
 }
 

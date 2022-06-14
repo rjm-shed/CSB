@@ -56,6 +56,12 @@ namespace CSB
             LoadLogo(cbxLogo);
             LoadSheetCbx(cbxRoofClad);
             LoadSheetCbx(cbxWallClad);
+            LoadC_Z(cbxPurlin);
+            LoadC(cbxFascia);
+            LoadC_Z(cbxGirtSide);
+            LoadC_Z(cbxGirtSideRight);
+            LoadC_Z(cbxGirtEnd);
+            LoadC_Z(cbxGirtEndBack);
 
             AddVersionNumber();
 
@@ -84,89 +90,109 @@ namespace CSB
         private void LoadLogo(ComboBox temp)
         {
             temp.Items.Clear();
-            temp.Items.Add("CSB Steel Build");
-            temp.Items.Add("CSB Agricultural");
-            temp.Items.Add("CSB Aviation");
-            temp.Items.Add("CSB Commercial");
-            temp.Items.Add("CSB Custom");
-            temp.Items.Add("CSB Equinabuild");
-            temp.Items.Add("CSB Industrial");
-            temp.Items.Add("CSB Recreational");
+
+            var xdoc = XDocument.Load(myHelper.Setting() + "CSB_Project_Data.xml");
+
+            foreach (var childElement in xdoc.Root.Elements())
+            {
+                string a = childElement.Name.ToString();
+                string c = childElement.Value.ToString();
+
+                if (a == "Logo")
+                {
+                    temp.Items.Add(childElement.Value.ToString());
+                }
+            }
         }
 
         private void LoadCbx(ComboBox temp)
         {
             temp.Items.Clear();
 
+            var xdoc = XDocument.Load(myHelper.Setting() + "CSB_Project_Data.xml");
 
-            //var xdoc = XDocument.Load(@"T:\CSB_Program_Files\Documentation\Settings\CSB_Project_Data.xml");
+            foreach (var childElement in xdoc.Root.Elements())
+            {
+                string a = childElement.Name.ToString();
+                string c = childElement.Value.ToString();
 
-            //string xFile = myHelper.TeklaFolder() + AttributeSettings + ".CSB_Gable_Shed.MainForm.xml";
-
-            //if (File.Exists(xFile))
-            //{
-
-            //}
-            //else
-            //{
-            //    myHelper.LogFile("1018 File does not exist - " + xFile);
-            //}
-
-            //var xdocAttrib = XDocument.Load(xFile);
-
-            //foreach (var childElement in xdoc.Root.Elements())
-            //{
-            //    //string a = childElement.Name.ToString();
-            //    //string c = childElement.Value.ToString();
-
-            //    //if (a == "CSB" && c == "Colour")
-            //    //{
-
-            //        var tgt2 = xdoc.Root.Descendants("Colour").FirstOrDefault();
-
-            //        temp.Items.Add(tgt2.Value);
-
-            //    //}
-
-            //}
-
-
-            temp.Items.Add("CBOND(TBC)");
-            temp.Items.Add("ZINC");
-            temp.Items.Add("BASALT");
-            temp.Items.Add("CLASSIC CREAM");
-            temp.Items.Add("COTTAGE GREEN");
-            temp.Items.Add("COVE");
-            temp.Items.Add("DEEP OCEAN");
-            temp.Items.Add("DUNE");
-            temp.Items.Add("EVENING HAZE");
-            temp.Items.Add("GULLY");
-            temp.Items.Add("IRONSTONE");
-            temp.Items.Add("JASPER");
-            temp.Items.Add("MANGROVE");
-            temp.Items.Add("MANOR RED");
-            temp.Items.Add("MONUMENT");
-            temp.Items.Add("NIGHT SKY");
-            temp.Items.Add("PALE EUCALYPT");
-            temp.Items.Add("PAPERBARK");
-            temp.Items.Add("SHALE GREY");
-            temp.Items.Add("SURFMIST");
-            temp.Items.Add("TERRAIN");
-            temp.Items.Add("WALLABY");
-            temp.Items.Add("WINDSPRAY");
-            temp.Items.Add("WOODLAND GREY");
+                if ( a == "Colour")
+                {
+                    temp.Items.Add(childElement.Value.ToString());
+                }
+            }
         }
+
         private void LoadSkyCbx(ComboBox temp)
         {
             temp.Items.Clear();
-            temp.Items.Add("OPAL");
-            temp.Items.Add("CLEAR");
+
+            var xdoc = XDocument.Load(myHelper.Setting() + "CSB_Project_Data.xml");
+
+            foreach (var childElement in xdoc.Root.Elements())
+            {
+                string a = childElement.Name.ToString();
+                string c = childElement.Value.ToString();
+
+                if (a == "Sky")
+                {
+                    temp.Items.Add(childElement.Value.ToString());
+                }
+            }
         }
+
+        private void LoadC_Z(ComboBox temp)
+        {
+            temp.Items.Clear();
+
+            var xdoc = XDocument.Load(myHelper.Setting() + "CSB_Project_Data.xml");
+
+            foreach (var childElement in xdoc.Root.Elements())
+            {
+                string a = childElement.Name.ToString();
+                string c = childElement.Value.ToString();
+
+                if (a == "C" || a == "Z")
+                {
+                    temp.Items.Add(childElement.Value.ToString());
+                }
+            }
+        }
+
+        private void LoadC(ComboBox temp)
+        {
+            temp.Items.Clear();
+
+            var xdoc = XDocument.Load(myHelper.Setting() + "CSB_Project_Data.xml");
+
+            foreach (var childElement in xdoc.Root.Elements())
+            {
+                string a = childElement.Name.ToString();
+                string c = childElement.Value.ToString();
+
+                if (a == "C")
+                {
+                    temp.Items.Add(childElement.Value.ToString());
+                }
+            }
+        }
+
         private void LoadSheetCbx(ComboBox temp)
         {
             temp.Items.Clear();
-            temp.Items.Add("0.47 TCT 5-RIB");
-            temp.Items.Add("0.47 TCT CORRY");
+
+            var xdoc = XDocument.Load(myHelper.Setting() + "CSB_Project_Data.xml");
+
+            foreach (var childElement in xdoc.Root.Elements())
+            {
+                string a = childElement.Name.ToString();
+                string c = childElement.Value.ToString();
+
+                if (a == "ColorBond")
+                {
+                    temp.Items.Add(childElement.Value.ToString());
+                }
+            }
         }
 
         #endregion
@@ -230,8 +256,20 @@ namespace CSB
             txtBaySize.Text = ProjectSales.BayString;
 
             txtWallGirtSide.Text = ProjectSales.WallGirtSide;
+            txtWallGirtSideRight.Text = ProjectSales.WallGirtSide;
             txtWallGirtEnd.Text = ProjectSales.WallGirtEnd;
+            txtWallGirtEndBack.Text = ProjectSales.WallGirtEnd;
             txtPurlin.Text = ProjectSales.RoofPurlin;
+
+            if (ProjectSales.RoofPurlin != null && ProjectSales.RoofPurlin != "" && ProjectSales.RoofPurlin.Contains("Z"))
+            {
+                txtFascia.Text = ProjectSales.RoofPurlin.Replace("Z","C");
+            }
+            else
+            {
+                txtFascia.Text = ProjectSales.RoofPurlin;
+            }
+               
             txtProjectDetails.Text = ProjectSales.ProjectDetails;
 
             if (ProjectSales.RoofPurlin != null && ProjectSales.RoofPurlin.Contains("Z"))
@@ -317,7 +355,11 @@ namespace CSB
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //string d = "MET-MSC20015";
+            //string d = "Z20015";
+
+            //d = d.Replace("Z", "C");
+
+
             //string c =d.Substring(7);
 
             //string k = d.Substring(6);
@@ -591,8 +633,11 @@ namespace CSB
             checkBox1.Checked = false; // roofonly
 
             txtPurlin.Text = "";
+            txtFascia.Text = "";
             txtWallGirtSide.Text = "";
+            txtWallGirtSideRight.Text = "";
             txtWallGirtEnd.Text = "";
+            txtWallGirtEndBack.Text = "";
             txtProjectDetails.Text = "";
 
             radModelYes.Checked = true;
@@ -1788,6 +1833,61 @@ namespace CSB
                 txtPurlin.Text = mTemp.Substring(6);
             }
 
+            // Left Wall Girt
+
+            xTemp = txtWallGirtSide.Text.Trim();
+
+            if (xTemp != null && xTemp != "" && xTemp.Length == 6)
+            {
+                tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+
+            }
+            else
+            {
+                tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
+
+                string mTemp = tgt.Value;
+
+                txtWallGirtSide.Text = mTemp.Substring(6);
+            }
+
+            // Right Side Wall Girt
+
+            xTemp = txtWallGirtSideRight.Text.Trim();
+
+            if (xTemp != null && xTemp != "" && xTemp.Length == 6)
+            {
+                tgt = xdoc.Root.Descendants("GirtProfile2").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+
+            }
+            else
+            {
+                tgt = xdoc.Root.Descendants("GirtProfile2").FirstOrDefault();
+
+                string mTemp = tgt.Value;
+
+                txtWallGirtSideRight.Text = mTemp.Substring(6);
+            }
+
+            // Sidewall Girt Lap
+
+            tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
+
+            if (txtWallGirtSide.Text.Contains("Z") || txtWallGirtSideRight.Text.Contains("Z"))
+            {
+                int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+
+                tgt.Value = lap.ToString();
+            }
+            else
+            {
+                tgt.Value = "0";
+            }
+
+            // Fascia Girt
+
             xTemp = txtWallGirtSide.Text.Trim();
 
             if (xTemp != null && xTemp != "" && xTemp.Length == 6)
@@ -1819,6 +1919,8 @@ namespace CSB
                 txtWallGirtSide.Text = mTemp.Substring(6);
             }
 
+            // Front Endwall Girt
+
             xTemp = txtWallGirtEnd.Text.Trim();
 
             if (xTemp != null && xTemp != "" && xTemp.Length == 6)
@@ -1833,6 +1935,24 @@ namespace CSB
                 string mTemp = tgt.Value;
 
                 txtWallGirtEnd.Text = mTemp.Substring(6);
+            }
+
+            // Back Endwall Girt
+
+            xTemp = txtWallGirtEndBack.Text.Trim();
+
+            if (xTemp != null && xTemp != "" && xTemp.Length == 6)
+            {
+                tgt = xdoc.Root.Descendants("EndGirtProfile2").FirstOrDefault();
+                tgt.Value = "MET-MS" + xTemp;
+            }
+            else
+            {
+                tgt = xdoc.Root.Descendants("EndGirtProfile2").FirstOrDefault();
+
+                string mTemp = tgt.Value;
+
+                txtWallGirtEndBack.Text = mTemp.Substring(6);
             }
 
             //TODO: Purlin Split Location - needs updating for different roof/wall
@@ -1983,19 +2103,15 @@ namespace CSB
             tgt.Value = "0";
 
             // turn mullions off
-            tgt = xdoc.Root.Descendants("CreateMidMullions").FirstOrDefault();
+            tgt = xdoc.Root.Descendants("CreateFrontMullions").FirstOrDefault();
             tgt.Value = "1";
             tgt = xdoc.Root.Descendants("CreateBackMullions").FirstOrDefault();
             tgt.Value = "1";
-            tgt = xdoc.Root.Descendants("CreateFrontMullions").FirstOrDefault();
-            tgt.Value = "1";
-            //}
-            //else // Building has walls
-            //{
-            // Create Girts, endwall columns and cladding
 
-            tgt = xdoc.Root.Descendants("CreateMidMullions").FirstOrDefault(); // Remove Mid mullion
+            tgt = xdoc.Root.Descendants("CreateMidMullions").FirstOrDefault(); // Remove Front Mid Wall mullion
             tgt.Value = "1";
+            tgt = xdoc.Root.Descendants("CreateMidMullions2").FirstOrDefault(); // Remove back Mid wall mullion
+            tgt.Value = "0";
 
             // Right wall
             if (btnRight.BackColor == System.Drawing.Color.Red)
@@ -2238,17 +2354,17 @@ namespace CSB
                         }
                     }
 
-                    Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
-                    Origin.X = 0;
-                    Origin.Y = width / 2;
-                    Origin.Z = apex + 500;
+                    //Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
+                    //Origin.X = 0;
+                    //Origin.Y = width / 2;
+                    //Origin.Z = apex + 500;
 
-                    Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
-                    FinishPoint.X = 2000;
-                    FinishPoint.Y = width / 2;
-                    FinishPoint.Z = apex + 500;
+                    //Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
+                    //FinishPoint.X = 2000;
+                    //FinishPoint.Y = width / 2;
+                    //FinishPoint.Z = apex + 500;
 
-                    AddInformationNote(Origin, FinishPoint, "Remove Raker Angle");
+                    //AddInformationNote(Origin, FinishPoint, "Remove Raker Angle");
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.White)
                 {                    
@@ -2275,17 +2391,17 @@ namespace CSB
                         }
                     }
 
-                    Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
-                    Origin.X = length;
-                    Origin.Y = width / 2;
-                    Origin.Z = apex + 500;
+                    //Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
+                    //Origin.X = length;
+                    //Origin.Y = width / 2;
+                    //Origin.Z = apex + 500;
 
-                    Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
-                    FinishPoint.X = length + 2000;
-                    FinishPoint.Y = width / 2;
-                    FinishPoint.Z = apex + 500;
+                    //Tekla.Structures.Geometry3d.Point FinishPoint = new Tekla.Structures.Geometry3d.Point();
+                    //FinishPoint.X = length + 2000;
+                    //FinishPoint.Y = width / 2;
+                    //FinishPoint.Z = apex + 500;
 
-                    AddInformationNote(Origin, FinishPoint, "Remove Raker Angle");
+                    //AddInformationNote(Origin, FinishPoint, "Remove Raker Angle");
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.White)
                 {      
@@ -2404,7 +2520,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project EW Clad Back Right Corro_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        if (txtWallGirtEndBack.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project EW Clad Back Right Corro_Right Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
                         }
@@ -2413,7 +2529,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project EW Clad Back Right_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        if (txtWallGirtEndBack.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project EW Clad Back Right_Right Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
                         }
@@ -2438,7 +2554,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project EW Clad Back Left Corro_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        if (txtWallGirtEndBack.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project EW Clad Back Left Corro_Left Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
                         }
@@ -2447,7 +2563,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project EW Clad Back Left_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtEnd.Text.Trim().Contains("150"))
+                        if (txtWallGirtEndBack.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project EW Clad Back Left_Left Open 150.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
                         }
@@ -2541,7 +2657,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project SW Clad Right Corro_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        if (txtWallGirtSideRight.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project SW Clad Right Corro_FrontBack Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                         }
@@ -2550,7 +2666,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project SW Clad Right_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        if (txtWallGirtSideRight.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project SW Clad Right_FrontBack Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                         }
@@ -2562,7 +2678,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project SW Clad Right Corro_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        if (txtWallGirtSideRight.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project SW Clad Right Corro_Back Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                         }
@@ -2571,7 +2687,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project SW Clad Right_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        if (txtWallGirtSideRight.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project SW Clad Right_Back Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                         }
@@ -2583,7 +2699,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project SW Clad Right Corro_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        if (txtWallGirtSideRight.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project SW Clad Right Corro_Front Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                         }
@@ -2592,7 +2708,7 @@ namespace CSB
                     {
                         UpdateAttributes("Project SW Clad Right_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
-                        if (txtWallGirtSide.Text.Trim().Contains("150"))
+                        if (txtWallGirtSideRight.Text.Trim().Contains("150"))
                         {
                             UpdateAttributes(@"150\Project SW Clad Right_Front Open 150.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                         }
@@ -2606,7 +2722,7 @@ namespace CSB
                     }
                     else
                     {
-                        UpdateAttributes("Project SW Clad Right Corro.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
+                        UpdateAttributes("Project SW Clad Right.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                     }
                 }
 
@@ -2646,7 +2762,7 @@ namespace CSB
                 var xdoc = XDocument.Load(attribute);
 
                 //TODO: change to variable
-                string xFile = @"T:\CSB_Program_Files\Documentation\Settings\" + Original;
+                string xFile = myHelper.Setting() + Original; //@"T:\CSB_Program_Files\Documentation\Settings\"
 
                 if (File.Exists(xFile))
                 {
@@ -3519,7 +3635,53 @@ namespace CSB
             }
         }
 
-       
+        private void cbxPurlin_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtPurlin.Text = cbxPurlin.Text; 
+            
+            if (txtPurlin.Text != null && txtPurlin.Text.Contains("Z"))
+            {
+                chkPurlinSingleSpan.Checked = true;
+            }
+            else
+            {
+                chkPurlinSingleSpan.Checked = false;
+            }
+        }
+
+        private void cbxGirtSide_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtWallGirtSide.Text = cbxGirtSide.Text;
+
+            if (txtWallGirtSide.Text != null && txtWallGirtSide.Text.Contains("Z"))
+            {
+                chkGirtSingleSpan.Checked = true;
+            }
+            else
+            {
+                chkGirtSingleSpan.Checked = false;
+            }
+        }
+
+        private void cbxGirtEnd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtWallGirtEnd.Text = cbxGirtEnd.Text;
+        }
+
+        private void cbxGirtSideRight_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtWallGirtSideRight.Text = cbxGirtSideRight.Text;
+        }
+
+        private void cbxFascia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtFascia.Text = cbxFascia.Text;
+        }
+
+        private void cbxGirtEndBack_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtWallGirtEndBack.Text = cbxGirtEndBack.Text;
+        }
     }
 
     #endregion
