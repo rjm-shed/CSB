@@ -115,6 +115,8 @@ namespace CSB
             this.txtImportance = new System.Windows.Forms.TextBox();
             this.label49 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.cbxGutter = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.btnZINC = new System.Windows.Forms.Button();
             this.btnCBOND = new System.Windows.Forms.Button();
             this.txtColourComment = new System.Windows.Forms.TextBox();
@@ -152,6 +154,15 @@ namespace CSB
             this.cbxRoof = new System.Windows.Forms.ComboBox();
             this.label66 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.txtFascia = new System.Windows.Forms.TextBox();
+            this.cbxFascia = new System.Windows.Forms.ComboBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txtWallGirtEndBack = new System.Windows.Forms.TextBox();
+            this.cbxGirtEndBack = new System.Windows.Forms.ComboBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtWallGirtSideRight = new System.Windows.Forms.TextBox();
+            this.cbxGirtSideRight = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtWallGirtEnd = new System.Windows.Forms.TextBox();
             this.cbxGirtEnd = new System.Windows.Forms.ComboBox();
@@ -187,15 +198,6 @@ namespace CSB
             this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider8 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider9 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.txtWallGirtSideRight = new System.Windows.Forms.TextBox();
-            this.cbxGirtSideRight = new System.Windows.Forms.ComboBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.txtWallGirtEndBack = new System.Windows.Forms.TextBox();
-            this.cbxGirtEndBack = new System.Windows.Forms.ComboBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.txtFascia = new System.Windows.Forms.TextBox();
-            this.cbxFascia = new System.Windows.Forms.ComboBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -205,6 +207,9 @@ namespace CSB
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -219,9 +224,6 @@ namespace CSB
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider9)).BeginInit();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl2
@@ -1325,6 +1327,8 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.tabPage6, null);
             this.structuresExtender1.SetAttributeTypeName(this.tabPage6, null);
             this.structuresExtender1.SetBindPropertyName(this.tabPage6, null);
+            this.tabPage6.Controls.Add(this.cbxGutter);
+            this.tabPage6.Controls.Add(this.label16);
             this.tabPage6.Controls.Add(this.btnZINC);
             this.tabPage6.Controls.Add(this.btnCBOND);
             this.tabPage6.Controls.Add(this.txtColourComment);
@@ -1369,6 +1373,29 @@ namespace CSB
             this.tabPage6.Text = "CSB COLOURS";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // cbxGutter
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGutter, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGutter, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGutter, null);
+            this.cbxGutter.FormattingEnabled = true;
+            this.cbxGutter.Location = new System.Drawing.Point(238, 86);
+            this.cbxGutter.Name = "cbxGutter";
+            this.cbxGutter.Size = new System.Drawing.Size(200, 21);
+            this.cbxGutter.TabIndex = 106;
+            // 
+            // label16
+            // 
+            this.structuresExtender1.SetAttributeName(this.label16, null);
+            this.structuresExtender1.SetAttributeTypeName(this.label16, null);
+            this.label16.AutoSize = true;
+            this.structuresExtender1.SetBindPropertyName(this.label16, null);
+            this.label16.Location = new System.Drawing.Point(8, 89);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(100, 13);
+            this.label16.TabIndex = 105;
+            this.label16.Text = "GUTTER COLOUR";
+            // 
             // btnZINC
             // 
             this.structuresExtender1.SetAttributeName(this.btnZINC, null);
@@ -1400,7 +1427,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.txtColourComment, null);
             this.structuresExtender1.SetAttributeTypeName(this.txtColourComment, null);
             this.structuresExtender1.SetBindPropertyName(this.txtColourComment, null);
-            this.txtColourComment.Location = new System.Drawing.Point(238, 448);
+            this.txtColourComment.Location = new System.Drawing.Point(238, 473);
             this.txtColourComment.Name = "txtColourComment";
             this.txtColourComment.Size = new System.Drawing.Size(200, 20);
             this.txtColourComment.TabIndex = 102;
@@ -1410,7 +1437,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.txtMisc3Desc, null);
             this.structuresExtender1.SetAttributeTypeName(this.txtMisc3Desc, null);
             this.structuresExtender1.SetBindPropertyName(this.txtMisc3Desc, null);
-            this.txtMisc3Desc.Location = new System.Drawing.Point(238, 421);
+            this.txtMisc3Desc.Location = new System.Drawing.Point(238, 446);
             this.txtMisc3Desc.Name = "txtMisc3Desc";
             this.txtMisc3Desc.Size = new System.Drawing.Size(200, 20);
             this.txtMisc3Desc.TabIndex = 100;
@@ -1420,7 +1447,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.txtMisc2Desc, null);
             this.structuresExtender1.SetAttributeTypeName(this.txtMisc2Desc, null);
             this.structuresExtender1.SetBindPropertyName(this.txtMisc2Desc, null);
-            this.txtMisc2Desc.Location = new System.Drawing.Point(238, 361);
+            this.txtMisc2Desc.Location = new System.Drawing.Point(238, 386);
             this.txtMisc2Desc.Name = "txtMisc2Desc";
             this.txtMisc2Desc.Size = new System.Drawing.Size(200, 20);
             this.txtMisc2Desc.TabIndex = 96;
@@ -1430,7 +1457,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.txtMisc1Desc, null);
             this.structuresExtender1.SetAttributeTypeName(this.txtMisc1Desc, null);
             this.structuresExtender1.SetBindPropertyName(this.txtMisc1Desc, null);
-            this.txtMisc1Desc.Location = new System.Drawing.Point(238, 307);
+            this.txtMisc1Desc.Location = new System.Drawing.Point(238, 332);
             this.txtMisc1Desc.Name = "txtMisc1Desc";
             this.txtMisc1Desc.Size = new System.Drawing.Size(200, 20);
             this.txtMisc1Desc.TabIndex = 92;
@@ -1441,7 +1468,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label50, null);
             this.label50.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label50, null);
-            this.label50.Location = new System.Drawing.Point(8, 448);
+            this.label50.Location = new System.Drawing.Point(8, 473);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(110, 13);
             this.label50.TabIndex = 101;
@@ -1453,7 +1480,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label51, null);
             this.label51.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label51, null);
-            this.label51.Location = new System.Drawing.Point(8, 421);
+            this.label51.Location = new System.Drawing.Point(8, 446);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(118, 13);
             this.label51.TabIndex = 99;
@@ -1465,7 +1492,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxMisc3, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxMisc3, null);
             this.cbxMisc3.FormattingEnabled = true;
-            this.cbxMisc3.Location = new System.Drawing.Point(238, 387);
+            this.cbxMisc3.Location = new System.Drawing.Point(238, 412);
             this.cbxMisc3.Name = "cbxMisc3";
             this.cbxMisc3.Size = new System.Drawing.Size(200, 21);
             this.cbxMisc3.TabIndex = 98;
@@ -1476,7 +1503,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label52, null);
             this.label52.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label52, null);
-            this.label52.Location = new System.Drawing.Point(8, 390);
+            this.label52.Location = new System.Drawing.Point(8, 415);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(90, 13);
             this.label52.TabIndex = 97;
@@ -1488,7 +1515,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label53, null);
             this.label53.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label53, null);
-            this.label53.Location = new System.Drawing.Point(8, 363);
+            this.label53.Location = new System.Drawing.Point(8, 388);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(118, 13);
             this.label53.TabIndex = 95;
@@ -1500,7 +1527,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxMisc2, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxMisc2, null);
             this.cbxMisc2.FormattingEnabled = true;
-            this.cbxMisc2.Location = new System.Drawing.Point(238, 333);
+            this.cbxMisc2.Location = new System.Drawing.Point(238, 358);
             this.cbxMisc2.Name = "cbxMisc2";
             this.cbxMisc2.Size = new System.Drawing.Size(200, 21);
             this.cbxMisc2.TabIndex = 94;
@@ -1511,7 +1538,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label54, null);
             this.label54.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label54, null);
-            this.label54.Location = new System.Drawing.Point(8, 336);
+            this.label54.Location = new System.Drawing.Point(8, 361);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(90, 13);
             this.label54.TabIndex = 93;
@@ -1523,7 +1550,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label55, null);
             this.label55.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label55, null);
-            this.label55.Location = new System.Drawing.Point(8, 309);
+            this.label55.Location = new System.Drawing.Point(8, 334);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(118, 13);
             this.label55.TabIndex = 91;
@@ -1535,7 +1562,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxMisc1, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxMisc1, null);
             this.cbxMisc1.FormattingEnabled = true;
-            this.cbxMisc1.Location = new System.Drawing.Point(238, 279);
+            this.cbxMisc1.Location = new System.Drawing.Point(238, 304);
             this.cbxMisc1.Name = "cbxMisc1";
             this.cbxMisc1.Size = new System.Drawing.Size(200, 21);
             this.cbxMisc1.TabIndex = 90;
@@ -1546,7 +1573,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label56, null);
             this.label56.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label56, null);
-            this.label56.Location = new System.Drawing.Point(8, 282);
+            this.label56.Location = new System.Drawing.Point(8, 307);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(90, 13);
             this.label56.TabIndex = 89;
@@ -1558,7 +1585,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxWindow, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxWindow, null);
             this.cbxWindow.FormattingEnabled = true;
-            this.cbxWindow.Location = new System.Drawing.Point(238, 251);
+            this.cbxWindow.Location = new System.Drawing.Point(238, 276);
             this.cbxWindow.Name = "cbxWindow";
             this.cbxWindow.Size = new System.Drawing.Size(200, 21);
             this.cbxWindow.TabIndex = 88;
@@ -1569,7 +1596,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label57, null);
             this.label57.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label57, null);
-            this.label57.Location = new System.Drawing.Point(8, 254);
+            this.label57.Location = new System.Drawing.Point(8, 279);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(111, 13);
             this.label57.TabIndex = 87;
@@ -1581,7 +1608,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxWhirly, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxWhirly, null);
             this.cbxWhirly.FormattingEnabled = true;
-            this.cbxWhirly.Location = new System.Drawing.Point(238, 224);
+            this.cbxWhirly.Location = new System.Drawing.Point(238, 249);
             this.cbxWhirly.Name = "cbxWhirly";
             this.cbxWhirly.Size = new System.Drawing.Size(200, 21);
             this.cbxWhirly.TabIndex = 86;
@@ -1592,7 +1619,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label58, null);
             this.label58.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label58, null);
-            this.label58.Location = new System.Drawing.Point(8, 227);
+            this.label58.Location = new System.Drawing.Point(8, 252);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(134, 13);
             this.label58.TabIndex = 85;
@@ -1604,7 +1631,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxWallSky, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxWallSky, null);
             this.cbxWallSky.FormattingEnabled = true;
-            this.cbxWallSky.Location = new System.Drawing.Point(238, 197);
+            this.cbxWallSky.Location = new System.Drawing.Point(238, 222);
             this.cbxWallSky.Name = "cbxWallSky";
             this.cbxWallSky.Size = new System.Drawing.Size(200, 21);
             this.cbxWallSky.TabIndex = 84;
@@ -1615,7 +1642,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label59, null);
             this.label59.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label59, null);
-            this.label59.Location = new System.Drawing.Point(8, 200);
+            this.label59.Location = new System.Drawing.Point(8, 225);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(144, 13);
             this.label59.TabIndex = 83;
@@ -1627,7 +1654,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxRoofSky, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxRoofSky, null);
             this.cbxRoofSky.FormattingEnabled = true;
-            this.cbxRoofSky.Location = new System.Drawing.Point(238, 170);
+            this.cbxRoofSky.Location = new System.Drawing.Point(238, 195);
             this.cbxRoofSky.Name = "cbxRoofSky";
             this.cbxRoofSky.Size = new System.Drawing.Size(200, 21);
             this.cbxRoofSky.TabIndex = 82;
@@ -1638,7 +1665,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label60, null);
             this.label60.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label60, null);
-            this.label60.Location = new System.Drawing.Point(8, 173);
+            this.label60.Location = new System.Drawing.Point(8, 198);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(141, 13);
             this.label60.TabIndex = 81;
@@ -1650,7 +1677,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxPA, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxPA, null);
             this.cbxPA.FormattingEnabled = true;
-            this.cbxPA.Location = new System.Drawing.Point(238, 143);
+            this.cbxPA.Location = new System.Drawing.Point(238, 168);
             this.cbxPA.Name = "cbxPA";
             this.cbxPA.Size = new System.Drawing.Size(200, 21);
             this.cbxPA.TabIndex = 80;
@@ -1661,7 +1688,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label61, null);
             this.label61.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label61, null);
-            this.label61.Location = new System.Drawing.Point(8, 146);
+            this.label61.Location = new System.Drawing.Point(8, 171);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(104, 13);
             this.label61.TabIndex = 79;
@@ -1673,7 +1700,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxSlide, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxSlide, null);
             this.cbxSlide.FormattingEnabled = true;
-            this.cbxSlide.Location = new System.Drawing.Point(238, 115);
+            this.cbxSlide.Location = new System.Drawing.Point(238, 140);
             this.cbxSlide.Name = "cbxSlide";
             this.cbxSlide.Size = new System.Drawing.Size(200, 21);
             this.cbxSlide.TabIndex = 78;
@@ -1684,7 +1711,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label62, null);
             this.label62.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label62, null);
-            this.label62.Location = new System.Drawing.Point(8, 118);
+            this.label62.Location = new System.Drawing.Point(8, 143);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(133, 13);
             this.label62.TabIndex = 77;
@@ -1696,7 +1723,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.cbxRoller, null);
             this.structuresExtender1.SetBindPropertyName(this.cbxRoller, null);
             this.cbxRoller.FormattingEnabled = true;
-            this.cbxRoller.Location = new System.Drawing.Point(238, 88);
+            this.cbxRoller.Location = new System.Drawing.Point(238, 113);
             this.cbxRoller.Name = "cbxRoller";
             this.cbxRoller.Size = new System.Drawing.Size(200, 21);
             this.cbxRoller.TabIndex = 76;
@@ -1707,7 +1734,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeTypeName(this.label63, null);
             this.label63.AutoSize = true;
             this.structuresExtender1.SetBindPropertyName(this.label63, null);
-            this.label63.Location = new System.Drawing.Point(8, 91);
+            this.label63.Location = new System.Drawing.Point(8, 116);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(225, 13);
             this.label63.TabIndex = 75;
@@ -1803,6 +1830,117 @@ namespace CSB
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "Wall Layout";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox8, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox8, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox8, null);
+            this.groupBox8.Controls.Add(this.txtFascia);
+            this.groupBox8.Controls.Add(this.cbxFascia);
+            this.groupBox8.Location = new System.Drawing.Point(272, 115);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(231, 45);
+            this.groupBox8.TabIndex = 35;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Fascia Purlin";
+            // 
+            // txtFascia
+            // 
+            this.structuresExtender1.SetAttributeName(this.txtFascia, null);
+            this.structuresExtender1.SetAttributeTypeName(this.txtFascia, null);
+            this.structuresExtender1.SetBindPropertyName(this.txtFascia, null);
+            this.txtFascia.Location = new System.Drawing.Point(6, 18);
+            this.txtFascia.Name = "txtFascia";
+            this.txtFascia.ReadOnly = true;
+            this.txtFascia.Size = new System.Drawing.Size(93, 20);
+            this.txtFascia.TabIndex = 27;
+            // 
+            // cbxFascia
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxFascia, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxFascia, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxFascia, null);
+            this.cbxFascia.FormattingEnabled = true;
+            this.cbxFascia.Location = new System.Drawing.Point(6, 17);
+            this.cbxFascia.Name = "cbxFascia";
+            this.cbxFascia.Size = new System.Drawing.Size(113, 21);
+            this.cbxFascia.TabIndex = 28;
+            this.cbxFascia.SelectedIndexChanged += new System.EventHandler(this.cbxFascia_SelectedIndexChanged);
+            // 
+            // groupBox7
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox7, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox7, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox7, null);
+            this.groupBox7.Controls.Add(this.txtWallGirtEndBack);
+            this.groupBox7.Controls.Add(this.cbxGirtEndBack);
+            this.groupBox7.Location = new System.Drawing.Point(519, 63);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(231, 45);
+            this.groupBox7.TabIndex = 34;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Back Endwall Girt";
+            // 
+            // txtWallGirtEndBack
+            // 
+            this.structuresExtender1.SetAttributeName(this.txtWallGirtEndBack, null);
+            this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtEndBack, null);
+            this.structuresExtender1.SetBindPropertyName(this.txtWallGirtEndBack, null);
+            this.txtWallGirtEndBack.Location = new System.Drawing.Point(6, 18);
+            this.txtWallGirtEndBack.Name = "txtWallGirtEndBack";
+            this.txtWallGirtEndBack.ReadOnly = true;
+            this.txtWallGirtEndBack.Size = new System.Drawing.Size(93, 20);
+            this.txtWallGirtEndBack.TabIndex = 27;
+            // 
+            // cbxGirtEndBack
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGirtEndBack, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtEndBack, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGirtEndBack, null);
+            this.cbxGirtEndBack.FormattingEnabled = true;
+            this.cbxGirtEndBack.Location = new System.Drawing.Point(6, 17);
+            this.cbxGirtEndBack.Name = "cbxGirtEndBack";
+            this.cbxGirtEndBack.Size = new System.Drawing.Size(113, 21);
+            this.cbxGirtEndBack.TabIndex = 28;
+            this.cbxGirtEndBack.SelectedIndexChanged += new System.EventHandler(this.cbxGirtEndBack_SelectedIndexChanged);
+            // 
+            // groupBox6
+            // 
+            this.structuresExtender1.SetAttributeName(this.groupBox6, null);
+            this.structuresExtender1.SetAttributeTypeName(this.groupBox6, null);
+            this.structuresExtender1.SetBindPropertyName(this.groupBox6, null);
+            this.groupBox6.Controls.Add(this.txtWallGirtSideRight);
+            this.groupBox6.Controls.Add(this.cbxGirtSideRight);
+            this.groupBox6.Location = new System.Drawing.Point(272, 59);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(231, 47);
+            this.groupBox6.TabIndex = 33;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Right Sidewall Girt";
+            // 
+            // txtWallGirtSideRight
+            // 
+            this.structuresExtender1.SetAttributeName(this.txtWallGirtSideRight, null);
+            this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtSideRight, null);
+            this.structuresExtender1.SetBindPropertyName(this.txtWallGirtSideRight, null);
+            this.txtWallGirtSideRight.Location = new System.Drawing.Point(6, 16);
+            this.txtWallGirtSideRight.Name = "txtWallGirtSideRight";
+            this.txtWallGirtSideRight.ReadOnly = true;
+            this.txtWallGirtSideRight.Size = new System.Drawing.Size(93, 20);
+            this.txtWallGirtSideRight.TabIndex = 25;
+            // 
+            // cbxGirtSideRight
+            // 
+            this.structuresExtender1.SetAttributeName(this.cbxGirtSideRight, null);
+            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtSideRight, null);
+            this.structuresExtender1.SetBindPropertyName(this.cbxGirtSideRight, null);
+            this.cbxGirtSideRight.FormattingEnabled = true;
+            this.cbxGirtSideRight.Location = new System.Drawing.Point(6, 16);
+            this.cbxGirtSideRight.Name = "cbxGirtSideRight";
+            this.cbxGirtSideRight.Size = new System.Drawing.Size(113, 21);
+            this.cbxGirtSideRight.TabIndex = 27;
+            this.cbxGirtSideRight.SelectedIndexChanged += new System.EventHandler(this.cbxGirtSideRight_SelectedIndexChanged);
             // 
             // groupBox4
             // 
@@ -2146,117 +2284,6 @@ namespace CSB
             // 
             this.errorProvider9.ContainerControl = this;
             // 
-            // groupBox6
-            // 
-            this.structuresExtender1.SetAttributeName(this.groupBox6, null);
-            this.structuresExtender1.SetAttributeTypeName(this.groupBox6, null);
-            this.structuresExtender1.SetBindPropertyName(this.groupBox6, null);
-            this.groupBox6.Controls.Add(this.txtWallGirtSideRight);
-            this.groupBox6.Controls.Add(this.cbxGirtSideRight);
-            this.groupBox6.Location = new System.Drawing.Point(272, 59);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(231, 47);
-            this.groupBox6.TabIndex = 33;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Right Sidewall Girt";
-            // 
-            // txtWallGirtSideRight
-            // 
-            this.structuresExtender1.SetAttributeName(this.txtWallGirtSideRight, null);
-            this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtSideRight, null);
-            this.structuresExtender1.SetBindPropertyName(this.txtWallGirtSideRight, null);
-            this.txtWallGirtSideRight.Location = new System.Drawing.Point(6, 16);
-            this.txtWallGirtSideRight.Name = "txtWallGirtSideRight";
-            this.txtWallGirtSideRight.ReadOnly = true;
-            this.txtWallGirtSideRight.Size = new System.Drawing.Size(93, 20);
-            this.txtWallGirtSideRight.TabIndex = 25;
-            // 
-            // cbxGirtSideRight
-            // 
-            this.structuresExtender1.SetAttributeName(this.cbxGirtSideRight, null);
-            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtSideRight, null);
-            this.structuresExtender1.SetBindPropertyName(this.cbxGirtSideRight, null);
-            this.cbxGirtSideRight.FormattingEnabled = true;
-            this.cbxGirtSideRight.Location = new System.Drawing.Point(6, 16);
-            this.cbxGirtSideRight.Name = "cbxGirtSideRight";
-            this.cbxGirtSideRight.Size = new System.Drawing.Size(113, 21);
-            this.cbxGirtSideRight.TabIndex = 27;
-            this.cbxGirtSideRight.SelectedIndexChanged += new System.EventHandler(this.cbxGirtSideRight_SelectedIndexChanged);
-            // 
-            // groupBox7
-            // 
-            this.structuresExtender1.SetAttributeName(this.groupBox7, null);
-            this.structuresExtender1.SetAttributeTypeName(this.groupBox7, null);
-            this.structuresExtender1.SetBindPropertyName(this.groupBox7, null);
-            this.groupBox7.Controls.Add(this.txtWallGirtEndBack);
-            this.groupBox7.Controls.Add(this.cbxGirtEndBack);
-            this.groupBox7.Location = new System.Drawing.Point(519, 63);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(231, 45);
-            this.groupBox7.TabIndex = 34;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Back Endwall Girt";
-            // 
-            // txtWallGirtEndBack
-            // 
-            this.structuresExtender1.SetAttributeName(this.txtWallGirtEndBack, null);
-            this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtEndBack, null);
-            this.structuresExtender1.SetBindPropertyName(this.txtWallGirtEndBack, null);
-            this.txtWallGirtEndBack.Location = new System.Drawing.Point(6, 18);
-            this.txtWallGirtEndBack.Name = "txtWallGirtEndBack";
-            this.txtWallGirtEndBack.ReadOnly = true;
-            this.txtWallGirtEndBack.Size = new System.Drawing.Size(93, 20);
-            this.txtWallGirtEndBack.TabIndex = 27;
-            // 
-            // cbxGirtEndBack
-            // 
-            this.structuresExtender1.SetAttributeName(this.cbxGirtEndBack, null);
-            this.structuresExtender1.SetAttributeTypeName(this.cbxGirtEndBack, null);
-            this.structuresExtender1.SetBindPropertyName(this.cbxGirtEndBack, null);
-            this.cbxGirtEndBack.FormattingEnabled = true;
-            this.cbxGirtEndBack.Location = new System.Drawing.Point(6, 17);
-            this.cbxGirtEndBack.Name = "cbxGirtEndBack";
-            this.cbxGirtEndBack.Size = new System.Drawing.Size(113, 21);
-            this.cbxGirtEndBack.TabIndex = 28;
-            this.cbxGirtEndBack.SelectedIndexChanged += new System.EventHandler(this.cbxGirtEndBack_SelectedIndexChanged);
-            // 
-            // groupBox8
-            // 
-            this.structuresExtender1.SetAttributeName(this.groupBox8, null);
-            this.structuresExtender1.SetAttributeTypeName(this.groupBox8, null);
-            this.structuresExtender1.SetBindPropertyName(this.groupBox8, null);
-            this.groupBox8.Controls.Add(this.txtFascia);
-            this.groupBox8.Controls.Add(this.cbxFascia);
-            this.groupBox8.Location = new System.Drawing.Point(272, 115);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(231, 45);
-            this.groupBox8.TabIndex = 35;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Fascia Purlin";
-            // 
-            // txtFascia
-            // 
-            this.structuresExtender1.SetAttributeName(this.txtFascia, null);
-            this.structuresExtender1.SetAttributeTypeName(this.txtFascia, null);
-            this.structuresExtender1.SetBindPropertyName(this.txtFascia, null);
-            this.txtFascia.Location = new System.Drawing.Point(6, 18);
-            this.txtFascia.Name = "txtFascia";
-            this.txtFascia.ReadOnly = true;
-            this.txtFascia.Size = new System.Drawing.Size(93, 20);
-            this.txtFascia.TabIndex = 27;
-            // 
-            // cbxFascia
-            // 
-            this.structuresExtender1.SetAttributeName(this.cbxFascia, null);
-            this.structuresExtender1.SetAttributeTypeName(this.cbxFascia, null);
-            this.structuresExtender1.SetBindPropertyName(this.cbxFascia, null);
-            this.cbxFascia.FormattingEnabled = true;
-            this.cbxFascia.Location = new System.Drawing.Point(6, 17);
-            this.cbxFascia.Name = "cbxFascia";
-            this.cbxFascia.Size = new System.Drawing.Size(113, 21);
-            this.cbxFascia.TabIndex = 28;
-            this.cbxFascia.SelectedIndexChanged += new System.EventHandler(this.cbxFascia_SelectedIndexChanged);
-            // 
             // Form1
             // 
             this.structuresExtender1.SetAttributeName(this, null);
@@ -2286,6 +2313,12 @@ namespace CSB
             this.tabPage6.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -2304,12 +2337,6 @@ namespace CSB
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider9)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2481,6 +2508,8 @@ namespace CSB
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TextBox txtWallGirtSideRight;
         private System.Windows.Forms.ComboBox cbxGirtSideRight;
+        private System.Windows.Forms.ComboBox cbxGutter;
+        private System.Windows.Forms.Label label16;
     }
 }
 

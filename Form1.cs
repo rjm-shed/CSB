@@ -37,12 +37,19 @@ namespace CSB
 
         Model myModel = new Model();
 
+        ColumnSize columnSize = new ColumnSize();
+
+        slabCorners _slabCorners = new slabCorners();
+
+        int _NoMullions = 0;
+
         public Form1()
         {
             InitializeComponent();
             LoadCbx(cbxRoof);
             LoadCbx(cbxWall);
             LoadCbx(cbxTrim);
+            LoadCbx(cbxGutter);
             LoadCbx(cbxRoller);
             LoadCbx(cbxSlide);
             LoadCbx(cbxPA);
@@ -261,6 +268,42 @@ namespace CSB
             txtWallGirtEndBack.Text = ProjectSales.WallGirtEnd;
             txtPurlin.Text = ProjectSales.RoofPurlin;
 
+            switch (ProjectSales.Industry.Trim())
+            {
+                case "Steel Build":
+                    cbxLogo.Text= "CSB Steel Build";
+                    break;
+                case "Agricultural":
+                    cbxLogo.Text = "CSB Agricultural";
+                    break;
+                case "Aviation":
+                    cbxLogo.Text = "CSB Aviation";
+                    break;
+                case "Commercial":
+                    cbxLogo.Text = "CSB Commercial";
+                    break;
+                case "Custom":
+                    cbxLogo.Text = "CSB Custom";
+                    break;
+                case "Equinabuild":
+                    cbxLogo.Text = "CSB Equinabuild";
+                    break;
+                case "Industrial":
+                    cbxLogo.Text = "CSB Industrial";
+                    break;
+                case "Recreational":
+                    cbxLogo.Text = "CSB Recreational";
+                    break;
+                default:
+                    if(ProjectSales.Industry != null || ProjectSales.Industry != "")
+                    {
+                        //MessageBox.Show("Email Richard a copy - " + ProjectSales.ProjectNo + " - " + ProjectSales.Industry, "Project Logo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Remember to manually change", "Project Logo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    cbxLogo.Text = "CSB Steel Build";
+                    break;
+            }
+
             if (ProjectSales.RoofPurlin != null && ProjectSales.RoofPurlin != "" && ProjectSales.RoofPurlin.Contains("Z"))
             {
                 txtFascia.Text = ProjectSales.RoofPurlin.Replace("Z","C");
@@ -305,10 +348,12 @@ namespace CSB
             if (ProjectSales.GutterColour != null && ProjectSales.GutterColour.Contains("Zincalume"))
             {
                 cbxTrim.Text = "ZINC";
+                cbxGutter.Text = "ZINC";
             }
             else if (ProjectSales.GutterColour != null && ProjectSales.GutterColour.Contains("Colorbond"))
             {
                 cbxTrim.Text = "CBOND(TBC)";
+                cbxGutter.Text = "CBOND(TBC)";
             }
 
             if (ProjectSales.ClearSheetRoof != null && ProjectSales.ClearSheetRoof.Contains("Opal"))
@@ -333,28 +378,92 @@ namespace CSB
 
             if (ProjectSales.RoofMaterial != null && ProjectSales.RoofMaterial.Contains(".42 BMT") && ProjectSales.RoofMaterial.Contains("5-Rib"))
             {
-                cbxRoofClad.Text = "0.47 TCT 5-RIB";
+                cbxRoofClad.Text = "0.47-TCT-5-RIB";
                 chkRolltop.Checked = false;
             }
             else if (ProjectSales.RoofMaterial != null && ProjectSales.RoofMaterial.Contains(".42 BMT") && ProjectSales.RoofMaterial.Contains("Corry"))
             {
-                cbxRoofClad.Text = "0.47 TCT CORRY";
+                cbxRoofClad.Text = "0.47-TCT-CORRY";
                 chkRolltop.Checked = true;
             }
 
             if (ProjectSales.WallMaterial != null && ProjectSales.WallMaterial.Contains(".42 BMT") && ProjectSales.WallMaterial.Contains("5-Rib"))
             {
-                cbxWallClad.Text = "0.47 TCT 5-RIB";
+                cbxWallClad.Text = "0.47-TCT-5-RIB";
             }
             else if (ProjectSales.WallMaterial != null && ProjectSales.WallMaterial.Contains(".42 BMT") && ProjectSales.WallMaterial.Contains("Corry"))
             {
-                cbxWallClad.Text = "0.47 TCT CORRY";
+                cbxWallClad.Text = "0.47-TCT-CORRY";
             }
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            createSlab(300, 60000, 40000);
+
+            //ContourPlate _Slab = new ContourPlate();
+
+            //_Slab.Name = "SLAB";
+            //_Slab.Profile.ProfileString = "150";
+            //_Slab.Material.MaterialString = "N40";
+            //_Slab.Class = "1";
+
+            //Contour ct = new Contour();
+
+            //ContourPoint p1 = new ContourPoint();
+            //p1.X = 0;
+            //p1.Y = 0;
+            //p1.Z = 0;
+            //p1.Chamfer = new Chamfer();
+
+            //ContourPoint p2 = new ContourPoint();
+            //p2.X = 0;
+            //p2.Y = 1000;
+            //p2.Z = 0;
+            //p2.Chamfer = new Chamfer();
+
+            //ContourPoint p3 = new ContourPoint();
+            //p3.X = 2000;
+            //p3.Y = 1000;
+            //p3.Z = 0;
+            //p3.Chamfer = new Chamfer();
+
+            //ContourPoint p4 = new ContourPoint();
+            //p4.X = 2000;
+            //p4.Y = 0;
+            //p4.Z = 0;
+            //p4.Chamfer = new Chamfer();
+
+            //ct.AddContourPoint(p1);
+            //ct.AddContourPoint(p2);
+            //ct.AddContourPoint(p3);
+            //ct.AddContourPoint(p4);
+
+            //_Slab.Contour = ct;
+            ////_Slab.Position.Depth = Position.DepthEnum.FRONT;
+
+            //bool jj = _Slab.Insert();
+
+            //MessageBox.Show(jj.ToString());
+
+            //myModel.CommitChanges();
+
+            //XmlDocument xmldoc = new XmlDocument();
+            //xmldoc.Load(@"T:\CSB_Program_Files\Documentation\Settings\CSB_Project_Data_UB_UC.xml");
+
+            //XmlNodeList nodeList = xmldoc.GetElementsByTagName("UB_UC");
+            //foreach (XmlNode node in nodeList)
+            //{
+            //    var Tekla = node.Attributes["Tekla"].Value;
+            //    var Aus = node.Attributes["Aus"].Value;
+            //    var Depth = node.Attributes["Depth"].Value;
+            //    var FlangeW = node.Attributes["FlangeW"].Value;
+            //    var FlangeT = node.Attributes["FlangeT"].Value;
+            //    var WebT = node.Attributes["WebT"].Value;
+            //    break;
+            //}
+
             //string d = "Z20015";
 
             //d = d.Replace("Z", "C");
@@ -578,6 +687,23 @@ namespace CSB
             string xResult = ProcessModel(Project);
         }
 
+        private bool checkConnection()
+        {
+            bool _yes = false;
+            if (myModel.GetConnectionStatus())
+            {
+                myHelper.LogFile("Model Connection OK");
+                _yes = true;
+            }
+            else
+            {
+                myHelper.LogFile("Model Connection Failed");
+                _yes = false;
+            }
+
+            return _yes;
+        }
+
         private void btnStd_Click(object sender, EventArgs e)
         {
             SetStandards();
@@ -661,6 +787,7 @@ namespace CSB
             cbxRoof.Text = temp;
             cbxWall.Text = temp;
             cbxTrim.Text = temp;
+            cbxGutter.Text = temp;
             cbxRoller.Text = temp;
             cbxSlide.Text = temp;
             cbxPA.Text = temp;
@@ -894,6 +1021,7 @@ namespace CSB
             projectInfo.SetUserProperty("CSB_ROOF_COLOUR", cbxRoof.Text.ToUpper().Trim());
             projectInfo.SetUserProperty("CSB_WALL_COLOUR", cbxWall.Text.ToUpper().Trim());
             projectInfo.SetUserProperty("CSB_TRIM_COLOUR", cbxTrim.Text.ToUpper().Trim());
+            projectInfo.SetUserProperty("CSB_GUTTER_COLOUR", cbxGutter.Text.ToUpper().Trim());
             projectInfo.SetUserProperty("CSB_RD_COLOUR", cbxRoller.Text.ToUpper().Trim());
             projectInfo.SetUserProperty("CSB_SD_COLOUR", cbxSlide.Text.ToUpper().Trim());
             projectInfo.SetUserProperty("CSB_PAD_COLOUR", cbxPA.Text.ToUpper().Trim());
@@ -945,32 +1073,46 @@ namespace CSB
             // Remove existing grid and North Symbols
             //********************************************************************************
 
+            if(checkConnection() == false) { myHelper.LogFile("Connection-3000"); }
+
             RemoveGridNorth();
 
+            //***********************************************************************
+            // Update Gable attributes
+
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3003"); }
+
+            UpdateGableAttributes(spacingList, width, eave, apex, length, pitch, slab);
+
             // **********************************************
+
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3001"); }
 
             InsertGrid(distanceListList, spacingList, width, slab,  eave, apex);
 
             //********************************************************************************
 
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3002"); }
+
             createViews(length, width, apex);
 
             //***********************************************************************
-            // Update Gable attributes
-
-            UpdateGableAttributes(spacingList, width, eave, apex, length, pitch);
-
-            //***********************************************************************
             // Update roof/wall attributes for building layout
+
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3004"); }
 
             SetRoofWallLayoutAttributes(length, apex, width);
 
             //***********************************************************************
             // Adjust V-Ridge for pitch
 
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3005"); }
+
             AdjustVPitch(txtPitch.Text.Trim());
 
             //**********************************************************************
+
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3006"); }
 
             if (chkRolltop.Checked == true)
             {
@@ -979,12 +1121,32 @@ namespace CSB
 
             //**********************************************************************
 
-            if(radModelYes.Checked == true)
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3016"); }
+
+            if (slab != 0)
             {
-                CreateModel();
+                AdjustWallSheet("Project Side Wall Cladding Right", "-30","Side");
+                AdjustWallSheet("Project Side Wall Cladding Left", "-30", "Side");
+                AdjustWallSheet("Project End Wall Cladding Front Right", "-30", "End");
+                AdjustWallSheet("Project End Wall Cladding Front Left", "-30", "End");
+                AdjustWallSheet("Project End Wall Cladding Back Right", "-30", "End");
+                AdjustWallSheet("Project End Wall Cladding Back Left", "-30", "End");
+
+                createSlab(slab, length, width);
+            }
+            //**********************************************************************
+
+            if (radModelYes.Checked == true)
+            {
+
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3007"); }
+
+                CreateModel(slab);
             }
 
             //**********************************************************************
+
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3008"); }
 
             AddProjectNotes();
 
@@ -1001,26 +1163,6 @@ namespace CSB
             string temp = vv + @"\modeling\" + myHelper.ShareMacro();
 
             myHelper.LogFile("Share Macro Name - " + temp);
-
-            if (File.Exists(temp))
-            {
-                myHelper.LogFile("Share Macro Name - " + temp + " - exists");
-
-                bool ismacrounning = true;
-                Operation.RunMacro(myHelper.ShareMacro());
-                while (ismacrounning)
-                {
-                    ismacrounning = Tekla.Structures.Model.Operations.Operation.IsMacroRunning();
-                }
-            }
-            else
-            {
-                myHelper.LogFile("Share Macro Name - " + temp + " - missing");
-
-                Cursor.Current = Cursors.Default;
-                tabControl2.Enabled = true;
-                MessageBox.Show("Share macro missing");
-            }
 
             try
             {
@@ -1061,6 +1203,70 @@ namespace CSB
             return Result;
         }
 
+        private void createSlab(double slab, double length, double width)
+        {
+            
+            string thick = slab.ToString();
+
+            if(thick == "300")
+            {
+                thick = "300.01";
+            }
+
+            ContourPlate _Slab = new ContourPlate();
+
+            _Slab.Name = "SLAB";
+            _Slab.Profile.ProfileString = thick;
+            _Slab.Material.MaterialString = "N40";
+            _Slab.Class = "1";
+
+            Contour ct = new Contour();
+
+            ContourPoint p1 = new ContourPoint();
+            p1.X = -_slabCorners.FGW;
+            p1.Y = -_slabCorners.LGW;
+            p1.Z = 0;
+            p1.Chamfer = new Chamfer();
+
+            ContourPoint p2 = new ContourPoint();
+            p2.X = -_slabCorners.FGW;
+            p2.Y = width + _slabCorners.RGW;
+            p2.Z = 0;
+            p2.Chamfer = new Chamfer();
+
+            ContourPoint p3 = new ContourPoint();
+            p3.X = length + _slabCorners.BGW;
+            p3.Y = width + _slabCorners.RGW;
+            p3.Z = 0;
+            p3.Chamfer = new Chamfer();
+
+            ContourPoint p4 = new ContourPoint();
+            p4.X = length + _slabCorners.BGW;
+            p4.Y = -_slabCorners.LGW;
+            p4.Z = 0;
+            p4.Chamfer = new Chamfer();
+
+            ct.AddContourPoint(p1);
+            ct.AddContourPoint(p2);
+            ct.AddContourPoint(p3);
+            ct.AddContourPoint(p4);
+
+            _Slab.Contour = ct;
+            _Slab.Position.Depth = Position.DepthEnum.FRONT;
+
+            bool jj = _Slab.Insert();
+
+            //MessageBox.Show(jj.ToString());
+
+            myModel.CommitChanges();
+
+            //if(_Slab.Type == ContourPlate.ContourPlateTypeEnum.SLAB)
+            //{
+            //    MessageBox.Show("OK");
+            //}
+
+        }
+
         private void AdjustVPitch(string pitch)
         {
             //********************************************************************************
@@ -1098,11 +1304,57 @@ namespace CSB
 
         }
 
+        private void AdjustWallSheet(string wall,string offset,string position)
+        {
+            //********************************************************************************
+
+            string modelPath = myModel.GetInfo().ModelPath;
+            string WallSettings = "";
+
+            try
+            {
+                
+                if (position == "Side")
+                {
+                    WallSettings = modelPath + @"\attributes\" + wall + @".CSB_SideWall_Cladding.MainForm.xml";
+                }
+                else
+                {
+                    WallSettings = modelPath + @"\attributes\" + wall + @".CSB_EndWall_Cladding.MainForm.xml";
+                }               
+
+                var xdocRoof = XDocument.Load(WallSettings);
+
+                var xtgt = xdocRoof.Root.Descendants("ApexDist").FirstOrDefault();
+
+                xtgt.Value = offset;
+
+                myHelper.LogFile("Bottom offset - " + WallSettings);
+
+                //***********************************************************************
+
+                xdocRoof.Save(WallSettings);
+
+                //********************************************************************************
+
+            }
+            catch
+            {
+                myHelper.LogFile("1901 Bottom offset Update failed - " + WallSettings);
+            }
+
+            //********************************************************************************
+
+        }
+
         private void RemoveGridNorth()
         {
 
             try
             {
+
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3009"); }
+
                 ModelObjectEnumerator Enum = myModel.GetModelObjectSelector().GetAllObjects();
 
                 while (Enum.MoveNext())
@@ -1145,12 +1397,17 @@ namespace CSB
                         }
                         else
                         {
+
+                            if (checkConnection() == false) { myHelper.LogFile("Connection-3010"); }
+
                             q.Delete();
                             temp = "";
                         }
 
                     }
                 }
+
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3011"); }
 
                 myModel.CommitChanges();
 
@@ -1238,6 +1495,8 @@ namespace CSB
                     Left = "FRONT ELEVATION";
                 }
 
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3012"); }
+
                 myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
 
                 TSG.Point Origin = new TSG.Point(0, 0, 0);
@@ -1245,6 +1504,8 @@ namespace CSB
                 TSG.Vector Y = new TSG.Vector(0, 1, 0);
 
                 TransformationPlane XY_Plane = new TransformationPlane(Origin, X, Y);
+
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3013"); }
 
                 myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
                 myModel.CommitChanges();
@@ -1283,6 +1544,8 @@ namespace CSB
 
                 XY_Plane = new TransformationPlane(Origin, X, Y);
 
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3014"); }
+
                 myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
                 myModel.CommitChanges();
 
@@ -1305,6 +1568,8 @@ namespace CSB
                 Y = new TSG.Vector(0, 1, 0);
 
                 XY_Plane = new TransformationPlane(Origin, X, Y);
+
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3015"); }
 
                 myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
                 myModel.CommitChanges();
@@ -1333,6 +1598,8 @@ namespace CSB
 
                 XY_Plane = new TransformationPlane(Origin, X, Y);
 
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3016"); }
+
                 myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
                 myModel.CommitChanges();
 
@@ -1348,6 +1615,8 @@ namespace CSB
                     Y = new TSG.Vector(0, 1, 0);
 
                     XY_Plane = new TransformationPlane(Origin, X, Y);
+
+                    if (checkConnection() == false) { myHelper.LogFile("Connection-3017"); }
 
                     myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
                     myModel.CommitChanges();
@@ -1376,6 +1645,8 @@ namespace CSB
 
                     XY_Plane = new TransformationPlane(Origin, X, Y);
 
+                    if (checkConnection() == false) { myHelper.LogFile("Connection-3018"); }
+
                     myModel.GetWorkPlaneHandler().SetCurrentTransformationPlane(XY_Plane);
                     myModel.CommitChanges();
                 }
@@ -1385,6 +1656,9 @@ namespace CSB
                 {
                     try
                     {
+
+                        if (checkConnection() == false) { myHelper.LogFile("Connection-3019"); }
+
                         Tekla.Structures.Model.UI.View View = ViewEnum.Current;
 
                         ViewHandler.ShowView(View);
@@ -1428,6 +1702,8 @@ namespace CSB
                         System.Windows.Forms.MessageBox.Show("Views Failed", "Tekla Structures", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
                     }
                 }
+
+                if (checkConnection() == false) { myHelper.LogFile("Connection-3020"); }
 
                 myModel.CommitChanges();
 
@@ -1493,11 +1769,17 @@ namespace CSB
 
             List<double> spacingList2 = new List<double>();
 
-            if (width > 15000)
+            if (_NoMullions > 0)
             {
-                spacingList2.Add(Math.Round(width / 3, 0));
-                spacingList2.Add(Math.Round(width / 3, 0));
-                spacingList2.Add(Math.Round(width / 3, 0));
+                int temp = _NoMullions + 1;
+
+                for (int index = 1; index < temp+1; ++index)
+                {
+                    spacingList2.Add(Math.Round(width / temp, 0));
+                }
+                //    spacingList2.Add(Math.Round(width / temp, 0));
+                //spacingList2.Add(Math.Round(width / temp, 0));
+                //spacingList2.Add(Math.Round(width / temp, 0));
             }
             else
             {
@@ -1518,8 +1800,10 @@ namespace CSB
             }
             else
             {
-                string xSlab = '"' + slab.ToString() + " (FSL)" + '"';
-                RLs = "-" + slab.ToString() + " 0 " + eave.ToString() + " " + apex.ToString();
+                //string xSlab = '"' + slab.ToString() + " (FSL)" + '"';
+                double zEave = slab + eave;
+                double zApex = slab + apex;
+                RLs = "0 " + slab.ToString() + " " + zEave.ToString() + " " + zApex.ToString();
                 levels = '"' + "0 (GROUND)" + '"' + " FSL EAVE APEX";
             }
 
@@ -1549,11 +1833,13 @@ namespace CSB
             grid.Color = color.ToArgb();
             grid.FontColor = color;
             grid.Insert();
-                        
+
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3021"); }
+
             myModel.CommitChanges();
         }
 
-        private void UpdateGableAttributes(List<double> spacingList, double width, double eave, double apex, double length, double pitch)
+        private void UpdateGableAttributes(List<double> spacingList, double width, double eave, double apex, double length, double pitch, double slab)
         { 
 
             //TODO: Set Attributes for width - Done
@@ -1618,52 +1904,117 @@ namespace CSB
             myHelper.LogFile("API Attribute Settings - " + AttributeSettings);
             myHelper.LogFile("API Portal Settings - " + Portal1_Settings);
 
+            if (checkConnection() == false) { myHelper.LogFile("Connection-3022"); }
+
             string modelPath = myModel.GetInfo().ModelPath;
 
             string attribute = modelPath + @"\attributes\CSB_Project_Setup.CSB_Gable_Shed.MainForm.xml";
 
             //********************************************************************************
-            // Update column
+            // Update column / Foot Cage
             //********************************************************************************
 
             try
             {
 
+                string portalSettings = modelPath + @"\attributes\" + Portal1_Settings + ".CSB_Portal.MainForm.xml";
+
+                File.Copy(myHelper.TeklaFolder() + Portal1_Settings + ".CSB_Portal.MainForm.xml", portalSettings, true);
+
+                myHelper.LogFile("Portal copied - " + portalSettings);
+
+                var xdocPortal = XDocument.Load(portalSettings);
+
                 if (ProjectSales.ColumnType != null && (ProjectSales.ColumnType.Contains("UB") || ProjectSales.ColumnType.Contains("UC")))
                 {
-                    string col = ProjectSales.ColumnType.Trim();
-
-                    string column = col.Substring(3, 2) + col.Substring(0, 3) + "*" + col.Substring(5);
-
-                    if (myHelper.CheckColumn(column))
+                    
+                    if (myHelper.CheckColumn(ProjectSales.ColumnType.Trim(), columnSize))
                     {
-
-                        string portalSettings = modelPath + @"\attributes\" + Portal1_Settings + ".CSB_Portal.MainForm.xml";
-
-                        File.Copy(myHelper.TeklaFolder() + Portal1_Settings + ".CSB_Portal.MainForm.xml", portalSettings, true);
-
-                        myHelper.LogFile("Portal copied - " + portalSettings);
-
-                        var xdocPortal = XDocument.Load(portalSettings);
 
                         var xtgt = xdocPortal.Root.Descendants("RightProfile").FirstOrDefault();
 
-                        xtgt.Value = column;
+                        xtgt.Value = columnSize.TeklaProfile;
 
                         xtgt = xdocPortal.Root.Descendants("LeftProfile").FirstOrDefault();
 
-                        xtgt.Value = column;
+                        xtgt.Value = columnSize.TeklaProfile;
 
-                        //***********************************************************************
+                        myHelper.LogFile("Column profile - " + columnSize.TeklaProfile);
 
-                        xdocPortal.Save(portalSettings);
+                    }
+                    else
+                    {
 
-                        //********************************************************************************
+                        myHelper.LogFile("ERROR Column profile not changed - " + ProjectSales.ColumnType.Trim());
+
+                        var xtgt10 = xdocPortal.Root.Descendants("RightProfile").FirstOrDefault();
+                       
+                        if (myHelper.CheckColumnTekla(xtgt10.Value, columnSize))
+                        {
+
+                        }
                     }
 
-                    myHelper.LogFile("Column profile - " + column);
+                }
+
+                _slabCorners.ColumnWidth =  columnSize.FlangeW;
+
+                //***********************************************************************
+                //Update footings for slab
+
+                if (slab != 0)
+                {
+                   var xtgt2 = xdocPortal.Root.Descendants("RightBase").FirstOrDefault();
+
+                    switch (xtgt2.Value.Trim())
+                    {
+                        case "API Baseplate 1m No Slab":
+                            xtgt2.Value = "API Baseplate 1m Slab";
+                            break;
+                        case "API Baseplate 1m No Slab L":
+                            xtgt2.Value = "API Baseplate 1m Slab L";
+                            break;
+                        case "API Baseplate 1m No Slab S":
+                            xtgt2.Value = "API Baseplate 1m Slab S";
+                            break;
+                    }
+                   
+                   var xtgt3 = xdocPortal.Root.Descendants("LeftBase").FirstOrDefault();
+
+                    switch (xtgt3.Value.Trim())
+                    {
+                        case "API Baseplate 1m No Slab":
+                            xtgt3.Value = "API Baseplate 1m Slab";
+                            break;
+                        case "API Baseplate 1m No Slab L":
+                            xtgt3.Value = "API Baseplate 1m Slab L";
+                            break;
+                        case "API Baseplate 1m No Slab S":
+                            xtgt3.Value = "API Baseplate 1m Slab S";
+                            break;
+                    }
+
+                    if(xtgt2.Value == xtgt3.Value)
+                    {
+                        setFooting(modelPath, slab, xtgt2.Value);
+                    }
+                    else
+                    {
+                        setFooting(modelPath, slab, xtgt2.Value);
+                        setFooting(modelPath, slab, xtgt3.Value);
+                    }
+
+                    setFooting(modelPath, slab, "API Baseplate 1m Slab Mullion");
 
                 }
+
+                //***********************************************************************
+
+                xdocPortal.Save(portalSettings);
+
+                //********************************************************************************
+
+
             }
             catch
             {
@@ -1851,6 +2202,7 @@ namespace CSB
 
                 txtWallGirtSide.Text = mTemp.Substring(6);
             }
+            _slabCorners.LeftGirt= tgt.Value;
 
             // Right Side Wall Girt
 
@@ -1870,6 +2222,7 @@ namespace CSB
 
                 txtWallGirtSideRight.Text = mTemp.Substring(6);
             }
+            _slabCorners.RightGirt = tgt.Value;
 
             // Sidewall Girt Lap
 
@@ -1936,6 +2289,7 @@ namespace CSB
 
                 txtWallGirtEnd.Text = mTemp.Substring(6);
             }
+            _slabCorners.FrontGirt = tgt.Value;
 
             // Back Endwall Girt
 
@@ -1954,6 +2308,7 @@ namespace CSB
 
                 txtWallGirtEndBack.Text = mTemp.Substring(6);
             }
+            _slabCorners.BackGirt = tgt.Value;
 
             //TODO: Purlin Split Location - needs updating for different roof/wall
 
@@ -2178,10 +2533,92 @@ namespace CSB
             }
 
             //***********************************************************************
-            
+            // Mullion with Slab
+
+            if(slab != 0)
+            {
+                tgt = xdoc.Root.Descendants("MullionBase1").FirstOrDefault();
+                tgt.Value = "API Baseplate 1m Slab Mullion";
+
+                tgt = xdoc.Root.Descendants("MullionBase2").FirstOrDefault();
+                tgt.Value = "API Baseplate 1m Slab Mullion";
+
+                tgt = xdoc.Root.Descendants("MullionBase3").FirstOrDefault();
+                tgt.Value = "API Baseplate 1m Slab Mullion";
+            }
+            // depth set with others above
+
+            //***********************************************************************
+            // Calc number of Mullion
+
+            var tgtFront = xdoc.Root.Descendants("NoOfFrontMullions").FirstOrDefault();
+           var tgtBack = xdoc.Root.Descendants("NoOfBackMullions").FirstOrDefault();
+
+            if (tgtFront != null && tgtBack != null)
+            {
+                int _front= 0;
+                int _back = 0;
+
+                bool isParsable = Int32.TryParse(tgtFront.Value, out _front);
+
+                bool isParsable2 = Int32.TryParse(tgtFront.Value, out _back);
+
+                if(isParsable == true || isParsable2 == true)
+                {
+                    if (_front >= _back && _front > 0)
+                    {
+                        _NoMullions = _front;
+                    }
+                    else if (_back >= _front && _back > 0)
+                    {
+                        _NoMullions = _back;
+                    }
+                    else
+                    {
+                        _NoMullions = 0;
+                    }
+                }
+                else
+                {
+                    _NoMullions = 0;
+                }
+
+            }
+
+            //***********************************************************************
+
             xdoc.Save(attribute);
 
             //********************************************************************************
+
+        }
+
+        private void setFooting(string modelPath,double slab,string _target)
+        {
+
+            string footingSettings = modelPath + @"\attributes\" + _target + ".CSB_Base_and_Cage.MainForm.xml";
+
+            try
+            {
+                File.Copy(myHelper.TeklaFolder() + _target + ".CSB_Base_and_Cage.MainForm.xml", footingSettings, true);
+
+                myHelper.LogFile("Footing copied - " + footingSettings);
+
+            }
+            catch
+            {
+
+                myHelper.LogFile("Footing Not copied - " + footingSettings);
+                return;
+            }
+
+            var xdocFooting = XDocument.Load(footingSettings);
+
+            var FootDist = xdocFooting.Root.Descendants("foot_dis").FirstOrDefault();
+
+            FootDist.Value = slab.ToString();
+
+            xdocFooting.Save(footingSettings);
 
         }
 
@@ -2318,7 +2755,7 @@ namespace CSB
 
                 if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxRoofClad.Text == "0.47 TCT CORRY")
+                    if (cbxRoofClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project Roof Clad Left Corro.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
@@ -2331,7 +2768,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.Red)
                 {                    
-                    if (cbxRoofClad.Text == "0.47 TCT CORRY")
+                    if (cbxRoofClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project Roof Clad Left Corro_Front Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro_Front Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
@@ -2368,7 +2805,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.White)
                 {                    
-                    if (cbxRoofClad.Text == "0.47 TCT CORRY")
+                    if (cbxRoofClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project Roof Clad Left Corro_Back Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro_Back Open.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
@@ -2405,7 +2842,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.White)
                 {      
-                    if (cbxRoofClad.Text == "0.47 TCT CORRY")
+                    if (cbxRoofClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project Roof Clad Left Corro_Roof Only.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Left.CSB_Roof_Cladding.MainForm.xml");
                         UpdateAttributes("Project Roof Clad Right Corro_Roof Only.CSB_Roof_Cladding.MainForm.xml", "Project Roof Cladding Right.CSB_Roof_Cladding.MainForm.xml");
@@ -2437,7 +2874,7 @@ namespace CSB
                 // front-right corner
                 if (btnFront.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Front Right Corro_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
                     }
@@ -2448,7 +2885,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.White)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Front Right Corro_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Right.CSB_EndWall_Cladding.MainForm.xml");
 
@@ -2471,7 +2908,7 @@ namespace CSB
                 // front-left corner
                 if (btnFront.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Front Left Corro_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
                     }
@@ -2482,7 +2919,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.White)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Front Left Corro_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Front Left.CSB_EndWall_Cladding.MainForm.xml");
 
@@ -2505,7 +2942,7 @@ namespace CSB
                 // back-right corner
                 if (btnRear.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Back Right Corro_Right Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
                     }
@@ -2516,7 +2953,7 @@ namespace CSB
                 }
                 else if (btnRear.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.White)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Back Right Corro_Right Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Right.CSB_EndWall_Cladding.MainForm.xml");
 
@@ -2539,7 +2976,7 @@ namespace CSB
                 // back-left corner
                 if (btnRear.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Back Left Corro_Left Closed.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
                     }
@@ -2550,7 +2987,7 @@ namespace CSB
                 }
                 else if (btnRear.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.White)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project EW Clad Back Left Corro_Left Open.CSB_EndWall_Cladding.MainForm.xml", "Project End Wall Cladding Back Left.CSB_EndWall_Cladding.MainForm.xml");
 
@@ -2575,7 +3012,7 @@ namespace CSB
 
                 if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.White && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Left Corro_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
 
@@ -2596,7 +3033,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.White && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Left Corro_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
 
@@ -2617,7 +3054,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.Red && btnLeft.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Left Corro_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
 
@@ -2638,7 +3075,7 @@ namespace CSB
                 }
                 else
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Left Corro.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Left.CSB_SideWall_Cladding.MainForm.xml");
                     }
@@ -2653,7 +3090,7 @@ namespace CSB
 
                 if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.White && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Right Corro_FrontBack Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
@@ -2674,7 +3111,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.Red && btnRear.BackColor == System.Drawing.Color.White && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Right Corro_Back Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
@@ -2695,7 +3132,7 @@ namespace CSB
                 }
                 else if (btnFront.BackColor == System.Drawing.Color.White && btnRear.BackColor == System.Drawing.Color.Red && btnRight.BackColor == System.Drawing.Color.Red)
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Right Corro_Front Open.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
 
@@ -2716,7 +3153,7 @@ namespace CSB
                 }
                 else
                 {
-                    if (cbxWallClad.Text == "0.47 TCT CORRY")
+                    if (cbxWallClad.Text == "0.47-TCT-CORRY")
                     {
                         UpdateAttributes("Project SW Clad Right Corro.CSB_SideWall_Cladding.MainForm.xml", "Project Side Wall Cladding Right.CSB_SideWall_Cladding.MainForm.xml");
                     }
@@ -2802,7 +3239,7 @@ namespace CSB
 
         }
 
-        private void CreateModel()
+        private void CreateModel(double slab)
         {
             try
             {
@@ -2815,7 +3252,7 @@ namespace CSB
                 Tekla.Structures.Geometry3d.Point Origin = new Tekla.Structures.Geometry3d.Point();
                 Origin.X = 0;
                 Origin.Y = 0;
-                Origin.Z = 0;
+                Origin.Z = slab;
 
                 cInput.AddOneInputPosition(Origin);
 

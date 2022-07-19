@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
+using System.Xml;
 
 namespace CSB
 {
@@ -59,7 +60,7 @@ namespace CSB
 
             var xdoc = XDocument.Load(Globals.Config());
 
-          string  Result = xdoc.Root.Descendants("TemplateModel").FirstOrDefault().Value;
+            string Result = xdoc.Root.Descendants("TemplateModel").FirstOrDefault().Value;
 
             return Result;
         }
@@ -118,6 +119,10 @@ namespace CSB
 
             string Result = xdoc.Root.Descendants("CreateNote").FirstOrDefault().Value;
 
+//#if DEBUG
+//            Result = "no";
+//#endif
+
             return Result;
         }
 
@@ -131,7 +136,6 @@ namespace CSB
 
             return Result;
         }
-
 
         public bool checkDistanceList(string distanceList)
         {
@@ -180,7 +184,7 @@ namespace CSB
             //bool Result = true;
 
             List<double> distanceListLis = new List<double>();
-            
+
             double distance = 0;
             distanceListLis.Add(distance);
             string[] list = distanceList.Split(' ');
@@ -263,6 +267,7 @@ namespace CSB
         public bool ReadSalesInput(string xFile, salesLib Sales)
         {
             bool Result = true;
+            Sales.Industry = "";
 
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(xFile);
@@ -396,6 +401,10 @@ namespace CSB
                                 var temp = xlRange.Cells[2, j].Value2;
                                 Sales.Height = temp.ToString("0.###");
                             }
+                        }
+                        else if (xlRange.Cells[1, j].Value2 == "Industry")
+                        {
+                            Sales.Industry = xlRange.Cells[2, j].Value2;
                         }
                         else if (xlRange.Cells[1, j].Value2 == "JobNo")
                         {
@@ -567,7 +576,7 @@ namespace CSB
             return Result;
         }
 
-        public  bool CheckFolder(string xPath)
+        public bool CheckFolder(string xPath)
         {
             bool Result = false;
 
@@ -578,64 +587,26 @@ namespace CSB
 
             return Result;
         }
-        public bool CheckColumn(string xTemp)
+
+        public bool CheckColumn(string xTemp, ColumnSize columnSize)
         {
             bool Result = false;
 
-            List<string> xColumn = new List<string>();
-            xColumn.Add("UB150*14");
-            xColumn.Add("UB150*18");
-            xColumn.Add("UB180*16");
-            xColumn.Add("UB180*18");
-            xColumn.Add("UB180*22");
-            xColumn.Add("UB200*18");
-            xColumn.Add("UB200*22");
-            xColumn.Add("UB200*25");
-            xColumn.Add("UB200*30");
-            xColumn.Add("UB250*26");
-            xColumn.Add("UB250*31");
-            xColumn.Add("UB250*37");
-            xColumn.Add("UB310*32");
-            xColumn.Add("UB310*40");
-            xColumn.Add("UB310*46");
-            xColumn.Add("UB360*45");
-            xColumn.Add("UB360*51");
-            xColumn.Add("UB360*57");
-            xColumn.Add("UB410*54");
-            xColumn.Add("UB410*60");
-            xColumn.Add("UB460*67");
-            xColumn.Add("UB460*75");
-            xColumn.Add("UB460*82");
-            xColumn.Add("UB530*82");
-            xColumn.Add("UB530*92");
-            xColumn.Add("UB610*101");
-            xColumn.Add("UB610*113");
-            xColumn.Add("UB610*125");
-            xColumn.Add("UB690*125");
-            xColumn.Add("UB690*140");
-            xColumn.Add("UB760*148");
-            xColumn.Add("UB760*173");
-            xColumn.Add("UB760*197");
-            xColumn.Add("UB760*220");
-            xColumn.Add("UB760*244");
-            xColumn.Add("UC100*15");
-            xColumn.Add("UC150*23");
-            xColumn.Add("UC150*30");
-            xColumn.Add("UC150*37");
-            xColumn.Add("UC200*46");
-            xColumn.Add("UC200*52");
-            xColumn.Add("UC200*60");
-            xColumn.Add("UC250*73");
-            xColumn.Add("UC250*90");
-            xColumn.Add("UC310*97");
-            xColumn.Add("UC310*118");
-            xColumn.Add("UC310*137");
-            xColumn.Add("UC310*158");
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(@"T:\CSB_Program_Files\Documentation\Settings\CSB_Project_Data_UB_UC.xml");
 
-            for (int index = 0; index < xColumn.Count-1; ++index)
+            XmlNodeList nodeList = xmldoc.GetElementsByTagName("UB_UC");
+            foreach (XmlNode node in nodeList)
             {
-                if (xTemp == xColumn[index])
+                if (node.Attributes["Aus"].Value == xTemp)
                 {
+                    columnSize.AusProfile = node.Attributes["Aus"].Value;
+                    columnSize.TeklaProfile = node.Attributes["Tekla"].Value;
+                    columnSize.Depth = node.Attributes["Depth"].Value;
+                    columnSize.FlangeW = node.Attributes["FlangeW"].Value;
+                    columnSize.FlangeT = node.Attributes["FlangeT"].Value;
+                    columnSize.WebT = node.Attributes["WebT"].Value;
+
                     Result = true;
                     break;
                 }
@@ -643,6 +614,34 @@ namespace CSB
 
             return Result;
         }
+
+        public bool CheckColumnTekla(string xTemp, ColumnSize columnSize)
+        {
+            bool Result = false;
+
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(@"T:\CSB_Program_Files\Documentation\Settings\CSB_Project_Data_UB_UC.xml");
+
+            XmlNodeList nodeList = xmldoc.GetElementsByTagName("UB_UC");
+            foreach (XmlNode node in nodeList)
+            {
+                if (node.Attributes["Tekla"].Value == xTemp)
+                {
+                    columnSize.AusProfile = node.Attributes["Aus"].Value;
+                    columnSize.TeklaProfile = node.Attributes["Tekla"].Value;
+                    columnSize.Depth = node.Attributes["Depth"].Value;
+                    columnSize.FlangeW = node.Attributes["FlangeW"].Value;
+                    columnSize.FlangeT = node.Attributes["FlangeT"].Value;
+                    columnSize.WebT = node.Attributes["WebT"].Value;
+
+                    Result = true;
+                    break;
+                }
+            }
+
+            return Result;
+        }
+
         public void LogFile(string temp)
         {
             string xMonth = DateTime.Today.Month.ToString();
@@ -659,7 +658,7 @@ namespace CSB
                 xDay = "0" + xDay;
             }
 
-            string xtemp = Environment.UserName +"_"+DateTime.Today.Year.ToString()+ xMonth + xDay;
+            string xtemp = Environment.UserName + "_" + DateTime.Today.Year.ToString() + xMonth + xDay;
 
             StringBuilder sb = new StringBuilder();
             sb.Append(DateTime.Now + " - " + temp + "\r\n"); //TeklaStructuresLogs
@@ -686,7 +685,7 @@ namespace CSB
             return isSingleInstance;
         }
 
-    }    
+    }   
 
     static class Globals
     {
@@ -706,6 +705,174 @@ namespace CSB
             set { _checkError = value; }
             get { return _checkError; }
         }
+    }
+
+    public class slabCorners
+    {
+        private string mcolumnWidth;
+
+        public string ColumnWidth
+        {
+            set { mcolumnWidth = value;
+            mCol = ColumnOffset(); }
+        }
+
+        private string mfrontGirt;
+
+        public string FrontGirt
+        {
+            set { mfrontGirt = value;
+                mFGW = GirtWidth(mfrontGirt);
+                mFGW = mFGW + mCol; }
+        }
+
+        private string mbackGirt;
+
+        public string BackGirt
+        {
+            set { mbackGirt = value;
+                mBGW = GirtWidth(mbackGirt);
+                mBGW = mBGW + mCol;}
+        }
+
+        private string mleftGirt;
+
+        public string LeftGirt
+        {
+            set { mleftGirt = value;
+                mLGW= GirtWidth(mleftGirt);}
+        }
+
+        private string mrightGirt;
+
+        public string RightGirt
+        {
+            set { mrightGirt = value; mRGW= GirtWidth(mrightGirt);}
+        }
+
+        private double mCol;
+
+        
+        private double mFGW;
+
+        public double FGW
+        {
+            get { return mFGW; }
+        }
+
+        private double mBGW;
+
+        public double BGW
+        {
+            get { return mBGW; }
+        }
+
+        private double mLGW;
+
+        public double LGW
+        {
+            get { return mLGW; }
+        }
+
+        private double mRGW;
+
+        public double RGW
+        {
+            get { return mRGW; }
+        }
+
+        private double ColumnOffset()
+        {
+            double xtemp = 0;
+            double.TryParse(mcolumnWidth, out xtemp);
+            xtemp = xtemp / 2;
+
+            return xtemp;
+        }
+
+        private double GirtWidth(string Girt)
+        {
+            double temp = 0;
+
+            if (Girt.Contains("100"))
+            {
+                temp = 100+5;
+            }
+            else if(Girt.Contains("150"))
+            {
+                temp = 150 + 5;
+            }
+            else if (Girt.Contains("200"))
+            {
+                temp = 200 + 5;
+            }
+            else if (Girt.Contains("250"))
+            {
+                temp = 250 + 5;
+            }
+            else if (Girt.Contains("300"))
+            {
+                temp = 300 + 5;
+            }
+            else if (Girt.Contains("350"))
+            {
+                temp = 350 + 5;
+            }
+
+            return temp;    
+        }
+    }
+
+    public  class ColumnSize
+    {
+        private string mTeklaProfile;
+
+        public string TeklaProfile
+        {
+            get { return mTeklaProfile; }
+            set { mTeklaProfile = value; }
+        }
+
+        private string mAusProfile;
+
+        public string AusProfile
+        {
+            get { return mAusProfile; }
+            set { mAusProfile = value; }
+        }
+
+        private string mDepth;
+
+        public string Depth
+        {
+            get { return mDepth; }
+            set { mDepth = value; }
+        }
+
+        private string mFlangeW;
+
+        public string FlangeW
+        {
+            get { return mFlangeW; }
+            set { mFlangeW = value; }
+        }
+
+        private string mFlangeT;
+
+        public string FlangeT
+        {
+            get { return mFlangeT; }
+            set { mFlangeT = value; }
+        }
+
+        private string mWebT;
+
+        public string WebT
+        {
+            get { return mWebT; }
+            set { mWebT = value; }
+        }
+
     }
 
     public class salesLib
@@ -774,6 +941,14 @@ namespace CSB
         {
             get { return mQuoteVer; }
             set { mQuoteVer = value; }
+        }
+
+        private string mIndustry;
+
+        public string Industry
+        {
+            get { return mIndustry; }
+            set { mIndustry = value; }
         }
 
         private string mCompanyName;
