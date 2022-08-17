@@ -1282,7 +1282,7 @@ namespace CSB
 
                 var xtgt = xdocRoof.Root.Descendants("RidgeCapProfile").FirstOrDefault();
 
-                string vRidge = "FLBK0.6 * " + pitch + " * " + pitch + " * 30 * 180 * 180 * 30";
+                string vRidge = "FLBK0.6*" + pitch + "*" + pitch + "*30*180*180*30";
 
                 xtgt.Value = vRidge;
 
@@ -2024,7 +2024,7 @@ namespace CSB
 
             if (File.Exists(attribute))
             {
-
+                myHelper.LogFile("3000 attribute " + attribute);
             }
             else
             {
@@ -2037,7 +2037,7 @@ namespace CSB
 
             if (File.Exists(xFile))
             {
-
+                myHelper.LogFile("3001 attribute " + xFile);
             }
             else
             {
@@ -2061,6 +2061,8 @@ namespace CSB
                 }
 
             }
+
+            myHelper.LogFile("3002 ");
 
             //********************************************************************************
             // Fill attribute file
@@ -2095,22 +2097,32 @@ namespace CSB
                 }
             }
 
+            myHelper.LogFile("3003 ");
+
             tgt = xdoc.Root.Descendants("Width").FirstOrDefault();
 
             tgt.Value = width.ToString();
+
+            myHelper.LogFile("3004 ");
 
             tgt = xdoc.Root.Descendants("SlopeAngle").FirstOrDefault();
 
             tgt.Value = pitch.ToString();
 
+            myHelper.LogFile("3005 ");
+
             tgt = xdoc.Root.Descendants("PortalAtt1").FirstOrDefault();
 
             tgt.Value = Portal1_Settings;
+
+            myHelper.LogFile("3006 ");
 
             string gridNo = "1";
             string flyBraceAttrib = "1";
             string bayNo = "1";
             string SplitSingle = "2";
+
+            myHelper.LogFile("3007 ");
 
             for (int index = 1; index < spacingList.Count; ++index)
             {
@@ -2118,10 +2130,14 @@ namespace CSB
                 flyBraceAttrib = flyBraceAttrib + " 1";
             }
 
+            myHelper.LogFile("3008 ");
+
             for (int index = 1; index < spacingList.Count - 1; ++index)
             {
                 bayNo = bayNo + " " + (index + 1);
             }
+
+            myHelper.LogFile("3009 ");
 
             for (int index = 1; index < spacingList.Count - 2; ++index)
             {
@@ -2149,6 +2165,19 @@ namespace CSB
             // Purlin Girt Sizes
             //********************************************************************************
 
+            tgt = xdoc.Root.Descendants("Purlin_OverLabDis").FirstOrDefault();
+
+            //if (xTemp.Contains("Z"))
+            //{
+                int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+
+                tgt.Value = lap.ToString();
+            //}
+            //else
+            //{
+            //    tgt.Value = "0";
+            //}
+
             string xTemp = txtPurlin.Text.Trim();
 
             if (xTemp != null && xTemp != "" && xTemp.Length == 6)
@@ -2162,18 +2191,18 @@ namespace CSB
                 tgt = xdoc.Root.Descendants("RidgePurProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
 
-                tgt = xdoc.Root.Descendants("Purlin_OverLabDis").FirstOrDefault();
+                //tgt = xdoc.Root.Descendants("Purlin_OverLabDis").FirstOrDefault();
 
-                if (xTemp.Contains("Z"))
-                {
-                    int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+                //if (xTemp.Contains("Z"))
+                //{
+                //    int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
 
-                    tgt.Value = lap.ToString();
-                }
-                else
-                {
-                    tgt.Value = "0";
-                }
+                //    tgt.Value = lap.ToString();
+                //}
+                //else
+                //{
+                //    tgt.Value = "0";
+                //}
             }
             else
             {
@@ -2226,46 +2255,62 @@ namespace CSB
 
             // Sidewall Girt Lap
 
+            //tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
+
+            //if (txtWallGirtSide.Text.Contains("Z") || txtWallGirtSideRight.Text.Contains("Z"))
+            //{
+            //    lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+
+            //    tgt.Value = lap.ToString();
+            //}
+            //else
+            //{
+            //    tgt.Value = "0";
+            //}
+
+            //// Sidewall lap
+
+
             tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
 
-            if (txtWallGirtSide.Text.Contains("Z") || txtWallGirtSideRight.Text.Contains("Z"))
-            {
-                int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+            //if (xTemp.Contains("Z"))
+            //{
+                lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
 
                 tgt.Value = lap.ToString();
-            }
-            else
-            {
-                tgt.Value = "0";
-            }
+            //}
+            //else
+            //{
+            //    tgt.Value = "0";
+            //}
 
             // Fascia Girt
 
-            xTemp = txtWallGirtSide.Text.Trim();
+            xTemp = txtFascia.Text.Trim(); //txtFascia
 
             if (xTemp != null && xTemp != "" && xTemp.Length == 6)
             {
-                tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
-                tgt.Value = "MET-MS" + xTemp;
+                //tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
+                //tgt.Value = "MET-MS" + xTemp;
                 tgt = xdoc.Root.Descendants("FasciaProfile").FirstOrDefault();
                 tgt.Value = "MET-MS" + xTemp;
 
-                tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
+                //tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
 
-                if (xTemp.Contains("Z"))
-                {
-                    int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+                //if (xTemp.Contains("Z"))
+                //{
+                //    int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
 
-                    tgt.Value = lap.ToString();
-                }
-                else
-                {
-                    tgt.Value = "0";
-                }
+                //    tgt.Value = lap.ToString();
+                //}
+                //else
+                //{
+                //    tgt.Value = "0";
+                //}
             }
             else
             {
-                tgt = xdoc.Root.Descendants("GirtProfile").FirstOrDefault();
+                tgt = xdoc.Root.Descendants("FasciaProfile").FirstOrDefault();
 
                 string mTemp = tgt.Value;
 
@@ -2361,7 +2406,11 @@ namespace CSB
 
             if (chkGirtSingleSpan.Checked == false)
             {
-                tgt = xdoc.Root.Descendants("SideSplitGrids").FirstOrDefault(); //Girt split
+                tgt = xdoc.Root.Descendants("SideSplitGrids").FirstOrDefault(); //Left Girt split
+
+                tgt.Value = split[0];
+
+                tgt = xdoc.Root.Descendants("SideSplitGrids2").FirstOrDefault(); //Right Girt split
 
                 tgt.Value = split[0];
 
@@ -2379,7 +2428,11 @@ namespace CSB
             }
             else if (chkGirtSingleSpan.Checked == true)
             {
-                tgt = xdoc.Root.Descendants("SideSplitGrids").FirstOrDefault(); //Girt split
+                tgt = xdoc.Root.Descendants("SideSplitGrids").FirstOrDefault(); //Left Girt split
+
+                tgt.Value = SplitSingle;
+
+                tgt = xdoc.Root.Descendants("SideSplitGrids2").FirstOrDefault(); //Right Girt split
 
                 tgt.Value = SplitSingle;
 
