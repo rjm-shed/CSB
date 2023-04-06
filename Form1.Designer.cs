@@ -1961,7 +1961,7 @@ namespace CSB
             this.structuresExtender1.SetAttributeName(this.txtWallGirtEnd, null);
             this.structuresExtender1.SetAttributeTypeName(this.txtWallGirtEnd, null);
             this.structuresExtender1.SetBindPropertyName(this.txtWallGirtEnd, null);
-            this.txtWallGirtEnd.Location = new System.Drawing.Point(6, 18);
+            this.txtWallGirtEnd.Location = new System.Drawing.Point(6, 17);
             this.txtWallGirtEnd.Name = "txtWallGirtEnd";
             this.txtWallGirtEnd.ReadOnly = true;
             this.txtWallGirtEnd.Size = new System.Drawing.Size(93, 20);

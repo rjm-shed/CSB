@@ -24,6 +24,12 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Squirrel;
+using Microsoft.Office.Interop.Excel;
+using Model = Tekla.Structures.Model.Model;
+using Font = System.Drawing.Font;
+using System.Reflection;
+using RenderData;
+using Object = Tekla.Structures.Model.Object;
 
 namespace CSB
 {
@@ -41,7 +47,13 @@ namespace CSB
 
         slabCorners _slabCorners = new slabCorners();
 
+        List<ModelObject> _Columns = new List<ModelObject>();
+        ModelObject FirstPurlin = null;
+        ModelObject LastPurlin = null;
+
         int _NoMullions = 0;
+
+        //double EndLap = 0;
 
         public Form1()
         {
@@ -398,9 +410,131 @@ namespace CSB
 
         }
 
+        private static string GetPropertyDescription(PropertyInfo info)
+        {
+            Attribute attrib = info.GetCustomAttribute(typeof(DescriptionAttribute));
+
+            if (attrib != null)
+            {
+                return ((DescriptionAttribute)attrib).Description;
+            }
+            else return "";
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
-            createSlab(300, 60000, 40000);
+            string[] MacrosPathList;
+            string MacrosPath = string.Empty;
+            TeklaStructuresSettings.GetAdvancedOption("XS_MACRO_DIRECTORY", ref MacrosPath);
+            MacrosPathList = MacrosPath.Split(';');
+            string vv = MacrosPathList.ElementAt(0);
+
+            string temp = vv + @"\modeling\Z_ShowPartView.cs"; // + myHelper.ShareMacro();
+
+            //myHelper.LogFile("Share Macro Name - " + temp);
+
+            try
+            {
+                if (File.Exists(temp))
+                {
+                    //myHelper.LogFile("Share Macro Name - " + temp + " - exists");
+
+                    bool ismacrounning = true;
+                    Operation.RunMacro("Z_ShowPartView.cs"); // myHelper.ShareMacro());
+                    while (ismacrounning)
+                    {
+                        ismacrounning = Tekla.Structures.Model.Operations.Operation.IsMacroRunning();
+                    }
+                }
+                else
+                {
+                    //myHelper.LogFile("Share Macro Name - " + temp + " - missing");
+
+                    Cursor.Current = Cursors.Default;
+                    tabControl2.Enabled = true;
+                    MessageBox.Show("Share macro missing");
+                }
+
+            }
+            catch (Exception)
+            {
+                //myHelper.LogFile("Share Macro Name - " + temp + " - failed");
+
+                //System.Windows.Forms.MessageBox.Show(" not found, application stopped!", "Tekla Structures", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                Cursor.Current = Cursors.Default;
+                tabControl2.Enabled = true;
+                throw;
+            }
+            //ApiModel ww = new ApiModel();
+
+            //PropertyInfo info = ww.GetType().GetProperty("SpacingBetweenBays");
+
+            //string gg = GetPropertyDescription(info);
+
+            //myModel = new Model();
+
+            //ModelObjectVisualization.SetTransparencyForAll(TemporaryTransparency.TRANSPARENT);
+
+            ////if (ErrorBeams.Count > 0)
+            ////{
+
+            //   ModelObjectEnumerator Enum = myModel.GetModelObjectSelector().GetAllObjects();
+
+            //    int sa = Enum.GetSize();
+
+            //while (Enum.MoveNext())
+            //{
+            //    Component B = Enum.Current as Component;
+            //    if (B != null)
+            //    {
+
+            //        //int mTemp = 0;
+            //        string s = B.Name;
+
+            //        if (s == "CSB_Gable_Shed")
+            //        {
+
+            //            string value2 = null;
+            //            object ss = B.GetAttribute("SideSplitGrids",ref value2);
+
+            //            int g = s.Count();
+            //        }
+
+            //for (int i = 0; i < ErrorBeams.Count; i++)
+            //{
+            //    string zz = ErrorBeams[i].ToString();
+            //    zz = zz.Trim();
+
+            //    if (B.GetPartMark() == zz)
+            //    {
+            //        mTemp = 1;
+            //        break;
+            //    }
+            //}
+
+            //if (mTemp == 1)
+            //{
+            //    blueUBObjects.Add(B);
+
+            //    var x = B.GetBolts();
+
+            //    while (x.MoveNext())
+            //    {
+            //        try
+            //        {
+            //            redUBObjects.Add(x.Current);
+            //        }
+            //        catch
+            //        {
+
+            //        }
+            //    }
+            //}
+
+            //    }
+            //}
+            //}
+            //createSlab(300, 60000, 40000);
 
             //ContourPlate _Slab = new ContourPlate();
 
@@ -606,27 +740,6 @@ namespace CSB
 
                 return;
 
-                //DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you want to over-write it?" + "\r\n" + "ONLY DO THIS IF IT HAS NOT BEEN SHARED", "Project already exists", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Information);
-
-                //if (dialogResult == DialogResult.Yes)
-                //{
-                //    try
-                //    {
-                //        Directory.Delete(xtemp, true);
-                //        myHelper.LogFile("Project deleted " + Project.ModelName);
-                //    }
-                //    catch
-                //    {
-                //        System.Windows.Forms.MessageBox.Show("Did not Delete", "Project", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
-                //        myHelper.LogFile("Project not deleted " + Project.ModelName);
-                //        return;
-                //    }
-                //}
-                //else if (dialogResult == DialogResult.No)
-                //{
-                //    return;
-                //}
-
             }
 
             string MasterFiles = @"T:\CSB_Program_Files\Documentation\Masters\";
@@ -682,7 +795,6 @@ namespace CSB
                 System.Windows.Forms.MessageBox.Show("Unable to copy", "Master Files", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
                 return;
             }
-
 
             string xResult = ProcessModel(Project);
         }
@@ -866,6 +978,77 @@ namespace CSB
         #endregion
 
         #region Processes
+
+
+        private void CheckColumn(double X, double Y,double Z)
+        {
+            TSG.Point pointCheck = new TSG.Point();
+            pointCheck.X = X;
+            pointCheck.Y = Y;
+            pointCheck.Z = Z;
+
+            Tekla.Structures.Model.UI.ModelObjectSelector ms = new Tekla.Structures.Model.UI.ModelObjectSelector();
+            ModelObjectEnumerator myEnum = myModel.GetModelObjectSelector().GetObjectsByBoundingBox(pointCheck + new TSG.Point(50, 50, 50), pointCheck - new TSG.Point(50, 50, 250));
+           
+            while (myEnum.MoveNext())
+            {
+                Beam b = myEnum.Current as Beam;
+                
+                if (b != null)
+                {
+                    string aa = b.Name;
+
+                    if (b.Name == "COLUMN")
+                    {
+                        myHelper.LogFile("Column found");
+
+                        _Columns.Add(b);
+
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        private void CheckPurlin(string _Purlin, double X, double Y, double Z)
+        {
+            TSG.Point pointCheck = new TSG.Point();
+            pointCheck.X = X;
+            pointCheck.Y = Y;
+            pointCheck.Z = Z;
+
+            Tekla.Structures.Model.UI.ModelObjectSelector ms = new Tekla.Structures.Model.UI.ModelObjectSelector();
+            ModelObjectEnumerator myEnum = myModel.GetModelObjectSelector().GetObjectsByBoundingBox(pointCheck + new TSG.Point(50, 50, 50), pointCheck - new TSG.Point(50, 50, 50));
+
+            while (myEnum.MoveNext())
+            {
+                Beam b = myEnum.Current as Beam;
+
+                if (b != null)
+                {
+                    string aa = b.Name;
+
+                    if (b.Name == "PURLIN")
+                    {
+                        myHelper.LogFile("Purlin found");
+
+                        if(_Purlin == "First")
+                        {
+                            FirstPurlin = b;
+                        }
+                        else if (_Purlin == "Last")
+                        {
+                            LastPurlin = b;
+                        }                        
+
+                        break;
+                    }
+                }
+            }
+
+        }
+
         public string ProcessModel(ProjectLib Project)
         {
 
@@ -914,7 +1097,7 @@ namespace CSB
                 myHelper.LogFile("Model Template - " + Project.TemplateModel);
 
                 MH.CreateNewSingleUserModel(Project.ModelName, Project.Folder, Project.TemplateModel);
-
+               
             }
             catch (Exception e)
             {
@@ -1078,19 +1261,22 @@ namespace CSB
             RemoveGridNorth();
 
             //***********************************************************************
+
             // Update Gable attributes
 
             if (checkConnection() == false) { myHelper.LogFile("Connection-3003"); }
 
-            UpdateGableAttributes(spacingList, width, eave, apex, length, pitch, slab);
+            List<double> spacingList2 = new List<double>();// Y grid, mullions
 
-            // **********************************************
+            UpdateGableAttributes(spacingList, spacingList2, width, eave, apex, length, pitch, slab);
+
+            //********************************************************************************
 
             if (checkConnection() == false) { myHelper.LogFile("Connection-3001"); }
 
-            InsertGrid(distanceListList, spacingList, width, slab,  eave, apex);
+            InsertGrid(spacingList2, spacingList, width, slab, eave, apex);
 
-            //********************************************************************************
+            // **********************************************
 
             if (checkConnection() == false) { myHelper.LogFile("Connection-3002"); }
 
@@ -1134,6 +1320,7 @@ namespace CSB
 
                 createSlab(slab, length, width);
             }
+
             //**********************************************************************
 
             if (radModelYes.Checked == true)
@@ -1142,6 +1329,52 @@ namespace CSB
                 if (checkConnection() == false) { myHelper.LogFile("Connection-3007"); }
 
                 CreateModel(slab);
+
+                // Left Gutter
+
+                for (int i = 0; i < distanceListList.Count() ; i++)
+                {
+
+                    if (i == 0)
+                    {
+                        CheckPurlin("First", distanceListList[i], -200, eave);
+                    }
+                    else if (i == distanceListList.Count() - 1)
+                    {
+                        CheckPurlin("Last", distanceListList[i], -200, eave);
+                    }
+                    
+                    CheckColumn(distanceListList[i], 0, eave);
+
+                }
+
+                CreateGutter();
+
+                // Right Gutter
+
+                _Columns = new List<ModelObject>();
+                FirstPurlin = null;
+                LastPurlin = null;
+
+                for (int i = 0; i < distanceListList.Count(); i++)
+                {
+
+                    if (i == 0)
+                    {
+                        CheckPurlin("First", distanceListList[i], width + 200, eave);
+                    }
+                    else if (i == distanceListList.Count() - 1)
+                    {
+                        CheckPurlin("Last", distanceListList[i], width + 200, eave);
+                    }
+
+                    CheckColumn(distanceListList[i], width, eave);
+
+                }
+
+                CreateGutter();
+
+
             }
 
             //**********************************************************************
@@ -1201,6 +1434,37 @@ namespace CSB
             tabControl2.Enabled = true;
 
             return Result;
+        }
+
+        private void CreateGutter()
+        {
+
+            try
+            {
+                Component c = new Component();
+                c.Name = "CSB_Gutter_Tapered";
+                c.Number = Component.PLUGIN_OBJECT_NUMBER;
+                ComponentInput input = new ComponentInput();
+                input.AddInputObject(FirstPurlin);
+                input.AddInputObject(LastPurlin);
+                foreach (Beam column in _Columns)
+                {
+                    input.AddInputObject(column);
+                }
+                c.SetComponentInput(input);
+                c.LoadAttributesFromFile("standard");
+
+                c.Insert();
+
+                myModel.CommitChanges();
+
+                myHelper.LogFile("Gutter Created");
+            }
+            catch (Exception e)
+            {
+                myHelper.LogFile("1907 - " + e.Message);
+            }
+
         }
 
         private void createSlab(double slab, double length, double width)
@@ -1440,10 +1704,10 @@ namespace CSB
                 }
                 else if (radNE.Checked == true)
                 {
-                    Top = "NE ELEVATION";
-                    Right = "SE ELEVATION";
-                    Bottom = "SW ELEVATION";
-                    Left = "NW ELEVATION";
+                    Top = "NW ELEVATION";
+                    Right = "NE ELEVATION";
+                    Bottom = "SE ELEVATION";
+                    Left = "SW ELEVATION";
                 }
                 else if (radE.Checked == true)
                 {
@@ -1764,28 +2028,32 @@ namespace CSB
             myHelper.LogFile("Views updated");
         }
 
-        private void InsertGrid(List<double> distanceListList, List<double> spacingList, double width, double slab, double eave, double apex)
+        private void InsertGrid(List<double> spacingList2, List<double> spacingList, double width, double slab, double eave, double apex)
         {
 
-            List<double> spacingList2 = new List<double>();
+            //List<double> spacingList2 = new List<double>();
 
-            if (_NoMullions > 0)
-            {
-                int temp = _NoMullions + 1;
+            //if (_NoMullions > 0)
+            //{
+            //    int temp = _NoMullions + 1;
 
-                for (int index = 1; index < temp+1; ++index)
-                {
-                    spacingList2.Add(Math.Round(width / temp, 0));
-                }
-                //    spacingList2.Add(Math.Round(width / temp, 0));
-                //spacingList2.Add(Math.Round(width / temp, 0));
-                //spacingList2.Add(Math.Round(width / temp, 0));
-            }
-            else
-            {
-                spacingList2.Add(Math.Round(width / 2, 0));
-                spacingList2.Add(Math.Round(width / 2, 0));
-            }
+            //    for (int index = 1; index < temp+1; ++index)
+            //    {
+            //        spacingList2.Add(Math.Round(width / temp, 0));
+            //    }
+            //    //    spacingList2.Add(Math.Round(width / temp, 0));
+            //    //spacingList2.Add(Math.Round(width / temp, 0));
+            //    //spacingList2.Add(Math.Round(width / temp, 0));
+            //}
+            //else
+            //{
+            //    spacingList2.Add(Math.Round(width / 2, 0));
+            //    spacingList2.Add(Math.Round(width / 2, 0));
+            //}
+
+            //EndLap = 5 * (int)Math.Round((spacingList2.Max() * 0.15) / 5.0);
+
+            //MessageBox.Show(EndLap.ToString());
 
             double eave2 = Math.Round(slab + eave, 0);
             double apex2 = Math.Round(slab + apex, 0);
@@ -1839,7 +2107,7 @@ namespace CSB
             myModel.CommitChanges();
         }
 
-        private void UpdateGableAttributes(List<double> spacingList, double width, double eave, double apex, double length, double pitch, double slab)
+        private void UpdateGableAttributes(List<double> spacingList, List<double> spacingList2, double width, double eave, double apex, double length, double pitch, double slab)
         { 
 
             //TODO: Set Attributes for width - Done
@@ -2169,9 +2437,10 @@ namespace CSB
 
             //if (xTemp.Contains("Z"))
             //{
-                int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+            int lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+            lap = (lap / 2);
 
-                tgt.Value = lap.ToString();
+            tgt.Value = lap.ToString();
             //}
             //else
             //{
@@ -2273,16 +2542,23 @@ namespace CSB
 
             tgt = xdoc.Root.Descendants("SideGirtOverlap").FirstOrDefault();
 
-            //if (xTemp.Contains("Z"))
-            //{
-                lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+            lap = 5 * (int)Math.Round((spacingList.Max() * 0.15) / 5.0);
+            lap = (lap / 2);
 
-                tgt.Value = lap.ToString();
-            //}
-            //else
-            //{
-            //    tgt.Value = "0";
-            //}
+            tgt.Value = lap.ToString();
+
+            //MessageBox.Show(EndLap.ToString());
+
+            // Endwall lap moved to end of section
+
+            //tgt = xdoc.Root.Descendants("EndGirtOverlap").FirstOrDefault();
+
+            //double EndLap = 5 * (int)Math.Round((spacingList2.Max() * 0.15) / 5.0);
+            //EndLap = (EndLap / 2);
+
+            ////MessageBox.Show(EndLap.ToString());
+
+            //tgt.Value = EndLap.ToString();
 
             // Fascia Girt
 
@@ -2637,6 +2913,31 @@ namespace CSB
                 }
 
             }
+
+            //***********************************************************************
+            // Calc Endwall spacing and overlap
+
+            if (_NoMullions > 0)
+            {
+                int temp = _NoMullions + 1;
+
+                for (int index = 1; index < temp + 1; ++index)
+                {
+                    spacingList2.Add(Math.Round(width / temp, 0));
+                }
+            }
+            else
+            {
+                spacingList2.Add(Math.Round(width / 2, 0));
+                spacingList2.Add(Math.Round(width / 2, 0));
+            }
+
+            tgt = xdoc.Root.Descendants("EndGirtOverlap").FirstOrDefault();
+
+            double EndLap = 5 * (int)Math.Round((spacingList2.Max() * 0.15) / 5.0);
+            EndLap = (EndLap / 2);
+
+            tgt.Value = EndLap.ToString();
 
             //***********************************************************************
 
@@ -3573,7 +3874,7 @@ namespace CSB
         #region Menu
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
